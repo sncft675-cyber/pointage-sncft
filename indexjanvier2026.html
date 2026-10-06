@@ -1,0 +1,460 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Roulement PC et Régulation</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root{
+  --bg:#eef2f7; --surface:#ffffff; --fg:#16222f; --muted:#5d6b7b; --line:#d3dbe6;
+  --accent:#2e6fae; --accent-fg:#ffffff;
+  --head:#3579bd;
+  --head-fg:#ffffff;
+  --x-w:#ffffff; --x-g:#f2f2f2; --x-G:#d9d9d9; --x-b:#daeef3;
+  --x-p:#e4dfec; --x-v:#ebf1de; --x-O:#fbcda7;
+  --hl:#e74c3c;
+  --hl-tint:rgba(46,111,174,0.20);
+  --font-d:'Barlow Condensed','Arial Narrow',sans-serif;
+  --font-b:'IBM Plex Sans',system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0f2036; --surface:#173250; --fg:#e8eef6; --muted:#9db3ca; --line:#2f4d70;
+  --accent:#7dbbf0; --accent-fg:#0b1a28;
+  --head:#1e5a9e; --head-fg:#ffffff;
+  --hl:#ff8e7a;
+  --hl-tint:rgba(125,187,240,0.25);
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f2036; --surface:#173250; --fg:#e8eef6; --muted:#9db3ca; --line:#2f4d70;
+  --accent:#7dbbf0; --accent-fg:#0b1a28;
+  --head:#1e5a9e; --head-fg:#ffffff;
+  --hl:#ff8e7a;
+  --hl-tint:rgba(125,187,240,0.25);
+  color-scheme:dark}
+*{box-sizing:border-box}[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--fg);
+  font:16px/1.4 var(--font-b);font-family:var(--font-b)}
+.wrap{max-width:1100px;margin:0 auto;padding-inline:16px;padding-block:0 40px}
+header{background:var(--head);color:var(--head-fg);margin-inline:-16px;
+  padding:18px 16px 0;position:sticky;top:0;z-index:5}
+header .org{font:600 11px/1.3 var(--font-b);letter-spacing:.1em;text-transform:uppercase;opacity:.85}
+header h1{font:700 24px/1.1 var(--font-d);margin:4px 0 8px;letter-spacing:.01em}
+.month-bar{background:rgba(255,255,255,.15);border-radius:6px;
+  padding:6px 12px;margin:0 0 10px;font:700 15px var(--font-d);
+  letter-spacing:.08em;text-transform:uppercase;text-align:center}
+.nav-bar{display:flex;justify-content:space-between;align-items:center;gap:6px;
+  padding:0 0 10px;font:600 13px var(--font-b);min-height:26px}
+.nav-link{color:var(--head-fg);text-decoration:none;padding:5px 10px;
+  border-radius:5px;background:rgba(255,255,255,.15);opacity:.95;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:42%}
+.nav-link:hover{background:rgba(255,255,255,.28)}
+.nav-link[hidden]{display:none}
+.nav-home{flex:none;max-width:none}
+.tabs{display:flex;gap:4px}
+.tabs button{flex:1;min-width:0;font:600 17px var(--font-d);letter-spacing:.03em;
+  text-transform:uppercase;padding:10px 8px;border:0;border-radius:6px 6px 0 0;
+  background:transparent;color:var(--head-fg);opacity:.7;cursor:pointer}
+.tabs button[aria-selected="true"]{background:var(--bg);color:var(--fg);opacity:1}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+section{padding-top:18px;display:flex;flex-direction:column;gap:16px}
+label.lbl{font:600 12px var(--font-b);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+select{width:100%;font:500 18px var(--font-b);padding:12px;border:1px solid var(--line);
+  border-radius:8px;background:var(--surface);color:var(--fg)}
+.who{display:flex;flex-wrap:wrap;gap:4px 12px;align-items:baseline;justify-content:space-between}
+.who b{font:700 28px/1.1 var(--font-d)}.who span{color:var(--muted)}
+.dow,.grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}
+.dow div{font:600 13px var(--font-d);text-align:center;color:var(--muted);
+  letter-spacing:.06em;text-transform:uppercase}
+.cell{border-radius:6px;min-height:68px;padding:4px 3px 5px;display:flex;
+  flex-direction:column;align-items:center;justify-content:space-between;
+  text-align:center;color:#000;border:1px solid var(--line);
+  transition:box-shadow .15s}
+.cell .d{font:500 11px var(--font-b);align-self:flex-start;padding-left:2px;color:#555}
+.cell .k{font:700 23px/1 var(--font-d);white-space:nowrap}
+.cell .k.l{font-size:16px}
+.cell .k small{display:block;font:700 13px/1 var(--font-d)}
+.cell.today{outline:4px solid var(--accent);outline-offset:1px;z-index:2}
+.cell.nov{opacity:.9}
+.cell.hl{box-shadow:inset 0 0 0 1000px var(--hl-tint)}
+.month-sep{grid-column:1/-1;font:700 15px var(--font-d);letter-spacing:.08em;
+  text-transform:uppercase;color:var(--muted);padding-top:8px}
+.cell.blank{background:transparent;border-color:transparent}
+.f-w{background:var(--x-w)}.f-g{background:var(--x-g)}.f-G{background:var(--x-G)}
+.f-b{background:var(--x-b)}.f-p{background:var(--x-p)}.f-v{background:var(--x-v)}
+.f-O{background:var(--x-O)}
+.stats{display:flex;flex-wrap:wrap;gap:6px}
+.chip{background:var(--surface);border:1px solid var(--line);display:inline-flex;
+  align-items:baseline;gap:6px;padding:6px 10px;border-radius:999px;font:600 14px var(--font-b);
+  cursor:pointer;user-select:none;transition:background .12s, border-color .12s}
+.chip:hover{background:var(--hl);border-color:var(--hl);color:#fff}
+.chip:hover b{color:#fff}
+.chip b{font:700 20px var(--font-d)}
+.strip{display:flex;gap:4px;overflow-x:auto;padding-bottom:6px}
+.strip button{flex:none;width:52px;padding:6px 0;border:1px solid var(--line);
+  border-radius:8px;background:var(--surface);color:var(--fg);cursor:pointer;
+  display:flex;flex-direction:column;align-items:center;font-family:var(--font-b)}
+.strip button small{font:600 11px var(--font-b);color:var(--muted);
+  text-transform:uppercase;letter-spacing:.06em}
+.strip button b{font:700 22px/1.1 var(--font-d)}
+.strip button[aria-pressed="true"]{background:var(--accent);color:var(--accent-fg);border-color:var(--accent)}
+.strip button[aria-pressed="true"] small{color:inherit}
+.daytitle{font:700 28px/1.1 var(--font-d)}
+.grp{border-radius:10px;overflow:hidden;border:1px solid var(--line);background:var(--surface)}
+.grp h3{background:var(--head);color:var(--head-fg);margin:0;padding:8px 12px;
+  display:flex;justify-content:space-between;align-items:baseline;
+  font:700 19px var(--font-d);letter-spacing:.04em;text-transform:uppercase}
+.grp h3 span{font:500 13px var(--font-b);letter-spacing:0;text-transform:none;opacity:.9}
+.grp ul{list-style:none;margin:0;padding:0}
+.grp li{display:flex;justify-content:space-between;gap:12px;padding:9px 12px;
+  border-top:1px solid var(--line);font-size:16px}
+.grp li em{font-style:normal;color:var(--muted);font-size:14px;text-align:right}
+.grp li button{all:unset;cursor:pointer;color:var(--accent);text-decoration:underline;text-underline-offset:3px}
+.sec{display:flex;flex-direction:column;gap:12px;margin-top:6px}
+.sec h2{font:700 20px var(--font-d);letter-spacing:.08em;text-transform:uppercase;margin:0;color:var(--muted)}
+.amp{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.card h3{margin:0;padding:8px 12px;font:700 17px var(--font-d);letter-spacing:.06em;
+  text-transform:uppercase;background:var(--head);color:var(--head-fg)}
+.card .row{display:flex;align-items:center;gap:10px;padding:8px 12px;
+  border-top:1px solid var(--line);font-size:15px}
+.card .row:first-of-type{border-top:0}
+.card .row i{flex:none;min-width:38px;height:30px;padding-inline:6px;border-radius:5px;
+  display:grid;place-items:center;font:700 17px var(--font-d);font-style:normal;
+  background:var(--bg);border:1px solid var(--line)}
+.card .row i:empty{background:var(--x-g)}
+.card .row span{flex:1;min-width:0}
+.card .row b{font:600 15px var(--font-b);font-variant-numeric:tabular-nums;white-space:nowrap}
+.tw{--surface:#fff;--fg:#000;--line:#c4c8c1;--muted:#555;color:var(--fg);
+  overflow:auto;border:1px solid var(--line);border-radius:10px;
+  background:var(--surface);max-height:80vh}
+table.t{border-collapse:separate;border-spacing:0;font-size:13px;width:max-content}
+.t th,.t td{border-right:1px solid var(--line);border-bottom:1px solid var(--line);
+  padding:0;text-align:center;white-space:nowrap}
+.t thead th{position:sticky;background:var(--surface);z-index:2;font-weight:600}
+.t thead tr:nth-child(1) th{top:0;font:700 15px var(--font-d);letter-spacing:.06em;
+  text-transform:uppercase;padding:6px 8px;text-align:left}
+.t thead tr:nth-child(2) th{top:31px;height:24px;font:700 14px var(--font-d)}
+.t thead tr:nth-child(3) th{top:55px;height:20px;font:600 11px var(--font-b);color:var(--muted)}
+.t .fix{position:sticky;left:0;z-index:3;background:var(--surface);text-align:left;
+  padding:0 10px;min-width:150px;box-shadow:1px 0 0 var(--line)}
+.t thead .fix{z-index:4}
+.t td.nm{font:600 14px var(--font-b);height:36px}
+.t td.nm button{all:unset;cursor:pointer;display:block;width:100%;padding:8px 0}
+.t td.nm button:hover{color:var(--accent);text-decoration:underline}
+.t td.inf{padding:0 8px;color:var(--muted);font-size:13px}
+.t td.sd{padding:0 8px;font:700 15px var(--font-d);font-variant-numeric:tabular-nums}
+.t td.cd{min-width:44px;height:36px;font:700 14px var(--font-d);padding:0 3px}
+.t th.td,.t td.tdy{box-shadow:inset 3px 0 0 var(--accent),inset -3px 0 0 var(--accent)}
+.t th.td{color:var(--accent)}
+.t td.mois{border-right:2px solid var(--fg)}
+.hint,.note{font-size:13px;color:var(--muted)}
+@media (max-width:420px){
+  .tabs button{font-size:15px;padding-inline:2px}
+  .cell{min-height:60px}.cell .k{font-size:21px}.cell .k.l{font-size:15px}
+}
+</style></head><body>
+<div class="wrap">
+<header>
+  <div class="org" id="orgline"></div>
+  <h1 id="titleline"></h1>
+  <div class="month-bar" id="monthbar"></div>
+  <nav class="nav-bar" id="navbar">
+    <a id="navprev" class="nav-link" hidden></a>
+    <a href="index.html" class="nav-link nav-home">📅 Tous les mois</a>
+    <a id="navnext" class="nav-link" hidden></a>
+  </nav>
+  <div class="tabs" role="tablist">
+    <button role="tab" id="tab-agent" aria-selected="true" aria-controls="v-agent">Mon planning</button>
+    <button role="tab" id="tab-jour" aria-selected="false" aria-controls="v-jour">Par jour</button>
+    <button role="tab" id="tab-tab" aria-selected="false" aria-controls="v-tab">Pointage complet</button>
+  </div>
+</header>
+
+<section id="v-agent" role="tabpanel" aria-labelledby="tab-agent">
+  <div><label class="lbl" for="sel">Choisir mon nom</label><select id="sel"></select></div>
+  <div class="who"><b id="wn"></b><span id="wp"></span></div>
+  <div class="stats" id="stats"></div>
+  <div class="dow" aria-hidden="true">
+    <div>Lun</div><div>Mar</div><div>Mer</div><div>Jeu</div><div>Ven</div><div>Sam</div><div>Dim</div>
+  </div>
+  <div class="grid" id="grid"></div>
+  <p class="note">Survolez les compteurs ci-dessus pour mettre en évidence les jours correspondants.</p>
+  <div class="leg"></div>
+</section>
+
+<section id="v-jour" role="tabpanel" aria-labelledby="tab-jour" hidden>
+  <div class="strip" id="strip" aria-label="Choisir un jour"></div>
+  <div class="daytitle" id="dt"></div>
+  <div id="groups" style="display:flex;flex-direction:column;gap:12px"></div>
+</section>
+
+<section id="v-tab" role="tabpanel" aria-labelledby="tab-tab" hidden>
+  <div class="hint">Faites défiler le tableau vers la droite. Touchez un nom pour ouvrir son planning.</div>
+  <div class="tw"><table class="t" id="tbl"></table></div>
+  <div class="leg"></div>
+</section>
+</div>
+
+<script>
+const CFG = {"org1": "SOCIETE NATIONALE DES CHEMINS DE FER TUNISIENS", "org2": "Département Gestion Des Circulations Ferroviaires", "title": "Pointage du personnel du PC et de la Régulation", "year": 2026, "month": 0, "monthName": "janvier", "nextMonthName": "février", "ndays": 39, "novStart": 31};
+const AG = [{"n": "Nasri Ridha", "p": "B.Horaires", "m": "38873 C", "s": 55, "c": ["=", "=", "=", "R", "=", "=", "=", "=", "=", "=", "R", "=", "=", "=", "C", "=", "=", "R", "=", "=", "=", "=", "C", "C", "R", "=", "=", "=", "=", "=", "=", "R", "=", "=", "=", "C", "=", "=", "R"], "f": "wwwwwwwwwwwwwwgwwwwwwwggwwwwwwwwwwwgwww"}, {"n": "Hemissi Sabri", "p": "Chef PC", "m": "46594 T", "s": 62, "c": ["Ret", "Ret", "+PC/Ret", "R", "=", "=", "=", "R", "+L5", "+PC/VN", "R", "Ret", "Ret", "Ret", "+VN", "+L5", "+PC/VN", "+L5", "Ral", "Ral", "Ral", "Ral", "-VN/Ral", "+PC/Ral/L5", "R", "=", "=", "=", "=", "RC", "RC", "+PC", "R", "RC", "RC", "RC", "RC", "RC", "R"], "f": "bbvwwwwwwvwbbbwwvwbbbbvvwwwwwGGbwGGGGGw"}, {"n": "Khemiri Ramzi", "p": "PC", "m": "39676 H", "s": 77, "c": ["+", "-", "R", "+", "-", "+", "-", "+", "-", "R", "+", "-", "+", "+", "-", "+", "-", "R", "+", "-", "-", "+", "-", "R", "+", "-", "+", "-", "+", "-", "-", "R", "-", "+", "-", "+", "-", "R", "+"], "f": "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww"}, {"n": "Hannachi Mondher", "p": "PC", "m": "39486 G", "s": 79, "c": ["-PC", "+PC", "-PC", "-PC", "R", "C", "-VN", "-L5", "-VN", "R", "-PC", "-VN", "+VN", "+L5", "-VN", "-L5", "R", "-PC", "-VN", "-L5", "C", "C", "C", "C", "R", "+", "-", "+", "-", "+", "+", "R", "+", "-", "+", "-", "+", "-", "R"], "f": "wwwwwgwwwwwwwwwwwwwwggggwwwwwwwwwwwwwww"}, {"n": "Toumi Malik", "p": "PC", "m": "39696 G", "s": 75, "c": ["C", "C", "C", "R", "+", "-", "+", "-", "+", "-", "R", "+", "-", "-", "+", "-", "R", "+", "-", "+", "+", "-", "+", "-", "R", "Ral", "Ret", "Ret", "Rap", "Rap", "Ral", "R", "=", "=", "=", "=", "=", "+PC", "R"], "f": "gggwwwwwwwwwwwwwwwwwwwwwwbbbbbbwwwwwwww"}, {"n": "Oueslati Amor", "p": "B.Rapport d'incid.", "m": "38624 F", "s": 76, "c": ["F", "", "R", "R", "", "", "", "", "C", "R", "R", "", "", "", "", "", "R", "R", "", "C", "C", "", "", "R", "R", "", "", "", "", "", "R", "R", "", "", "", "", "", "R", "R"], "f": "gwwwwwwwgwwwwwwwwwwggwwwwwwwwwwwwwwwwww"}, {"n": "Meftahi Henda", "p": "B.Ralentissement", "m": "39949 H", "s": 126, "c": ["", "", "", "R", "", "", "", "", "", "", "R", "", "", "", "", "", "", "R", "C", "C", "C", "C", "C", "C", "R", "", "", "", "", "", "", "R", "", "", "", "", "", "", "R"], "f": "wwwwwwwwwwwwwwwwwwggggggwwwwwwwwwwwwwww"}, {"n": "Ben Mahfoudh Rafaa", "p": "B.Retard", "m": "39420 D", "s": 49, "c": ["C", "C", "C", "R", "", "", "", "", "", "", "R", "C", "C", "C", "", "", "", "R", "", "", "", "", "", "", "R", "", "C", "C", "", "", "", "R", "", "", "", "", "", "", "R"], "f": "gggwwwwwwwwgggwwwwwwwwwwwwggwwwwwwwwwww"}, {"n": "Besbes Adel", "p": "Régulateur", "m": "39417 A", "s": 87, "c": ["/", "R", "+VN", "+L5", "-VN", "-L5", "R/N VN", "N L5", "/", "R", "+L5", "+VN", "-L5", "-VN", "R/N L5", "N VN", "/", "R", "C", "C", "-VN", "-L5", "R/N VN", "N L5", "/", "R", "C", "C", "-L5", "-VN", "R/N L5", "N VN", "/", "R", "+VN", "+L5", "-VN", "-L5", "R/N VN"], "f": "wwwwwwwwwwwwwwwwwwggwwwwwwggwwwwwwwwwww"}, {"n": "Cherni Hichem", "p": "Régulateur", "m": "46788 A", "s": 73, "c": ["/", "R", "+L5", "+VN", "-L5", "-VN", "R/N L5", "N VN", "/", "R", "+VN", "+L5", "-VN", "-L5", "R/N VN", "N L5", "/", "R", "+VN", "+L5", "-L5", "-VN", "R/N L5", "N VN", "/", "R", "+VN", "+L5", "-VN", "-L5", "R/N VN", "N L5", "/", "R", "+L5", "+VN", "-L5", "-VN", "R/N L5"], "f": "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww"}, {"n": "Ben Ouezdou Marouen", "p": "Régulateur", "m": "49042 H", "s": 51, "c": ["R/N VN", "N L5", "/", "R", "+L5", "+VN", "-L5", "-VN", "R", "C", "C", "R", "C", "C", "C", "C", "R/N VN", "N L5", "/", "R", "+L5", "+VN", "-L5", "-VN", "R/N L5", "N VN", "/", "R", "+VN", "+L5", "-VN", "-L5", "R/N VN", "N L5", "/", "R", "+L5", "+VN", "-L5"], "f": "wwwwwwwwwggwggggwwwwwwwwwwwwwwwwwwwwwww"}, {"n": "Tissaoui Taoufik", "p": "Régulateur", "m": "49116 X", "s": 60, "c": ["R/N L5", "N VN", "/", "R", "+VN", "+L5", "C", "C", "R/N", "N", "/", "R", "+L5", "+VN", "-L5", "-VN", "R/N L5", "N VN", "/", "R", "RC", "C", "C", "C", "R/N VN", "N L5", "/", "R", "+L5", "+VN", "-L5", "-VN", "R/N L5", "N VN", "/", "R", "+VN", "+L5", "-VN"], "f": "wwwwwwggvvwwwwwwwwwwGgggwwwwwwwwwwwwwww"}, {"n": "Achouri Mohamed", "p": "Régulateur", "m": "46790 C", "s": 43, "c": ["+L5", "+VN", "R/N L5", "N VN", "/", "R", "+VN", "+L5", "C", "-L5", "R/N VN", "N L5", "/", "R", "+L5", "+VN", "-L5", "-VN", "R/N L5", "N VN", "/", "R", "C", "+VN", "-VN", "-L5", "R/N VN", "N L5", "/", "R", "C", "+VN", "-L5", "-L5", "R/N L5", "N VN", "/", "R", "+VN"], "f": "wwwwwwwwgwwwwwwwwwwwwwgwwwwwwwgwwwwwwww"}, {"n": "Zekri Oussema", "p": "Régulateur", "m": "46430 Z", "s": 81, "c": ["-VN", "-L5", "R/N VN", "N L5", "/", "R", "+L5", "+VN", "-L5", "-VN", "R/N L5", "N VN", "/", "R", "C", "C", "-VN", "-L5", "R/N VN", "N L5", "/", "R", "+L5", "-L5", "-L5", "C", "R/N L5", "N VN", "/", "R", "+VN", "+L5", "-VN", "-VN", "R/N VN", "N L5", "/", "R", "+L5"], "f": "wwwwwwwwwwwwwwggwwwwwwwwwgwwwwwwwwwwwww"}, {"n": "Djobbi Fahd", "p": "Régulateur", "m": "49044 K", "s": 79, "c": ["-L5", "-VN", "-L5", "-VN", "R/N L5", "N VN", "/", "R", "+VN", "+L5", "-VN/L5", "-L5", "R/N VN", "N L5", "/", "R", "+L5", "+VN", "-L5", "-VN", "R/N L5", "N VN", "/", "R", "+VN", "+L5", "-VN", "-L5", "R/N VN", "N L5", "/", "R", "RC", "C", "C", "C", "R/N L5", "N VN", "/"], "f": "wwwwwwwwwwvwwwwwwwwwwwwwwwwwwwwwGgggwww"}, {"n": "Guantassi Hamdi", "p": "Régulateur", "m": "49041 G", "s": 51, "c": ["+VN", "+L5", "-VN", "-L5", "R/N VN", "N L5", "/", "R", "C", "C", "C", "C", "R/N L5", "N VN", "/", "R", "C", "C", "C", "C", "R/N VN", "N L5", "/", "R", "+L5", "+VN", "-L5", "-VN", "R/N L5", "N VN", "/", "R", "+VN", "+L5", "-VN", "-L5", "R/N VN", "N L5", "/"], "f": "wwwwwwwwggggwwwwggggwwwwwwwwwwwwwwwwwww"}, {"n": "Talbi Alaeddine", "p": "Régulateur", "m": "46451 Z", "s": 68, "c": ["M", "M", "M", "M", "M", "M", "M", "=", "M", "M", "M", "M", "M", "M", "M", "M", "M", "M", "+L5", "+VN", "+VN", "+L5", "+VN", "R", "-PC", "-VN", "+L5", "+VN", "R", "R", "+L5", "-PC", "+L5", "+VN", "-L5", "-VN", "R", "R", "-PC"], "f": "wwwwwwwwwwwwwwwwwwwwwwwwbwwwwwwbwwwwwwb"}, {"n": "Beltifa Mourad", "p": "Régulateur", "m": "39224 W", "s": 18, "c": ["Ral", "Ral", "R", "R", "Ral", "Ral", "Ral", "R", "R", "R", "R", "R", "R", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "", "", "", "", "", "", "", ""], "f": "bbwwbbbwwwwwwggggggggggggggggggOOOOOOOO"}];
+
+const DOW=['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'];
+const DOWL=['dimanche','lundi','mardi','mercredi','jeudi','vendredi','samedi'];
+const MON=['janvier','février','mars','avril','mai','juin','juillet','août',
+           'septembre','octobre','novembre','décembre'];
+const HRS={M:'04h – 12h',S:'12h – 20h',N:'20h – 04h'};
+const NOV = CFG.novStart;
+const N   = CFG.ndays;
+const dateOf = i => new Date(CFG.year, CFG.month, 1 + i);
+const cap = s => s.charAt(0).toUpperCase()+s.slice(1);
+
+function isBureauRRR(poste){
+  if(!poste) return false;
+  const p = poste.trim();
+  return /^B\.(Retard|Ralentissement|Rapport)/i.test(p) || /^B\.Rap\./i.test(p);
+}
+
+function parse(raw, poste){
+  const c=(raw||'').trim();
+  if(!c){
+    if (isBureauRRR(poste))
+      return {t:'B', k:'•', l:'Journée travaillée (bureau RRR)', p:'', h:''};
+    return {t:'X', k:'', l:'Non renseigné', p:'', h:''};
+  }
+  const r=parseT(c); r.k=c; return r;
+}
+function parseT(c){
+  const sp=s=>s.split('/').map(x=>x.trim()).filter(Boolean).join(' › ');
+  if(c==='R')  return {t:'R',k:'R',l:'Repos',p:'',h:''};
+  if(c==='/')  return {t:'N',k:'/',l:'Suite de nuit (travail)',p:'',h:''};
+  if(c==='RC') return {t:'RC',k:'RC',l:'Repos compensatoire',p:'',h:''};
+  if(c==='C')  return {t:'C',k:'C',l:'Congé',p:'',h:''};
+  if(c==='F')  return {t:'F',k:'F',l:'Jour férié',p:'',h:''};
+  if(c==='D')  return {t:'D',k:'D',l:'D (à préciser)',p:'',h:''};
+  if(c==='=')  return {t:'J',k:'=',l:'Journée',p:'',h:''};
+  if(c==='=PC')return {t:'J',k:'=PC',l:'Journée PC',p:'PC',h:'07h – 15h'};
+  if(c==='Ret')return {t:'B',k:'',l:'Bureau retard',p:'Ret',h:''};
+  if(c==='Rap')return {t:'B',k:'',l:'Bureau rapport',p:'Rap',h:''};
+  if(c==='Ral')return {t:'B',k:'',l:'Bureau ralentissement',p:'Ral',h:''};
+  let m=c.match(/^([+-])(.+)$/);
+  if(m){const t=m[1]==='-'?'M':'S';return {t,k:t,l:t==='M'?'Matinée':'Soirée',p:sp(m[2]),h:HRS[t]};}
+  m=c.match(/^(?:R\/)?N(?:\s+(.+))?$/);
+  if(m){
+    const isRepos = c.startsWith('R/');
+    return {
+      t: isRepos ? 'R' : 'N',
+      k: c,
+      l: isRepos ? 'Repos (avant nuit)' : 'Nuit',
+      p: m[1] ? sp(m[1]) : '',
+      h: isRepos ? '' : HRS.N
+    };
+  }
+  return {t:'X',k:c,l:c,p:'',h:''};
+}
+const FC={p:'#8064a2',b:'#265c9e',v:'#4f6228',O:'#b83900'};
+const fc=f=>FC[f]||'#000';
+function codeHTML(k){
+  if(!k) return '';
+  const p=k.split(' ');
+  if(p.length>1) return p[0]+'<small>'+p.slice(1).join(' ')+'</small>';
+  return k;
+}
+const cls=k=>k.length>3?' l':'';
+const $=id=>document.getElementById(id);
+const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},
+             set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+const today=(()=>{
+  const n=new Date();
+  const i=Math.round((new Date(n.getFullYear(),n.getMonth(),n.getDate())
+        - new Date(CFG.year,CFG.month,1))/864e5);
+  return i>=0 && i<N ? i : -1;
+})();
+const countAgents = n => n === 0 ? 'aucun agent'
+                     : n === 1 ? '1 seul agent'
+                     : n + ' agents';
+
+$('orgline').innerHTML = CFG.org1.replace(/&/g,'&amp;')+'<br>'+CFG.org2.replace(/&/g,'&amp;');
+$('titleline').textContent = CFG.title;
+$('monthbar').textContent = 'Mois de ' + cap(CFG.monthName) + ' ' + CFG.year;
+
+(function(){
+  const selfId = (CFG.monthName + CFG.year).toLowerCase()
+      .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+      .replace(/[^a-z0-9]/g,'');
+  fetch('mois.json', {cache: 'no-store'})
+    .then(r => r.ok ? r.json() : null)
+    .then(data => {
+      if (!data || !Array.isArray(data.months) || data.months.length < 2) return;
+      const idx = data.months.findIndex(m => m.id === selfId);
+      if (idx < 0) return;
+      const p = data.months[idx - 1];
+      const n = data.months[idx + 1];
+      if (p) {
+        const a = document.getElementById('navprev');
+        a.href = p.file; a.textContent = '← ' + p.label; a.hidden = false;
+      }
+      if (n) {
+        const a = document.getElementById('navnext');
+        a.href = n.file; a.textContent = n.label + ' →'; a.hidden = false;
+      }
+    })
+    .catch(() => {});
+})();
+
+const sel=$('sel');
+const o0=document.createElement('option');o0.value='';o0.textContent='Choisir mon nom';sel.appendChild(o0);
+AG.forEach((a,i)=>{const o=document.createElement('option');o.value=i;o.textContent=a.n+' · '+a.p;sel.appendChild(o)});
+const slug=n=>n.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase()
+  .replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+
+function drawAgent(){
+  if(sel.value===''){$('wn').textContent='Choisissez votre nom dans la liste';
+    $('wp').textContent='';$('grid').innerHTML='';$('stats').innerHTML='';return}
+  const a=AG[+sel.value]; store.set('agent',sel.value);
+  $('wn').textContent=a.n;
+  $('wp').textContent=a.p+' · '+a.m
+    +' · Solde Cgé au 1er '+cap(CFG.monthName)+' '+CFG.year+' : '+a.s;
+  const grid=$('grid'); grid.innerHTML='';
+  const cnt={};
+  const off=(dateOf(0).getDay()+6)%7;
+  for(let i=0;i<off;i++) grid.insertAdjacentHTML('beforeend','<div class="cell blank"></div>');
+  a.c.forEach((raw,i)=>{
+    const d=dateOf(i), x=parse(raw, a.p);
+    if(i<NOV) cnt[x.t]=(cnt[x.t]||0)+1;
+    if(i===NOV){
+      const pad=(7-((off+NOV)%7))%7;
+      for(let j=0;j<pad;j++) grid.insertAdjacentHTML('beforeend','<div class="cell blank"></div>');
+      grid.insertAdjacentHTML('beforeend','<div class="month-sep">Début '+cap(CFG.nextMonthName)+'</div>');
+      const rest=(d.getDay()+6)%7;
+      for(let j=0;j<rest;j++) grid.insertAdjacentHTML('beforeend','<div class="cell blank"></div>');
+    }
+    const el=document.createElement('div');
+    el.className='cell f-'+a.f[i]+(i===today?' today':'')+(i>=NOV?' nov':'');
+    el.dataset.type = x.t;
+    el.style.color=fc(a.f[i]);
+    el.title=DOWL[d.getDay()]+' '+d.getDate()+' '+MON[d.getMonth()]+' : '+raw
+      +' ('+x.l+(x.h?', '+x.h:'')+')';
+    el.innerHTML='<span class="d">'+d.getDate()+'</span>'
+      +'<span class="k'+cls(x.k)+'">'+codeHTML(x.k)+'</span><span class="p"></span>';
+    grid.appendChild(el);
+  });
+  const S=[['M','Matinées (-)'],['S','Soirées (+)'],['N','Nuits (N)'],['J','Journées (=)'],
+           ['B','Bureaux RRR'],['R','Repos (R, R/N)'],['RC','RC'],['C','Congés (C)']];
+  $('stats').innerHTML=S.filter(([t])=>cnt[t])
+    .map(([t,l])=>'<span class="chip" data-t="'+t+'"><b>'+cnt[t]+'</b>'+l+'</span>').join('')
+    +'<span class="note" style="align-self:center">sur '+CFG.monthName+' '+CFG.year+'</span>';
+  $('stats').querySelectorAll('.chip[data-t]').forEach(chip=>{
+    const t = chip.dataset.t;
+    const on = () => grid.querySelectorAll('.cell[data-type="'+t+'"]')
+                       .forEach(c => c.classList.add('hl'));
+    const off = () => grid.querySelectorAll('.cell.hl')
+                       .forEach(c => c.classList.remove('hl'));
+    chip.addEventListener('mouseenter', on);
+    chip.addEventListener('mouseleave', off);
+    chip.addEventListener('touchstart', on, {passive:true});
+    chip.addEventListener('touchend',   off);
+  });
+}
+
+const row=(k,l,h)=>'<div class="row"><i>'+k+'</i><span>'+l+'</span><b>'+h+'</b></div>';
+const legHTML='<div class="sec"><h2>Amplitude de travail</h2><div class="amp">'
+ + '<div class="card"><h3>PC</h3>'
+ +   row('M','','06h20 – 13h00')+row('S','','13h00 – 19h40')+row('=','=PC','07h00 – 15h00')+'</div>'
+ + '<div class="card"><h3>Régulateurs</h3>'
+ +   row('M','','04h00 – 12h00')+row('S','','12h00 – 20h00')+row('N','','20h00 – 04h00')+'</div>'
+ + '<div class="card"><h3>Retard &amp; Ralentissement</h3>'
+ +   row('','Du lundi au jeudi','07h00 – 14h00')
+ +   row('','Vendredi &amp; samedi','07h00 – 13h00')+'</div>'
+ + '<div class="card"><h3>Autres postes</h3>'
+ +   '<div class="row"><span>Chef PC</span><b>07h00 – 13h40</b></div>'
+ +   '<div class="row"><span>B.Programmation, du lundi au samedi</span><b>07h00 – 13h40</b></div>'
+ +   '<div class="row"><span>B.Rapport d\'incident</span><b>Administratif</b></div>'
+ + '</div></div></div>';
+document.querySelectorAll('.leg').forEach(e=>e.innerHTML=legHTML);
+
+let cur=today>=0?today:0;
+const strip=$('strip');
+for(let i=0;i<N;i++){
+  const d=dateOf(i);
+  const b=document.createElement('button');
+  b.dataset.i=i;b.setAttribute('aria-pressed','false');
+  const lbl = i>=NOV ? CFG.nextMonthName.slice(0,3)
+                     : (i===0 ? CFG.monthName.slice(0,3) : '');
+  b.innerHTML='<small>'+DOW[d.getDay()]+'</small><b>'+d.getDate()+'</b><small>'+lbl+'</small>';
+  if(i===today) b.style.borderColor='var(--accent)';
+  b.onclick=()=>{cur=i;drawDay(true)};
+  strip.appendChild(b);
+}
+function drawDay(scroll){
+  [...strip.children].forEach(b=>b.setAttribute('aria-pressed',String(+b.dataset.i===cur)));
+  const d=dateOf(cur);
+  $('dt').textContent=cap(DOWL[d.getDay()])+' '+d.getDate()+' '+MON[d.getMonth()]+' '+d.getFullYear()
+    +(cur===today?' (aujourd\'hui)':'');
+  const by={};
+  AG.forEach((a,i)=>{const x=parse(a.c[cur], a.p);(by[x.t]=by[x.t]||[]).push({a,i,x})});
+  const G=[['M','Matinée (-)'],['S','Soirée (+)'],['N','Nuit (N)'],['J','Journée (=)'],
+           ['B','Bureaux RRR (Ret / Rap / Ral + vides)'],['RC','Repos compensatoire (RC)'],
+           ['R','Repos (R, R/N)'],['C','Congé (C)'],['F','Férié (F)'],['D','D']];
+  let h='';
+  G.forEach(([t,l])=>{const L=by[t];if(!L)return;
+    h+='<div class="grp"><h3>'+l+' <span>'
+      +(t==='M'||t==='S'||t==='N'?HRS[t]+' · ':'')+countAgents(L.length)+'</span></h3><ul>'
+      +L.map(({a,i,x})=>'<li><button data-a="'+i+'">'+a.n
+      +'</button><em>'+x.k+'</em></li>').join('')+'</ul></div>';});
+  if(by.X) h+='<p class="note">Pas encore de code : '+by.X.map(o=>o.a.n).join(', ')+'.</p>';
+  $('groups').innerHTML=h;
+  $('groups').querySelectorAll('button[data-a]').forEach(b=>b.onclick=()=>{
+    sel.value=b.dataset.a;drawAgent();tab('agent')});
+  if(scroll) strip.children[cur].scrollIntoView({inline:'center',block:'nearest'});
+}
+
+function drawTable(){
+  const nOct = NOV, nNov = N - NOV;
+  let h='<thead><tr><th class="fix" rowspan="3">Nom et prénom</th>'
+    + '<th rowspan="3">Poste</th><th rowspan="3">Matricule</th>'
+    + '<th rowspan="3">Solde Cgé<br>(1er '+cap(CFG.monthName)+')</th>'
+    + '<th colspan="'+nOct+'">Mois de '+cap(CFG.monthName)+' '+CFG.year+'</th>';
+  if(nNov>0) h+='<th colspan="'+nNov+'">Mois de '+cap(CFG.nextMonthName)+' '+CFG.year+'</th>';
+  h+='</tr><tr>';
+  for(let i=0;i<N;i++){const d=dateOf(i);h+='<th class="'+(i===today?'td':'')+'">'+d.getDate()+'</th>'}
+  h+='</tr><tr>';
+  for(let i=0;i<N;i++) h+='<th class="'+(i===today?'td':'')+'">·</th>';
+  h+='</tr></thead><tbody>';
+  const L1=['D','L','M','M','J','V','S'];
+  AG.forEach((a,r)=>{
+    h+='<tr><td class="fix nm"><button data-a="'+r+'">'+a.n+'</button></td>'
+      +'<td class="inf">'+a.p+'</td><td class="inf">'+a.m+'</td><td class="sd">'+a.s+'</td>';
+    a.c.forEach((raw,i)=>{
+      h+='<td style="color:'+fc(a.f[i])+'" class="cd f-'+a.f[i]
+        +(i===NOV-1?' mois':'')+(i===today?' tdy':'')+'" title="'+raw+'">'+raw+'</td>';
+    });
+    h+='</tr>';
+  });
+  $('tbl').innerHTML=h+'</tbody>';
+  const ths=$('tbl').querySelectorAll('thead tr:nth-child(3) th');
+  ths.forEach((th,i)=>{th.textContent=L1[dateOf(i).getDay()]});
+  $('tbl').querySelectorAll('button[data-a]').forEach(b=>b.onclick=()=>{
+    sel.value=b.dataset.a;drawAgent();tab('agent')});
+}
+
+function tab(n){
+  ['agent','jour','tab'].forEach(k=>{
+    $('v-'+k).hidden = (n!==k);
+    $('tab-'+k).setAttribute('aria-selected',String(n===k));
+  });
+  store.set('tab',n); window.scrollTo(0,0);
+  if(n==='jour') drawDay(true);
+}
+['agent','jour','tab'].forEach(k=>$('tab-'+k).onclick=()=>tab(k));
+sel.onchange=drawAgent;
+const hs=(location.hash||'').slice(1);
+const hi=AG.findIndex(a=>slug(a.n)===hs);
+const saved=store.get('agent');
+if(hi>=0) sel.value=hi;
+else if(saved!==null && AG[+saved]) sel.value=saved;
+else sel.value='';
+drawAgent(); drawDay(false); drawTable();
+if(hs==='jour') tab('jour');
+if(hs==='pointage'||hs==='tableau') tab('tab');
+</script>
+</body></html>
