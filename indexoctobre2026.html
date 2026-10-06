@@ -442,7 +442,7 @@ const slug=n=>n.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase()
 function drawAgent(){
   if(sel.value===''){$('wn').textContent='Choisissez votre nom dans la liste';
     $('wp').textContent='';$('grid').innerHTML='';$('stats').innerHTML='';return}
-  const a=AG[+sel.value]; store.set('agent',sel.value);
+  const a=AG[+sel.value]; store.set('agent', slug(a.n));
   $('wn').textContent=a.n;
   $('wp').textContent=a.p+' · '+a.m
     +' · Solde Cgé au 1er '+cap(CFG.monthName)+' '+CFG.year+' : '+a.s;
@@ -596,8 +596,19 @@ sel.onchange=drawAgent;
 const hs=(location.hash||'').slice(1);
 const hi=AG.findIndex(a=>slug(a.n)===hs);
 const savedAgent=store.get('agent');
+let idxFromSaved = -1;
+if (savedAgent !== null) {
+  if (/^\d+$/.test(savedAgent)) {
+    // Ancienne valeur (index numérique) — compatibilité
+    const n = +savedAgent;
+    if (n >= 0 && n < AG.length) idxFromSaved = n;
+  } else {
+    // Nouvelle valeur (slug du nom) — match robuste entre mois
+    idxFromSaved = AG.findIndex(a => slug(a.n) === savedAgent);
+  }
+}
 if(hi>=0) sel.value=hi;
-else if(savedAgent!==null && AG[+savedAgent]) sel.value=savedAgent;
+else if(idxFromSaved >= 0) sel.value=idxFromSaved;
 else sel.value='';
 drawAgent(); drawDay(false); drawTable();
 const savedTab = store.get('tab');
