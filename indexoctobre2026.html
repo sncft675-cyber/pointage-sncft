@@ -2,6 +2,7 @@
 <html lang="fr"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Roulement PC et Régulation</title>
+<link rel="icon" id="favicon" href="data:,">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
 <style>
 :root{
@@ -11,6 +12,7 @@
   --head-fg:#ffffff;
   --x-w:#ffffff; --x-g:#f2f2f2; --x-G:#d9d9d9; --x-b:#daeef3;
   --x-p:#e4dfec; --x-v:#ebf1de; --x-O:#fbcda7;
+  --x-V:#f4cccc; --x-FOR:#ffe599;
   --hl:#e74c3c;
   --hl-tint:rgba(46,111,174,0.20);
   --font-d:'Barlow Condensed','Arial Narrow',sans-serif;
@@ -34,12 +36,27 @@
 body{margin:0;background:var(--bg);color:var(--fg);
   font:16px/1.4 var(--font-b);font-family:var(--font-b)}
 .wrap{max-width:1100px;margin:0 auto;padding-inline:16px;padding-block:0 40px}
+
+/* ===== Header ===== */
 header{background:var(--head);color:var(--head-fg);margin-inline:-16px;
   padding:18px 16px 0;position:sticky;top:0;z-index:5}
-header .org{font:600 11px/1.3 var(--font-b);letter-spacing:.1em;text-transform:uppercase;opacity:.85}
-header h1{font:700 24px/1.1 var(--font-d);margin:4px 0 8px;letter-spacing:.01em}
+.top-row{display:flex;align-items:center;gap:16px;margin-bottom:8px;min-height:64px}
+.logo{flex:none;height:64px;width:auto;
+  filter:drop-shadow(0 1px 2px rgba(0,0,0,.30));pointer-events:none}
+.top-row .org{flex:1;min-width:0;
+  font:600 12px/1.35 var(--font-b);letter-spacing:.1em;
+  text-transform:uppercase;opacity:.95}
+header:not(.has-logo) .top-row{justify-content:center;text-align:center}
+header:not(.has-logo) .top-row .org{text-align:center}
+header h1{font:700 24px/1.15 var(--font-d);margin:6px 0 10px;letter-spacing:.01em}
+@media (max-width:640px){
+  .top-row{flex-direction:column;align-items:center;gap:8px;text-align:center}
+  .top-row .org{text-align:center}
+  .logo{height:52px}
+  header h1{font-size:20px}
+}
 
-/* ---- Sélecteur de mois (mise en avant renforcée) ---- */
+/* ===== Sélecteur de mois ===== */
 .month-select-wrap{position:relative;margin:0 0 10px}
 .month-select{
   width:100%;
@@ -99,18 +116,22 @@ select{width:100%;font:500 18px var(--font-b);padding:12px;border:1px solid var(
   text-align:center;color:#000;border:1px solid var(--line);
   transition:box-shadow .15s}
 .cell .d{font:500 11px var(--font-b);align-self:flex-start;padding-left:2px;color:#555}
-.cell .k{font:700 23px/1 var(--font-d);white-space:nowrap}
-.cell .k.l{font-size:16px}
-.cell .k small{display:block;font:700 13px/1 var(--font-d)}
+.cell .k{font:700 clamp(14px, 4.6vw, 22px)/1 var(--font-d);
+  white-space:nowrap;letter-spacing:-0.01em;max-width:100%;overflow:hidden;
+  text-overflow:ellipsis}
 .cell.today{outline:4px solid var(--accent);outline-offset:1px;z-index:2}
 .cell.nov{opacity:.9}
+.cell.code-A{background:#d9a878 !important}
 .cell.hl{box-shadow:inset 0 0 0 1000px var(--hl-tint)}
+.cell.code-A.hl{background:#d9a878 !important;
+                box-shadow:inset 0 0 0 1000px var(--hl-tint)}
 .month-sep{grid-column:1/-1;font:700 15px var(--font-d);letter-spacing:.08em;
   text-transform:uppercase;color:var(--muted);padding-top:8px}
 .cell.blank{background:transparent;border-color:transparent}
 .f-w{background:var(--x-w)}.f-g{background:var(--x-g)}.f-G{background:var(--x-G)}
 .f-b{background:var(--x-b)}.f-p{background:var(--x-p)}.f-v{background:var(--x-v)}
 .f-O{background:var(--x-O)}
+.f-V{background:var(--x-V)}.f-FOR{background:var(--x-FOR)}
 .stats{display:flex;flex-wrap:wrap;gap:6px}
 .chip{background:var(--surface);border:1px solid var(--line);display:inline-flex;
   align-items:baseline;gap:6px;padding:6px 10px;border-radius:999px;font:600 14px var(--font-b);
@@ -151,6 +172,7 @@ select{width:100%;font:500 18px var(--font-b);padding:12px;border:1px solid var(
   display:grid;place-items:center;font:700 17px var(--font-d);font-style:normal;
   background:var(--bg);border:1px solid var(--line)}
 .card .row i:empty{background:var(--x-g)}
+.card .row i.dot{background:var(--x-G)}
 .card .row span{flex:1;min-width:0}
 .card .row b{font:600 15px var(--font-b);font-variant-numeric:tabular-nums;white-space:nowrap}
 .tw{--surface:#fff;--fg:#000;--line:#c4c8c1;--muted:#555;color:var(--fg);
@@ -173,7 +195,7 @@ table.t{border-collapse:separate;border-spacing:0;font-size:13px;width:max-conte
 .t td.inf{padding:0 8px;color:var(--muted);font-size:13px}
 .t td.sd{padding:0 8px;font:700 15px var(--font-d);font-variant-numeric:tabular-nums}
 .t td.cd{min-width:44px;height:36px;font:700 14px var(--font-d);padding:0 3px}
-/* Cadre du jour en cours : rectangle fermé */
+.t td.code-A{background:#d9a878 !important}
 .t th.td{
   color:var(--accent);
   box-shadow:inset 3px 0 0 var(--accent),
@@ -197,12 +219,15 @@ table.t{border-collapse:separate;border-spacing:0;font-size:13px;width:max-conte
 .hint,.note{font-size:13px;color:var(--muted)}
 @media (max-width:420px){
   .tabs button{font-size:15px;padding-inline:2px}
-  .cell{min-height:60px}.cell .k{font-size:21px}.cell .k.l{font-size:15px}
+  .cell{min-height:60px}.cell .k{font-size:clamp(12px,4.2vw,18px)}
 }
 </style></head><body>
 <div class="wrap">
-<header>
-  <div class="org" id="orgline"></div>
+<header id="mainHeader">
+  <div class="top-row">
+    <img id="logoImg" class="logo" alt="Logo" hidden>
+    <div class="org" id="orgline"></div>
+  </div>
   <h1 id="titleline"></h1>
   <div class="month-select-wrap">
     <select id="monthSelect" class="month-select" aria-label="Choisir un mois">
@@ -247,8 +272,8 @@ table.t{border-collapse:separate;border-spacing:0;font-size:13px;width:max-conte
 </div>
 
 <script>
-const CFG = {"org1": "SOCIETE NATIONALE DES CHEMINS DE FER TUNISIENS", "org2": "Département Gestion Des Circulations Ferroviaires", "title": "Pointage du personnel du PC et de la Régulation", "year": 2026, "month": 9, "monthName": "octobre", "nextMonthName": "novembre", "ndays": 39, "novStart": 31};
-const AG = [{"n": "Nasri Ridha", "p": "B.Horaires", "m": "38873 C", "s": 19, "c": ["=", "=", "=", "R", "=", "=", "=", "=", "=", "=", "R", "=", "=", "=", "=", "=", "=", "R", "=", "=", "=", "=", "=", "=", "R", "=", "=", "=", "=", "=", "=", "R", "=", "=", "=", "=", "=", "=", "R"], "f": "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww"}, {"n": "Toumi Malik", "p": "Chef PC", "m": "39696 G", "s": 69, "c": ["=", "R", "=PC", "=PC", "RC", "RC", "=", "=", "=", "=PC", "=PC", "=PC", "R", "=", "=", "=PC", "R", "R", "=", "=", "=", "=", "RC", "=PC", "=PC", "V", "=", "=", "=PC", "=PC", "RC", "R", "=", "=", "=", "=", "R", "=PC", "=PC"], "f": "wwppGGwwwpppwwwpwwwwwwGppOwwppGwwwwwwpp"}, {"n": "Khemiri Ramzi", "p": "PC", "m": "39676 H", "s": 68, "c": ["=PC", "=PC", "R", "R", "=PC", "=PC", "=PC", "=PC", "=PC", "R", "R", "V", "C", "C", "C", "C", "=PC", "=PC", "=PC", "=PC", "=PC", "=PC", "=PC", "RC", "RC", "=PC", "=PC", "=PC", "RC", "RC", "=PC", "=PC", "=PC", "=PC", "=PC", "=PC", "=PC", "R", "R"], "f": "wwwwwwwwwwwOggggwwwwwwwGGwwwGGwwwwwwwww"}, {"n": "Hemissi Sabri", "p": "PC", "m": "46594 T", "s": 31, "c": ["Ret", "Rap", "RC", "R", "Ral", "Ral", "Ral", "Ral", "Ral", "Ral", "R", "+L5/VN", "=PC", "=PC", "=PC", "Rap", "Rap", "R", "Rap", "Rap", "Rap", "Rap", "Rap", "Rap", "R", "Ral", "Ral", "Ral", "Ral", "Ral", "Ral", "R", "Ret", "Ret", "=", "=", "=", "=", "R"], "f": "bbGwbbbbbbwvwwwbbwbbbbbbwbbbbbbwbbwwwww"}, {"n": "Oueslati Amor", "p": "B.Rapport d'incid.", "m": "38624 F", "s": 64, "c": ["C", "C", "R", "R", "", "", "", "", "", "R", "R", "", "", "", "F", "C", "R", "R", "C", "C", "C", "C", "C", "R", "R", "", "", "", "", "", "R", "R", "", "", "", "", "", "R", "R"], "f": "ggwwwwwwwwwwwwggwwgggggwwwwwwwwwwwwwwww"}, {"n": "Meftahi Henda", "p": "B.Ralentissement", "m": "39949 H", "s": 109, "c": ["", "", "", "R", "C", "C", "C", "C", "C", "C", "R", "", "", "", "", "", "", "R", "", "", "", "", "", "", "R", "C", "C", "C", "C", "C", "C", "R", "", "", "", "", "", "", "R"], "f": "wwwwggggggwwwwwwwwwwwwwwwggggggwwwwwwww"}, {"n": "Ben Mahfoudh Rafaa", "p": "B.Retard", "m": "39420 D", "s": 24, "c": ["C", "", "", "R", "", "", "", "", "", "", "R", "", "", "", "", "", "", "R", "", "", "", "", "", "", "R", "", "", "", "", "", "", "R", "C", "C", "", "", "", "", "R"], "f": "gwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwggwwwww"}, {"n": "Besbes Adel", "p": "Régulateur", "m": "39417 A", "s": 23, "c": ["R", "C", "C", "C", "C", "R", "C", "C", "R", "C", "C", "C", "C", "R", "C", "C", "R", "C", "C", "C", "C", "R", "C", "C", "R", "C", "C", "C", "C", "R", "C", "", "", "", "", "", "", "", ""], "f": "wggggwggwggggwggwggggwggwggggwgOOOOOOOO"}, {"n": "Cherni Hichem", "p": "Régulateur", "m": "46788 A", "s": 49, "c": ["+L5", "-VN", "-L5", "R", "Ret", "+VN/L5", "+L5", "-L5", "-VN", "+VN", "R", "-L5", "+VN", "-L5", "-VN", "R", "+VN", "-L5", "-VN", "R", "R", "+L5", "+VN", "-L5", "R", "+VN", "-L5", "-L5", "-VN", "+L5", "R", "R", "R", "+L5", "+VN", "-L5", "-VN", "+L5", "R"], "f": "wwwwbvwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww"}, {"n": "Ben Ouezdou Marouen", "p": "Régulateur", "m": "49042 H", "s": 28, "c": ["C", "C", "R", "+L5", "+VN", "-L5", "-VN", "R/N L5", "N VN", "/", "R", "V", "+L5", "-VN", "-L5", "R/N VN", "N L5", "/", "R", "+L5", "+VN", "-L5", "-VN", "R/N L5", "N VN", "/", "R", "+VN", "+L5", "-VN", "-L5", "R/N VN", "N L5", "/", "R", "+L5", "+VN", "-L5", "-VN"], "f": "ggwwwwwwwwwOwwwwwwwwwwwwwwwwwwwwwwwwwww"}, {"n": "Tissaoui Taoufik", "p": "Régulateur", "m": "49116 X", "s": 41, "c": ["N", "/", "R", "+VN", "+L5", "-VN", "-L5", "R/N VN", "N L5", "/", "R", "RC", "RC", "RC", "RC", "R/N L5", "N VN", "/", "R", "+VN", "+L5", "-VN", "-L5", "R/N VN", "N L5", "/", "R", "+L5", "+VN", "-L5", "-VN", "R/N L5", "N VN", "/", "R", "+VN", "+L5", "-VN", "-L5"], "f": "vwwwwwwwwwwGGGGwwwwwwwwwwwwwwwwwwwwwwww"}, {"n": "Achouri Mohamed", "p": "Régulateur", "m": "46790 C", "s": 30, "c": ["-VN", "R/N L5", "N VN", "/", "R", "C", "C", "-VN", "-L5", "R/N VN", "N L5", "/", "R", "+L5", "+VN", "-L5", "-VN", "R/N L5", "N VN", "/", "R", "+VN", "+L5", "-VN", "-L5", "R/N VN", "N L5", "/", "R", "C", "+VN", "-L5", "-VN", "R/N L5", "N VN", "/", "R", "+VN", "+L5"], "f": "wwwwwggwwwwwwwwwwwwwwwwwwwwwwgwwwwwwwww"}, {"n": "Zekri Oussema", "p": "Régulateur", "m": "46430 Z", "s": 65, "c": ["-L5", "R/N VN", "N L5", "/", "R", "C", "+VN", "+L5", "+VN", "R/N L5", "N VN", "/", "R", "+VN", "+L5", "-VN", "-L5", "R/N VN", "N L5", "/", "R", "C", "C", "+VN", "-VN", "R/N L5", "N VN", "/", "R", "+VN", "+L5", "-VN", "-L5", "R/N VN", "N L5", "/", "R", "RC", "+VN"], "f": "wwwwwgwwwwwwwwwwwwwwwggwwwwwwwwwwwwwwGw"}, {"n": "Djobbi Fahd", "p": "Régulateur", "m": "49044 K", "s": 70, "c": ["+VN", "-L5", "-VN", "R/N L5", "N VN", "/", "R", "+VN", "+L5", "-VN/L5", "-L5/VN", "R/N VN", "N L5", "/", "R", "RC", "RC", "RC", "RC", "R/N L5", "N VN", "/", "R", "RC", "RC", "RC", "RC", "R/N VN", "N L5", "/", "R", "+L5", "+VN", "-L5", "-VN", "R/N L5", "N VN", "/", "R"], "f": "wwwwwwwwwvvwwwwGGGGwwwwGGGGwwwwwwwwwwww"}, {"n": "Guantassi Hamdi", "p": "Régulateur", "m": "49041 G", "s": 27, "c": ["RC", "RC", "C", "R/N VN", "N L5", "/", "R", "C", "C", "C", "C", "R/N L5", "N VN", "/", "R", "+VN/L5", "+L5", "-VN", "-L5", "R/N VN", "N L5", "/", "R", "+L5", "+VN/L5", "-L5/VN", "-VN", "R/N L5", "N VN", "/", "R", "+VN", "+L5", "-VN", "-L5", "R/N VN", "N L5", "/", "R"], "f": "GGgwwwwggggwwwwvwwwwwwwwvvwwwwwwwwwwwww"}, {"n": "Talbi Alaeddine", "p": "Régulateur", "m": "46451 Z", "s": 49, "c": ["R", "+L5", "+VN", "-L5", "A", "R/N L5", "N VN", "/", "R", "RC", "+L5", "-VN", "-L5", "R/N VN", "N L5", "/", "R", "+L5", "+VN", "-L5", "-VN", "R/N L5", "N VN", "/", "R", "V", "+L5", "-VN", "-L5", "R/N VN", "N L5", "/", "R", "RC", "RC", "C", "C", "R/N L5", "N VN"], "f": "wwwwwwwwwGwwwwwwwwwwwwwwwOwwwwwwwGGggww"}, {"n": "Hannachi Mondher", "p": "Régulateur", "m": "39486 G", "s": 48, "c": ["R", "+VN", "+L5", "-VN", "-L5/VN", "R/N VN", "N L5", "/", "R", "+L5", "+VN", "V", "-VN", "R/N L5", "N VN", "/", "R", "+VN", "+L5", "-VN", "-L5", "R/N VN", "N L5", "/", "R", "+L5", "+VN", "RC", "C", "R/N L5", "N VN", "/", "R", "+VN", "+L5", "-VN", "-L5", "R/N VN", "N L5"], "f": "wwwwvwwwwwwOwwwwwwwwwwwwwwwGgwwwwwwwwww"}];
+const CFG = {"org1": "SOCIETE NATIONALE DES CHEMINS DE FER TUNISIENS", "org2": "Département Gestion Des Circulations Ferroviaires", "title": "Pointage du personnel du PC et de la Régulation", "year": 2026, "month": 9, "monthName": "octobre", "nextMonthName": "novembre", "ndays": 39, "novStart": 31, "logoFile": "logo.svg", "faviconFile": "favicon.svg"};
+const AG = [{"n": "Nasri Ridha", "p": "B.Programmation", "m": "38873 C", "s": 19, "c": ["=", "=", "=", "R", "=", "=", "=", "=", "=", "=", "R", "=", "=", "=", "=", "=", "=", "R", "=", "=", "=", "=", "=", "=", "R", "=", "=", "=", "=", "=", "=", "R", "=", "=", "=", "=", "=", "=", "R"], "f": "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww"}, {"n": "Toumi Malik", "p": "Chef PC", "m": "39696 G", "s": 69, "c": ["=", "R", "=PC", "=PC", "RC", "RC", "=", "=", "=", "=PC", "=PC", "=PC", "R", "=", "=", "=PC", "R", "R", "=", "=", "=", "=", "RC", "=PC", "=PC", "V", "=", "=", "=PC", "=PC", "RC", "R", "=", "=", "=", "=", "R", "=PC", "=PC"], "f": "wwppGGwwwpppwwwpwwwwwwGppOwwppGwwwwwwpp"}, {"n": "Khemiri Ramzi", "p": "PC", "m": "39676 H", "s": 68, "c": ["=PC", "=PC", "R", "R", "=PC", "=PC", "=PC", "=PC", "=PC", "R", "R", "V", "C", "C", "C", "C", "=PC", "=PC", "=PC", "=PC", "=PC", "=PC", "=PC", "RC", "RC", "=PC", "=PC", "=PC", "RC", "RC", "=PC", "=PC", "=PC", "=PC", "=PC", "=PC", "=PC", "R", "R"], "f": "wwwwwwwwwwwOggggwwwwwwwGGwwwGGwwwwwwwww"}, {"n": "Hemissi Sabri", "p": "PC", "m": "46594 T", "s": 31, "c": ["Ret", "Rap", "RC", "R", "Ral", "Ral", "Ral", "Ral", "Ral", "Ral", "R", "+L5/VN", "=PC", "=PC", "=PC", "Rap", "Rap", "R", "Rap", "Rap", "Rap", "Rap", "Rap", "Rap", "R", "Ral", "Ral", "Ral", "Ral", "Ral", "Ral", "R", "Ret", "Ret", "=", "=", "=", "=", "R"], "f": "bbGwbbbbbbwvwwwbbwbbbbbbwbbbbbbwbbwwwww"}, {"n": "Oueslati Amor", "p": "B.Rapport d'incid.", "m": "38624 F", "s": 64, "c": ["C", "C", "R", "R", "", "", "", "", "", "R", "R", "", "", "", "F", "C", "R", "R", "C", "C", "C", "C", "C", "R", "R", "", "", "", "", "", "R", "R", "", "", "", "", "", "R", "R"], "f": "ggwwwwwwwwwwwwggwwgggggwwwwwwwwwwwwwwww"}, {"n": "Meftahi Henda", "p": "B.Ralentissement", "m": "39949 H", "s": 109, "c": ["", "", "", "R", "C", "C", "C", "C", "C", "C", "R", "", "", "", "", "", "", "R", "", "", "", "", "", "", "R", "C", "C", "C", "C", "C", "C", "R", "", "", "", "", "", "", "R"], "f": "wwwwggggggwwwwwwwwwwwwwwwggggggwwwwwwww"}, {"n": "Ben Mahfoudh Rafaa", "p": "B.Retard", "m": "39420 D", "s": 24, "c": ["C", "", "", "R", "", "", "", "", "", "", "R", "", "", "", "", "", "", "R", "", "", "", "", "", "", "R", "", "", "", "", "", "", "R", "C", "C", "", "", "", "", "R"], "f": "gwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwggwwwww"}, {"n": "Besbes Adel", "p": "Régulateur", "m": "39417 A", "s": 23, "c": ["R", "C", "C", "C", "C", "R", "C", "C", "R", "C", "C", "C", "C", "R", "C", "C", "R", "C", "C", "C", "C", "R", "C", "C", "R", "C", "C", "C", "C", "R", "C", "", "", "", "", "", "", "", ""], "f": "wggggwggwggggwggwggggwggwggggwgOOOOOOOO"}, {"n": "Cherni Hichem", "p": "Régulateur", "m": "46788 A", "s": 49, "c": ["+L5", "-VN", "-L5", "R", "Ret", "+VN/L5", "+L5", "-L5", "-VN", "+VN", "R", "-L5", "+VN", "-L5", "-VN", "R", "+VN", "-L5", "-VN", "R", "R", "+L5", "+VN", "-L5", "R", "+VN", "-L5", "-L5", "-VN", "+L5", "R", "R", "R", "+L5", "+VN", "-L5", "-VN", "+L5", "R"], "f": "wwwwbvwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww"}, {"n": "Ben Ouezdou Marouen", "p": "Régulateur", "m": "49042 H", "s": 28, "c": ["C", "C", "R", "+L5", "+VN", "-L5", "-VN", "R/N L5", "N VN", "/", "R", "V", "+L5", "-VN", "-L5", "R/N VN", "N L5", "/", "R", "+L5", "+VN", "-L5", "-VN", "R/N L5", "N VN", "/", "R", "+VN", "+L5", "-VN", "-L5", "R/N VN", "N L5", "/", "R", "+L5", "+VN", "-L5", "-VN"], "f": "ggwwwwwwwwwOwwwwwwwwwwwwwwwwwwwwwwwwwww"}, {"n": "Tissaoui Taoufik", "p": "Régulateur", "m": "49116 X", "s": 41, "c": ["N", "/", "R", "+VN", "+L5", "-VN", "-L5", "R/N VN", "N L5", "/", "R", "RC", "RC", "RC", "RC", "R/N L5", "N VN", "/", "R", "+VN", "+L5", "-VN", "-L5", "R/N VN", "N L5", "/", "R", "+L5", "+VN", "-L5", "-VN", "R/N L5", "N VN", "/", "R", "+VN", "+L5", "-VN", "-L5"], "f": "vwwwwwwwwwwGGGGwwwwwwwwwwwwwwwwwwwwwwww"}, {"n": "Achouri Mohamed", "p": "Régulateur", "m": "46790 C", "s": 30, "c": ["-VN", "R/N L5", "N VN", "/", "R", "C", "C", "-VN", "-L5", "R/N VN", "N L5", "/", "R", "+L5", "+VN", "-L5", "-VN", "R/N L5", "N VN", "/", "R", "+VN", "+L5", "-VN", "-L5", "R/N VN", "N L5", "/", "R", "C", "+VN", "-L5", "-VN", "R/N L5", "N VN", "/", "R", "+VN", "+L5"], "f": "wwwwwggwwwwwwwwwwwwwwwwwwwwwwgwwwwwwwww"}, {"n": "Zekri Oussema", "p": "Régulateur", "m": "46430 Z", "s": 65, "c": ["-L5", "R/N VN", "N L5", "/", "R", "C", "+VN", "+L5", "+VN", "R/N L5", "N VN", "/", "R", "+VN", "+L5", "-VN", "-L5", "R/N VN", "N L5", "/", "R", "C", "C", "+VN", "-VN", "R/N L5", "N VN", "/", "R", "+VN", "+L5", "-VN", "-L5", "R/N VN", "N L5", "/", "R", "RC", "+VN"], "f": "wwwwwgwwwwwwwwwwwwwwwggwwwwwwwwwwwwwwGw"}, {"n": "Djobbi Fahd", "p": "Régulateur", "m": "49044 K", "s": 70, "c": ["+VN", "-L5", "-VN", "R/N L5", "N VN", "/", "R", "+VN", "+L5", "-VN/L5", "-L5/VN", "R/N VN", "N L5", "/", "R", "RC", "RC", "RC", "RC", "R/N L5", "N VN", "/", "R", "RC", "RC", "RC", "RC", "R/N VN", "N L5", "/", "R", "+L5", "+VN", "-L5", "-VN", "R/N L5", "N VN", "/", "R"], "f": "wwwwwwwwwvvwwwwGGGGwwwwGGGGwwwwwwwwwwww"}, {"n": "Guantassi Hamdi", "p": "Régulateur", "m": "49041 G", "s": 27, "c": ["RC", "RC", "C", "R/N VN", "N L5", "/", "R", "C", "C", "C", "C", "R/N L5", "N VN", "/", "R", "+VN/L5", "+L5", "-VN", "-L5", "R/N VN", "N L5", "/", "R", "+L5", "+VN/L5", "-L5/VN", "-VN", "R/N L5", "N VN", "/", "R", "+VN", "+L5", "-VN", "-L5", "R/N VN", "N L5", "/", "R"], "f": "GGgwwwwggggwwwwvwwwwwwwwvvwwwwwwwwwwwww"}, {"n": "Talbi Alaeddine", "p": "Régulateur", "m": "46451 Z", "s": 49, "c": ["R", "+L5", "+VN", "-L5", "A", "R/N L5", "N VN", "/", "R", "RC", "+L5", "-VN", "-L5", "R/N VN", "N L5", "/", "R", "+L5", "+VN", "-L5", "-VN", "R/N L5", "N VN", "/", "R", "V", "+L5", "-VN", "-L5", "R/N VN", "N L5", "/", "R", "RC", "RC", "C", "C", "R/N L5", "N VN"], "f": "wwwwwwwwwGwwwwwwwwwwwwwwwOwwwwwwwGGggww"}, {"n": "Hannachi Mondher", "p": "Régulateur", "m": "39486 G", "s": 48, "c": ["R", "+VN", "+L5", "-VN", "-L5/VN", "R/N VN", "N L5", "/", "R", "+L5", "+VN", "V", "-VN", "R/N L5", "N VN", "/", "R", "+VN", "+L5", "-VN", "-L5", "R/N VN", "N L5", "/", "R", "+L5", "+VN", "RC", "C", "R/N L5", "N VN", "/", "R", "+VN", "+L5", "-VN", "-L5", "R/N VN", "N L5"], "f": "wwwwvwwwwwwOwwwwwwwwwwwwwwwGgwwwwwwwwww"}];
 
 const DOW=['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'];
 const DOWL=['dimanche','lundi','mardi','mercredi','jeudi','vendredi','samedi'];
@@ -265,7 +290,6 @@ function isBureauRRR(poste){
   const p = poste.trim();
   return /^B\.(Retard|Ralentissement|Rapport)/i.test(p) || /^B\.Rap\./i.test(p);
 }
-
 function parse(raw, poste){
   const c=(raw||'').trim();
   if(!c){
@@ -288,6 +312,11 @@ function parseT(c){
   if(c==='Ret')return {t:'B',k:'',l:'Bureau retard',p:'Ret',h:''};
   if(c==='Rap')return {t:'B',k:'',l:'Bureau rapport',p:'Rap',h:''};
   if(c==='Ral')return {t:'B',k:'',l:'Bureau ralentissement',p:'Ral',h:''};
+  if(c==='A')   return {t:'A',k:'A',l:'Absent',p:'',h:''};
+  if(c==='Cexp')return {t:'Cexp',k:'Cexp',l:'Congé exceptionnel',p:'',h:'',f:'O'};
+  if(c==='M')   return {t:'Mal',k:'M',l:'Maladie',p:'',h:'',f:'O'};
+  if(c==='V')   return {t:'V',k:'V',l:'Visite médicale',p:'',h:'',f:'V'};
+  if(c==='FOR') return {t:'FOR',k:'FOR',l:'Formation',p:'',h:'',f:'FOR'};
   let m=c.match(/^([+-])(.+)$/);
   if(m){const t=m[1]==='-'?'M':'S';return {t,k:t,l:t==='M'?'Matinée':'Soirée',p:sp(m[2]),h:HRS[t]};}
   m=c.match(/^(?:R\/)?N(?:\s+(.+))?$/);
@@ -305,13 +334,12 @@ function parseT(c){
 }
 const FC={p:'#8064a2',b:'#265c9e',v:'#4f6228',O:'#b83900'};
 const fc=f=>FC[f]||'#000';
-function codeHTML(k){
-  if(!k) return '';
-  const p=k.split(' ');
-  if(p.length>1) return p[0]+'<small>'+p.slice(1).join(' ')+'</small>';
-  return k;
+function codeHTML(k){ return k || ''; }
+const CODE_FILL_OVR = {'Cexp':'O','M':'O','V':'V','FOR':'FOR'};
+function cellFill(raw, baseFill){
+  const c=(raw||'').trim();
+  return CODE_FILL_OVR[c] || baseFill;
 }
-const cls=k=>k.length>3?' l':'';
 const $=id=>document.getElementById(id);
 const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},
              set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
@@ -328,6 +356,19 @@ const countAgents = n => n === 0 ? 'aucun agent'
 $('orgline').innerHTML = CFG.org1.replace(/&/g,'&amp;')+'<br>'+CFG.org2.replace(/&/g,'&amp;');
 $('titleline').textContent = CFG.title;
 
+// ---- Logo + favicon ----
+(function(){
+  if (CFG.logoFile) {
+    const img = document.getElementById('logoImg');
+    img.src = CFG.logoFile;
+    img.hidden = false;
+    document.getElementById('mainHeader').classList.add('has-logo');
+  }
+  const fav = document.getElementById('favicon');
+  if (CFG.faviconFile) fav.href = CFG.faviconFile;
+  else if (CFG.logoFile) fav.href = CFG.logoFile;
+})();
+
 // ---- Sélecteur de mois + navigation inter-mois ----
 (function(){
   const selfId = (CFG.monthName + CFG.year).toLowerCase()
@@ -341,10 +382,8 @@ $('titleline').textContent = CFG.title;
     .then(r => r.ok ? r.json() : null)
     .then(data => {
       if (!data || !Array.isArray(data.months) || data.months.length === 0) return;
-
       const sorted = data.months.slice().sort((a,b) =>
         (a.year - b.year) || (a.monthNum - b.monthNum));
-
       selMois.innerHTML = '';
       sorted.forEach(m => {
         const opt = document.createElement('option');
@@ -353,11 +392,9 @@ $('titleline').textContent = CFG.title;
         if (m.id === selfId) opt.selected = true;
         selMois.appendChild(opt);
       });
-
       selMois.addEventListener('change', () => {
         if (selMois.value) window.location.href = selMois.value;
       });
-
       const idx = data.months.findIndex(m => m.id === selfId);
       if (idx >= 0) {
         const p = data.months[idx - 1];
@@ -402,18 +439,22 @@ function drawAgent(){
       const rest=(d.getDay()+6)%7;
       for(let j=0;j<rest;j++) grid.insertAdjacentHTML('beforeend','<div class="cell blank"></div>');
     }
+    const fill = x.f || a.f[i];
     const el=document.createElement('div');
-    el.className='cell f-'+a.f[i]+(i===today?' today':'')+(i>=NOV?' nov':'');
+    el.className='cell f-'+fill+(i===today?' today':'')+(i>=NOV?' nov':'');
+    if(x.t==='A') el.classList.add('code-A');
     el.dataset.type = x.t;
-    el.style.color=fc(a.f[i]);
+    el.style.color=fc(fill);
     el.title=DOWL[d.getDay()]+' '+d.getDate()+' '+MON[d.getMonth()]+' : '+raw
       +' ('+x.l+(x.h?', '+x.h:'')+')';
     el.innerHTML='<span class="d">'+d.getDate()+'</span>'
-      +'<span class="k'+cls(x.k)+'">'+codeHTML(x.k)+'</span><span class="p"></span>';
+      +'<span class="k">'+codeHTML(x.k)+'</span><span class="p"></span>';
     grid.appendChild(el);
   });
   const S=[['M','Matinées (-)'],['S','Soirées (+)'],['N','Nuits (N)'],['J','Journées (=)'],
-           ['B','Bureaux RRR'],['R','Repos (R, R/N)'],['RC','RC'],['C','Congés (C)']];
+           ['B','Bureaux RRR'],['R','Repos (R, R/N)'],['RC','RC'],['C','Congés (C)'],
+           ['A','Absent (A)'],['Cexp','Congés except.'],['Mal','Maladie (M)'],
+           ['V','Visite méd. (V)'],['FOR','Formation (FOR)']];
   $('stats').innerHTML=S.filter(([t])=>cnt[t])
     .map(([t,l])=>'<span class="chip" data-t="'+t+'"><b>'+cnt[t]+'</b>'+l+'</span>').join('')
     +'<span class="note" style="align-self:center">sur '+CFG.monthName+' '+CFG.year+'</span>';
@@ -430,15 +471,15 @@ function drawAgent(){
   });
 }
 
-const row=(k,l,h)=>'<div class="row"><i>'+k+'</i><span>'+l+'</span><b>'+h+'</b></div>';
+const row=(k,l,h,c)=>'<div class="row"><i class="'+(c||'')+'">'+k+'</i><span>'+l+'</span><b>'+h+'</b></div>';
 const legHTML='<div class="sec"><h2>Amplitude de travail</h2><div class="amp">'
  + '<div class="card"><h3>PC</h3>'
- +   row('M','','06h20 – 13h00')+row('S','','13h00 – 19h40')+row('=','=PC','07h00 – 15h00')+'</div>'
+ +   row('M','','06h20 – 13h00')+row('S','','13h00 – 19h40')+row('=PC','','07h00 – 15h00')+'</div>'
  + '<div class="card"><h3>Régulateurs</h3>'
  +   row('M','','04h00 – 12h00')+row('S','','12h00 – 20h00')+row('N','','20h00 – 04h00')+'</div>'
  + '<div class="card"><h3>Retard &amp; Ralentissement</h3>'
- +   row('','Du lundi au jeudi','07h00 – 14h00')
- +   row('','Vendredi &amp; samedi','07h00 – 13h00')+'</div>'
+ +   row('•','Du lundi au jeudi','07h00 – 14h00','dot')
+ +   row('•','Vendredi &amp; samedi','07h00 – 13h00','dot')+'</div>'
  + '<div class="card"><h3>Autres postes</h3>'
  +   '<div class="row"><span>Chef PC</span><b>07h00 – 13h40</b></div>'
  +   '<div class="row"><span>B.Programmation, du lundi au samedi</span><b>07h00 – 13h40</b></div>'
@@ -467,8 +508,11 @@ function drawDay(scroll){
   const by={};
   AG.forEach((a,i)=>{const x=parse(a.c[cur], a.p);(by[x.t]=by[x.t]||[]).push({a,i,x})});
   const G=[['M','Matinée (-)'],['S','Soirée (+)'],['N','Nuit (N)'],['J','Journée (=)'],
-           ['B','Bureaux RRR (Ret / Rap / Ral + vides)'],['RC','Repos compensatoire (RC)'],
-           ['R','Repos (R, R/N)'],['C','Congé (C)'],['F','Férié (F)'],['D','D']];
+           ['B','Bureaux RRR (Ret / Rap / Ral)'],['RC','Repos compensatoire (RC)'],
+           ['R','Repos (R, R/N)'],['C','Congé (C)'],['F','Férié (F)'],['D','D'],
+           ['A','Absent (A)'],['Cexp','Congé exceptionnel (Cexp)'],
+           ['Mal','Maladie (M)'],['V','Visite médicale (V)'],
+           ['FOR','Formation (FOR)']];
   let h='';
   G.forEach(([t,l])=>{const L=by[t];if(!L)return;
     h+='<div class="grp"><h3>'+l+' <span>'
@@ -500,8 +544,11 @@ function drawTable(){
     h+='<tr><td class="fix nm"><button data-a="'+r+'">'+a.n+'</button></td>'
       +'<td class="inf">'+a.p+'</td><td class="inf">'+a.m+'</td><td class="sd">'+a.s+'</td>';
     a.c.forEach((raw,i)=>{
+      const fl = cellFill(raw, a.f[i]);
+      const isA = (raw||'').trim() === 'A';
       const endCls = (i===today && r===lastRow) ? ' tdy-end' : '';
-      h+='<td style="color:'+fc(a.f[i])+'" class="cd f-'+a.f[i]
+      h+='<td style="color:'+fc(fl)+'" class="cd f-'+fl
+        +(isA?' code-A':'')
         +(i===NOV-1?' mois':'')+(i===today?' tdy':'')+endCls
         +'" title="'+raw+'">'+raw+'</td>';
     });
@@ -524,14 +571,18 @@ function tab(n){
 }
 ['agent','jour','tab'].forEach(k=>$('tab-'+k).onclick=()=>tab(k));
 sel.onchange=drawAgent;
+
 const hs=(location.hash||'').slice(1);
 const hi=AG.findIndex(a=>slug(a.n)===hs);
-const saved=store.get('agent');
+const savedAgent=store.get('agent');
 if(hi>=0) sel.value=hi;
-else if(saved!==null && AG[+saved]) sel.value=saved;
+else if(savedAgent!==null && AG[+savedAgent]) sel.value=savedAgent;
 else sel.value='';
 drawAgent(); drawDay(false); drawTable();
-if(hs==='jour') tab('jour');
-if(hs==='pointage'||hs==='tableau') tab('tab');
+const savedTab = store.get('tab');
+if (hs === 'jour') tab('jour');
+else if (hs === 'pointage' || hs === 'tableau') tab('tab');
+else if (savedTab === 'jour') tab('jour');
+else if (savedTab === 'tab') tab('tab');
 </script>
 </body></html>
