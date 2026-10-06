@@ -50,10 +50,13 @@ header:not(.has-logo) .top-row{justify-content:center;text-align:center}
 header:not(.has-logo) .top-row .org{text-align:center}
 header h1{font:700 24px/1.15 var(--font-d);margin:6px 0 10px;letter-spacing:.01em}
 
-/* ===== MOBILE : header compact, pas de logo ===== */
+/* ===== MOBILE : header compact + rétractable ===== */
 @media (max-width:700px){
   .logo{display:none !important}
-  header{padding:10px 12px 0}
+  header{padding:10px 12px 0;
+    transition:transform .25s ease;
+    will-change:transform}
+  header.header-hidden{transform:translateY(-100%)}
   .top-row{min-height:auto;margin-bottom:2px;gap:0;flex-direction:column;
     align-items:flex-start;text-align:left}
   .top-row .org{font-size:10px;line-height:1.2;letter-spacing:.08em;
@@ -602,5 +605,47 @@ if (hs === 'jour') tab('jour');
 else if (hs === 'pointage' || hs === 'tableau') tab('tab');
 else if (savedTab === 'jour') tab('jour');
 else if (savedTab === 'tab') tab('tab');
+
+// ---- Header rétractable au scroll (mobile uniquement) ----
+(function(){
+  const header = document.getElementById('mainHeader');
+  if (!header) return;
+  let lastY = window.scrollY || 0;
+  let ticking = false;
+  const THRESHOLD = 6;
+  const TOP_ZONE  = 40;
+  const isMobile  = () => window.innerWidth <= 700;
+
+  function updateHeader(){
+    if (!isMobile()) {
+      header.classList.remove('header-hidden');
+      ticking = false;
+      return;
+    }
+    const currentY = window.scrollY;
+    const delta = currentY - lastY;
+
+    if (currentY <= TOP_ZONE) {
+      header.classList.remove('header-hidden');
+    } else if (delta > THRESHOLD) {
+      header.classList.add('header-hidden');
+    } else if (delta < -THRESHOLD) {
+      header.classList.remove('header-hidden');
+    }
+    lastY = currentY;
+    ticking = false;
+  }
+
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      window.requestAnimationFrame(updateHeader);
+      ticking = true;
+    }
+  }, {passive: true});
+
+  window.addEventListener('resize', () => {
+    if (!isMobile()) header.classList.remove('header-hidden');
+  });
+})();
 </script>
 </body></html>
