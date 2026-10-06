@@ -23,10 +23,14 @@ header h1{font:700 24px/1.15 var(--font-d);margin:6px 0 4px;letter-spacing:.01em
 header p{margin:6px 0 0;font-size:14px;opacity:.9}
 header:not(.has-logo) .top-row{justify-content:center;text-align:center}
 header:not(.has-logo) .top-row .org{text-align:center}
-@media (max-width:640px){
-  .top-row{flex-direction:column;align-items:center;gap:8px;text-align:center}
-  .top-row .org{text-align:center}
-  .logo{height:52px}
+@media (max-width:700px){
+  header{padding:14px 12px 14px}
+  header .top-row{justify-content:flex-start;text-align:left;
+    gap:0;margin-bottom:4px;flex-direction:column;align-items:flex-start}
+  header .top-row .logo{display:none}
+  header .top-row .org{font-size:10px;text-align:left;letter-spacing:.08em}
+  header h1{font-size:18px;text-align:left}
+  header p{font-size:12px;text-align:left}
 }
 .list{display:grid;gap:8px;margin-top:20px}
 .mois-card{display:flex;justify-content:space-between;align-items:center;
@@ -55,6 +59,6 @@ header:not(.has-logo) .top-row .org{text-align:center}
 <a class="mois-card" href="indexoctobre2026.html"><span class="mois-nom">Octobre 2026</span><span class="mois-fleche">→</span></a>
 <a class="mois-card" href="indexseptembre2026.html"><span class="mois-nom">Septembre 2026</span><span class="mois-fleche">→</span></a>
 </div>
-<p class="footer">Dernière mise à jour : 2026-10-06T18:11:47</p>
+<p class="footer">Dernière mise à jour : 2026-10-06T18:23:02</p>
 </div>
 </body></html>

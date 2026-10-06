@@ -49,11 +49,29 @@ header{background:var(--head);color:var(--head-fg);margin-inline:-16px;
 header:not(.has-logo) .top-row{justify-content:center;text-align:center}
 header:not(.has-logo) .top-row .org{text-align:center}
 header h1{font:700 24px/1.15 var(--font-d);margin:6px 0 10px;letter-spacing:.01em}
-@media (max-width:640px){
-  .top-row{flex-direction:column;align-items:center;gap:8px;text-align:center}
-  .top-row .org{text-align:center}
-  .logo{height:52px}
-  header h1{font-size:20px}
+
+/* ===== MOBILE : header compact, pas de logo ===== */
+@media (max-width:700px){
+  .logo{display:none !important}
+  header{padding:10px 12px 0}
+  .top-row{min-height:auto;margin-bottom:2px;gap:0;flex-direction:column;
+    align-items:flex-start;text-align:left}
+  .top-row .org{font-size:10px;line-height:1.2;letter-spacing:.08em;
+    opacity:.85;text-align:left}
+  header h1{font-size:16px;margin:2px 0 6px;line-height:1.1;text-align:left}
+  .month-select{font-size:16px;padding:8px 30px 8px 12px;letter-spacing:.08em}
+  .nav-bar{padding:2px 0 4px;font-size:11px;min-height:auto}
+  .nav-link{padding:3px 8px;font-size:11px}
+  .tabs button{font-size:14px;padding:6px 4px}
+}
+/* Téléphone en paysage : header ultra compact */
+@media (max-height:500px) and (max-width:900px){
+  header{padding:6px 12px 0}
+  .top-row{display:none}
+  header h1{font-size:14px;margin:0 0 4px}
+  .month-select{font-size:14px;padding:6px 26px 6px 10px}
+  .nav-bar{padding:0 0 3px}
+  .tabs button{font-size:13px;padding:5px 4px}
 }
 
 /* ===== Sélecteur de mois ===== */
