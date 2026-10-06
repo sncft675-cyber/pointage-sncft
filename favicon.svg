@@ -14,10 +14,11 @@
     <line x1="100" y1="82" x2="124" y2="68" stroke-width="3"/>
   </g>
   <circle cx="100" cy="82" r="3.5" fill="#ffffff"/>
+  <!-- Texte en blanc, plus gros pour lisibilité dans le favicon -->
   <text x="100" y="155" font-family="'Barlow Condensed','Arial Narrow',sans-serif"
         font-size="32" font-weight="700" letter-spacing="1.5"
         text-anchor="middle" fill="#ffffff">POINTAGE</text>
   <text x="100" y="178" font-family="'Barlow Condensed','Arial Narrow',sans-serif"
         font-size="13" font-weight="500" letter-spacing="1"
-        text-anchor="middle" fill="#ffffff" opacity="0.85">Régulation &amp; PC</text>
+        text-anchor="middle" fill="#ffffff" opacity="0.95">Régulation &amp; PC</text>
 </svg>
