@@ -15,6 +15,14 @@
   --x-V:#f4cccc; --x-FOR:#ffe599;
   --hl:#e74c3c;
   --hl-tint:rgba(46,111,174,0.20);
+  --fitr:#2e7d32;
+  --adha:#8e4a9e;
+  --retraite:#6b7280;
+  --conge:#c77d1e;
+  --repos:#3579bd;
+  --rc:#8064a2;
+  --ferie:#7f8c8d;
+  --absent:#c0392b;
   --font-d:'Barlow Condensed','Arial Narrow',sans-serif;
   --font-b:'IBM Plex Sans',system-ui,sans-serif;
 }
@@ -36,7 +44,6 @@
 body{margin:0;background:var(--bg);color:var(--fg);
   font:16px/1.4 var(--font-b);font-family:var(--font-b)}
 .wrap{max-width:1100px;margin:0 auto;padding-inline:16px;padding-block:0 40px}
-
 header{background:var(--head);color:var(--head-fg);margin-inline:-16px;
   padding:18px 16px 0;position:sticky;top:0;z-index:5}
 .top-row{display:flex;align-items:center;gap:16px;margin-bottom:8px;min-height:64px}
@@ -48,12 +55,9 @@ header{background:var(--head);color:var(--head-fg);margin-inline:-16px;
 header:not(.has-logo) .top-row{justify-content:center;text-align:center}
 header:not(.has-logo) .top-row .org{text-align:center}
 header h1{font:700 24px/1.15 var(--font-d);margin:6px 0 10px;letter-spacing:.01em}
-
 @media (max-width:700px){
   .logo{display:none !important}
-  header{padding:10px 12px 0;
-    transition:transform .25s ease;
-    will-change:transform}
+  header{padding:10px 12px 0;transition:transform .25s ease;will-change:transform}
   header.header-hidden{transform:translateY(-100%)}
   .top-row{min-height:auto;margin-bottom:2px;gap:0;flex-direction:column;
     align-items:flex-start;text-align:left}
@@ -63,7 +67,7 @@ header h1{font:700 24px/1.15 var(--font-d);margin:6px 0 10px;letter-spacing:.01e
   .month-select{font-size:16px;padding:8px 30px 8px 12px;letter-spacing:.08em}
   .nav-bar{padding:2px 0 4px;font-size:11px;min-height:auto}
   .nav-link{padding:3px 8px;font-size:11px}
-  .tabs button{font-size:13px;padding:6px 4px}
+  .tabs button{font-size:11px;padding:6px 2px}
 }
 @media (max-height:500px) and (max-width:900px){
   header{padding:6px 12px 0}
@@ -71,40 +75,27 @@ header h1{font:700 24px/1.15 var(--font-d);margin:6px 0 10px;letter-spacing:.01e
   header h1{font-size:14px;margin:0 0 4px}
   .month-select{font-size:14px;padding:6px 26px 6px 10px}
   .nav-bar{padding:0 0 3px}
-  .tabs button{font-size:12px;padding:5px 4px}
+  .tabs button{font-size:11px;padding:5px 2px}
 }
-
 .month-select-wrap{position:relative;margin:0 0 10px}
 .month-select{
-  width:100%;
-  appearance:none;-webkit-appearance:none;-moz-appearance:none;
+  width:100%;appearance:none;-webkit-appearance:none;-moz-appearance:none;
   background:rgba(255,255,255,.22);
-  border:2px solid rgba(255,255,255,.45);
-  border-radius:8px;
-  padding:12px 40px 12px 14px;
-  color:#ffffff;
-  font:700 22px var(--font-d);
-  letter-spacing:.12em;text-transform:uppercase;
+  border:2px solid rgba(255,255,255,.45);border-radius:8px;
+  padding:12px 40px 12px 14px;color:#ffffff;
+  font:700 22px var(--font-d);letter-spacing:.12em;text-transform:uppercase;
   text-align:center;cursor:pointer;
   text-shadow:0 1px 2px rgba(0,0,0,.20);
   box-shadow:0 2px 6px rgba(0,0,0,.10);
   transition:background-color .15s, border-color .15s, box-shadow .15s;
   background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 9' fill='white'><path d='M7 9L0 0h14z'/></svg>");
-  background-repeat:no-repeat;
-  background-position:right 14px center;
-  background-size:12px;
+  background-repeat:no-repeat;background-position:right 14px center;background-size:12px;
 }
 .month-select:hover{background-color:rgba(255,255,255,.32);border-color:rgba(255,255,255,.7)}
 .month-select:focus{outline:0;border-color:#fff;box-shadow:0 0 0 3px rgba(255,255,255,.35)}
-.month-select option{
-  color:#000;background:#fff;
-  font:500 15px var(--font-b);
-  text-transform:none;letter-spacing:0;
-}
-@media (max-width:420px){
-  .month-select{font-size:18px;padding:10px 34px 10px 12px}
-}
-
+.month-select option{color:#000;background:#fff;font:500 15px var(--font-b);
+  text-transform:none;letter-spacing:0}
+@media (max-width:420px){.month-select{font-size:18px;padding:10px 34px 10px 12px}}
 .nav-bar{display:flex;justify-content:space-between;align-items:center;gap:6px;
   padding:0 0 10px;font:600 13px var(--font-b);min-height:26px}
 .nav-link{color:var(--head-fg);text-decoration:none;padding:5px 10px;
@@ -113,9 +104,9 @@ header h1{font:700 24px/1.15 var(--font-d);margin:6px 0 10px;letter-spacing:.01e
 .nav-link:hover{background:rgba(255,255,255,.28)}
 .nav-link[hidden]{display:none}
 .nav-home{flex:none;max-width:none}
-.tabs{display:flex;gap:4px}
-.tabs button{flex:1;min-width:0;font:600 15px var(--font-d);letter-spacing:.03em;
-  text-transform:uppercase;padding:10px 6px;border:0;border-radius:6px 6px 0 0;
+.tabs{display:flex;gap:3px}
+.tabs button{flex:1;min-width:0;font:600 14px var(--font-d);letter-spacing:.02em;
+  text-transform:uppercase;padding:10px 4px;border:0;border-radius:6px 6px 0 0;
   background:transparent;color:var(--head-fg);opacity:.7;cursor:pointer}
 .tabs button[aria-selected="true"]{background:var(--bg);color:var(--fg);opacity:1}
 :focus-visible{outline:3px solid var(--accent);outline-offset:2px}
@@ -130,8 +121,7 @@ select{width:100%;font:500 18px var(--font-b);padding:12px;border:1px solid var(
   letter-spacing:.06em;text-transform:uppercase}
 .cell{border-radius:6px;min-height:68px;padding:4px 3px 5px;display:flex;
   flex-direction:column;align-items:center;justify-content:space-between;
-  text-align:center;color:#000;border:1px solid var(--line);
-  transition:box-shadow .15s}
+  text-align:center;color:#000;border:1px solid var(--line);transition:box-shadow .15s}
 .cell .d{font:500 11px var(--font-b);align-self:flex-start;padding-left:2px;color:#555}
 .cell .k{font:700 clamp(14px, 4.6vw, 22px)/1 var(--font-d);
   white-space:nowrap;letter-spacing:-0.01em;max-width:100%;overflow:hidden;
@@ -140,15 +130,13 @@ select{width:100%;font:500 18px var(--font-b);padding:12px;border:1px solid var(
 .cell.nov{opacity:.9}
 .cell.code-A{background:#d9a878 !important}
 .cell.hl{box-shadow:inset 0 0 0 1000px var(--hl-tint)}
-.cell.code-A.hl{background:#d9a878 !important;
-                box-shadow:inset 0 0 0 1000px var(--hl-tint)}
+.cell.code-A.hl{background:#d9a878 !important;box-shadow:inset 0 0 0 1000px var(--hl-tint)}
 .month-sep{grid-column:1/-1;font:700 15px var(--font-d);letter-spacing:.08em;
   text-transform:uppercase;color:var(--muted);padding-top:8px}
 .cell.blank{background:transparent;border-color:transparent}
 .f-w{background:var(--x-w)}.f-g{background:var(--x-g)}.f-G{background:var(--x-G)}
 .f-b{background:var(--x-b)}.f-p{background:var(--x-p)}.f-v{background:var(--x-v)}
-.f-O{background:var(--x-O)}
-.f-V{background:var(--x-V)}.f-FOR{background:var(--x-FOR)}
+.f-O{background:var(--x-O)}.f-V{background:var(--x-V)}.f-FOR{background:var(--x-FOR)}
 .stats{display:flex;flex-wrap:wrap;gap:6px}
 .chip{background:var(--surface);border:1px solid var(--line);display:inline-flex;
   align-items:baseline;gap:6px;padding:6px 10px;border-radius:999px;font:600 14px var(--font-b);
@@ -213,25 +201,11 @@ table.t{border-collapse:separate;border-spacing:0;font-size:13px;width:max-conte
 .t td.sd{padding:0 8px;font:700 15px var(--font-d);font-variant-numeric:tabular-nums}
 .t td.cd{min-width:44px;height:36px;font:700 14px var(--font-d);padding:0 3px}
 .t td.code-A{background:#d9a878 !important}
-.t th.td{
-  color:var(--accent);
-  box-shadow:inset 3px 0 0 var(--accent),
-             inset -3px 0 0 var(--accent),
-             inset 0 3px 0 var(--accent);
-}
-.t th.td2{
-  box-shadow:inset 3px 0 0 var(--accent),
-             inset -3px 0 0 var(--accent);
-}
-.t td.tdy{
-  box-shadow:inset 3px 0 0 var(--accent),
-             inset -3px 0 0 var(--accent);
-}
-.t td.tdy-end{
-  box-shadow:inset 3px 0 0 var(--accent),
-             inset -3px 0 0 var(--accent),
-             inset 0 -3px 0 var(--accent);
-}
+.t th.td{color:var(--accent);
+  box-shadow:inset 3px 0 0 var(--accent),inset -3px 0 0 var(--accent),inset 0 3px 0 var(--accent);}
+.t th.td2{box-shadow:inset 3px 0 0 var(--accent),inset -3px 0 0 var(--accent);}
+.t td.tdy{box-shadow:inset 3px 0 0 var(--accent),inset -3px 0 0 var(--accent);}
+.t td.tdy-end{box-shadow:inset 3px 0 0 var(--accent),inset -3px 0 0 var(--accent),inset 0 -3px 0 var(--accent);}
 .t td.mois{border-right:2px solid var(--fg)}
 .hint,.note{font-size:13px;color:var(--muted)}
 @media (max-width:420px){
@@ -239,67 +213,152 @@ table.t{border-collapse:separate;border-spacing:0;font-size:13px;width:max-conte
   .cell{min-height:60px}.cell .k{font-size:clamp(12px,4.2vw,18px)}
 }
 
-/* ===== Onglet RC / Congés ===== */
-.recap-who{display:flex;flex-wrap:wrap;gap:4px 12px;align-items:baseline;
-  justify-content:space-between}
+/* ===== RC / Congés ===== */
+.recap-who{display:flex;flex-wrap:wrap;gap:4px 12px;align-items:baseline;justify-content:space-between}
 .recap-who b{font:700 28px/1.1 var(--font-d)}
 .recap-who .meta{color:var(--muted);font-size:16px}
-.recap-who .meta .mat{font-weight:700;color:var(--accent);
-  letter-spacing:.03em}
+.recap-who .meta .mat{font-weight:700;color:var(--accent);letter-spacing:.03em}
 .recap-duo{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
 .recap-col-right{display:flex;flex-direction:column;gap:14px}
 @media (max-width:640px){.recap-duo{grid-template-columns:1fr}}
-
 .rec-card{background:var(--surface);border:1px solid var(--line);
   border-radius:12px;overflow:hidden;display:flex;flex-direction:column}
 .rec-card h3{margin:0;padding:12px 16px;font:700 18px var(--font-d);
   letter-spacing:.05em;text-transform:uppercase;color:#fff;
-  display:flex;justify-content:space-between;align-items:baseline;
-  gap:10px;flex-wrap:wrap}
+  display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
 .rec-card.rc h3{background:#8064a2}
 .rec-card.cg h3{background:#4f6228}
-.rec-card h3 small{font:500 12px var(--font-b);letter-spacing:0;
-  text-transform:none;opacity:.9}
-
-.rec-card.droit{background:linear-gradient(to right,
-  rgba(79,98,40,.10),rgba(79,98,40,.03));border-color:rgba(79,98,40,.4)}
-.rec-card.droit .row{display:flex;justify-content:space-between;
-  align-items:baseline;padding:14px 16px;gap:10px;flex-wrap:wrap}
+.rec-card h3 small{font:500 12px var(--font-b);letter-spacing:0;text-transform:none;opacity:.9}
+.rec-card.droit{background:linear-gradient(to right,rgba(79,98,40,.10),rgba(79,98,40,.03));
+  border-color:rgba(79,98,40,.4)}
+.rec-card.droit .row{display:flex;justify-content:space-between;align-items:baseline;
+  padding:14px 16px;gap:10px;flex-wrap:wrap}
 .rec-card.droit .k{font:700 14px var(--font-b);color:#4f6228;
   letter-spacing:.03em;text-transform:uppercase}
 .rec-card.droit .v{font:700 24px var(--font-d);color:#4f6228;
   font-variant-numeric:tabular-nums;line-height:1}
-
 .rec-lines{display:flex;flex-direction:column}
 .rec-line{display:flex;justify-content:space-between;align-items:flex-start;
-  padding:9px 16px;border-top:1px solid var(--line);font-size:14px;
-  gap:8px;background:var(--surface)}
+  padding:9px 16px;border-top:1px solid var(--line);font-size:14px;gap:8px;background:var(--surface)}
 .rec-line:first-child{border-top:0}
 .rec-line .k{color:var(--muted);display:flex;flex-direction:column;gap:2px}
-.rec-line .k .sub{font-size:11px;font-style:italic;
-  color:rgba(93,107,123,.85);font-weight:400}
-.rec-line .v{font:700 17px var(--font-d);font-variant-numeric:tabular-nums;
-  flex:none}
-
+.rec-line .k .sub{font-size:11px;font-style:italic;color:rgba(93,107,123,.85);font-weight:400}
+.rec-line .v{font:700 17px var(--font-d);font-variant-numeric:tabular-nums;flex:none}
 .rec-line.key{align-items:baseline}
 .rec-line.key .k{color:var(--fg);font-weight:600;font-style:normal}
 .rec-line.key .v{font-size:24px;font-weight:700}
-
-.rec-line.key.blue{background:rgba(46,111,174,.06);
-  border-top:2px solid rgba(46,111,174,.25)}
+.rec-line.key.blue{background:rgba(46,111,174,.06);border-top:2px solid rgba(46,111,174,.25)}
 .rec-line.key.blue .v{color:var(--accent)}
-.rec-line.key.orange{background:rgba(199,125,30,.08);
-  border-top:2px solid rgba(199,125,30,.30)}
+.rec-line.key.orange{background:rgba(199,125,30,.08);border-top:2px solid rgba(199,125,30,.30)}
 .rec-line.key.orange .k{color:#8a5410}
 .rec-line.key.orange .v{color:#c77d1e}
-.rec-line.key.green{background:rgba(61,139,61,.07);
-  border-top:2px solid rgba(61,139,61,.28)}
+.rec-line.key.green{background:rgba(61,139,61,.07);border-top:2px solid rgba(61,139,61,.28)}
 .rec-line.key.green .k{color:#2b632b}
 .rec-line.key.green .v{color:#3d8b3d}
-
 .rec-line.sub{background:var(--surface)}
 .rec-line.sub.first{border-top:2px solid var(--line)}
 .rec-line.sub.last{border-bottom:2px solid var(--line)}
+
+/* ===== Aïd ===== */
+.rules{background:linear-gradient(135deg,#f0f7ff 0%,#fbfcfc 100%);
+  border:1px solid #cfdcea;border-left:5px solid var(--accent);
+  border-radius:10px;padding:14px 18px;transition:padding .15s}
+.rules.collapsed{padding:12px 18px}
+.rules h3{margin:0;font:700 16px var(--font-d);letter-spacing:.05em;
+  text-transform:uppercase;color:var(--accent);
+  display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none}
+.rules h3:hover{opacity:.85}
+.rules h3 .chev{transition:transform .2s ease;font-size:12px;opacity:.7;line-height:1}
+.rules.collapsed h3 .chev{transform:rotate(-90deg)}
+.rules .content{margin-top:10px}
+.rules.collapsed .content{display:none}
+.rules ul{margin:0;padding-left:20px;font-size:14px;color:#2c3e50;line-height:1.6}
+.rules ul li{margin-bottom:6px}
+.rules ul li:last-child{margin-bottom:0}
+.rules b{color:var(--accent)}
+.rules .hl-blue{color:var(--accent);font-weight:700}
+.rules .hl-warn{color:#c0392b;font-weight:400;font-style:italic}
+.rules ul.sub-rules{margin:6px 0 0;padding-left:0;list-style:none;
+  display:flex;flex-direction:column;gap:6px}
+.rules ul.sub-rules li{position:relative;padding-left:16px;margin-bottom:0}
+.rules ul.sub-rules li::before{content:'•';position:absolute;left:2px;top:0;
+  color:var(--accent);font-weight:700}
+.rules h3 .title-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;width:100%}
+.rules h3 .title{flex:1;min-width:0}
+.annual-badge{display:inline-flex;align-items:center;gap:6px;
+  background:rgba(46,111,174,.12);color:var(--accent);
+  padding:4px 10px;border-radius:999px;font:600 11px var(--font-b);
+  letter-spacing:.06em;text-transform:uppercase;
+  border:1px solid rgba(46,111,174,.3);flex:none}
+.aid-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}
+@media (max-width:780px){.aid-grid{grid-template-columns:1fr}}
+.aid-card{background:var(--surface);border:1px solid var(--line);
+  border-radius:12px;overflow:hidden;display:flex;flex-direction:column}
+.aid-card > header{padding:14px 18px;color:#fff;display:flex;align-items:center;
+  gap:12px;margin:0;background:var(--ferie)}
+.aid-card.fitr > header{background:var(--fitr)}
+.aid-card.adha > header{background:var(--adha)}
+.aid-card > header .icon{font-size:26px;line-height:1}
+.aid-card > header div{flex:1;min-width:0}
+.aid-card > header h3{margin:0;font:700 20px var(--font-d);
+  letter-spacing:.03em;text-transform:uppercase}
+.aid-card > header .sub{font:500 12px var(--font-b);opacity:.9}
+.aid-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:var(--line)}
+.aid-stat{background:var(--surface);padding:10px 8px;text-align:center}
+.aid-stat .n{font:700 26px/1 var(--font-d);font-variant-numeric:tabular-nums}
+.aid-stat .l{font:600 10px var(--font-b);color:var(--muted);
+  text-transform:uppercase;letter-spacing:.06em;margin-top:2px}
+.aid-stat.prio .n{color:var(--fitr)}
+.aid-card.adha .aid-stat.prio .n{color:var(--adha)}
+.aid-stat.off .n{color:var(--muted)}
+.aid-stat.retr .n{color:var(--retraite)}
+.prio-block{padding:12px 16px 6px}
+.prio-block h4{margin:0 0 4px;font:700 13px var(--font-b);letter-spacing:.08em;
+  text-transform:uppercase;color:var(--fitr);display:flex;align-items:center;gap:6px}
+.aid-card.adha .prio-block h4{color:var(--adha)}
+.prio-block .hint{margin:0 0 10px;font-size:12px;color:var(--muted);
+  font-style:italic;line-height:1.4}
+.prio-list{list-style:none;margin:0;padding:0}
+.prio-list li{display:flex;align-items:center;gap:10px;padding:8px 0;
+  border-top:1px dashed #e4e9ef;font-size:14px;flex-wrap:wrap}
+.prio-list li:first-child{border-top:0}
+.prio-list .info{flex:1;min-width:0}
+.prio-list .nm{font-weight:600;color:var(--fg)}
+.prio-list .meta{display:block;font-size:11px;color:var(--muted);margin-top:1px}
+.off-block{padding:10px 16px 14px;border-top:1px solid var(--line);background:#fafbfd}
+.off-block summary{cursor:pointer;font:600 13px var(--font-b);color:var(--muted);
+  letter-spacing:.02em;user-select:none;display:flex;align-items:center;gap:6px;list-style:none}
+.off-block summary::-webkit-details-marker{display:none}
+.off-block summary::before{content:'▸';font-size:12px;transition:transform .15s}
+.off-block[open] summary::before{transform:rotate(90deg)}
+.off-block ul{list-style:none;margin:10px 0 0;padding:0}
+.off-block li{display:flex;align-items:center;gap:10px;padding:7px 0;
+  border-top:1px dashed #e4e9ef;font-size:13px;flex-wrap:wrap}
+.off-block li:first-child{border-top:0}
+.off-block .info{flex:1;min-width:0}
+.off-block .nm{font-weight:600;color:var(--muted)}
+.off-block .meta{display:block;font-size:11px;color:#98a4b2;margin-top:1px}
+.retr-block{padding:12px 16px 14px;border-top:1px solid var(--line);
+  background:linear-gradient(135deg,#f7f5fa 0%,#fafbfc 100%)}
+.retr-block h4{margin:0 0 4px;font:700 13px var(--font-b);letter-spacing:.08em;
+  text-transform:uppercase;color:var(--retraite);display:flex;align-items:center;gap:6px}
+.retr-block .hint{margin:0 0 10px;font-size:12px;color:var(--muted);
+  font-style:italic;line-height:1.4}
+.retr-block ul{list-style:none;margin:0;padding:0}
+.retr-block li{display:flex;align-items:center;gap:10px;padding:8px 0;
+  border-top:1px dashed #e4e9ef;font-size:14px;flex-wrap:wrap}
+.retr-block li:first-child{border-top:0}
+.retr-block .info{flex:1;min-width:0}
+.retr-block .nm{font-weight:600;color:var(--muted);
+  text-decoration:line-through;text-decoration-color:rgba(107,114,128,.4)}
+.retr-block .meta{display:block;font-size:11px;color:#98a4b2;margin-top:1px}
+.badge{flex:none;padding:3px 8px;border-radius:5px;
+  font:700 11px var(--font-b);letter-spacing:.05em;color:#fff}
+.badge.c{background:var(--conge)}
+.badge.r{background:var(--repos)}
+.badge.rc{background:var(--rc)}
+.badge.f{background:var(--ferie)}
+.badge.a{background:var(--absent)}
 </style></head><body>
 <div class="wrap">
 <header id="mainHeader">
@@ -323,6 +382,7 @@ table.t{border-collapse:separate;border-spacing:0;font-size:13px;width:max-conte
     <button role="tab" id="tab-jour" aria-selected="false" aria-controls="v-jour">Par jour</button>
     <button role="tab" id="tab-tab" aria-selected="false" aria-controls="v-tab">Pointage complet</button>
     <button role="tab" id="tab-rec" aria-selected="false" aria-controls="v-rec">RC / Congés</button>
+    <button role="tab" id="tab-aid" aria-selected="false" aria-controls="v-aid">Aïd</button>
   </div>
 </header>
 
@@ -357,12 +417,41 @@ table.t{border-collapse:separate;border-spacing:0;font-size:13px;width:max-conte
   </div>
   <div id="rec-content"></div>
 </section>
+
+<section id="v-aid" role="tabpanel" aria-labelledby="tab-aid" hidden>
+  <div class="rules" id="rulesBox">
+    <h3 id="rulesToggle">
+      <span class="title-row">
+        <span class="title">📋 Règles d'attribution des Aïds</span>
+        <span class="annual-badge">📅 Données annuelles</span>
+        <span class="chev">▾</span>
+      </span>
+    </h3>
+    <div class="content">
+      <ul>
+        <li>Chaque Aïd est traité <b>indépendamment</b> de l'autre.</li>
+        <li><b>En vue d'une équité totale :</b>
+          <ul class="sub-rules">
+            <li>Les agents ayant <b>travaillé</b> lors d'un Aïd sont
+              <b>prioritaires</b> pour demander un congé au prochain
+              <span class="hl-blue">même Aïd</span>,
+              <span class="hl-warn">sous réserve de disponibilité</span>.</li>
+            <li id="ruleNoWork"></li>
+            <li id="ruleRepos"></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="aid-grid" id="aidGrid"></div>
+</section>
 </div>
 
 <script>
 const CFG = {"org1": "SOCIETE NATIONALE DES CHEMINS DE FER TUNISIENS", "org2": "Département Gestion Des Circulations Ferroviaires", "title": "Pointage du personnel de la Régulation et PC Tunis", "year": 2026, "month": 9, "monthName": "octobre", "nextMonthName": "novembre", "ndays": 39, "novStart": 31, "logoFile": "logo.svg", "faviconFile": "favicon.svg"};
 const AG = [{"n": "Nasri Ridha", "p": "B.Programmation", "m": "38873 C", "s": 19, "c": ["=", "=", "=", "R", "=", "=", "=", "=", "=", "=", "R", "=", "=", "=", "=", "=", "=", "R", "=", "=", "=", "=", "=", "=", "R", "=", "=", "=", "=", "=", "=", "R", "=", "=", "=", "=", "=", "=", "R"], "f": "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww"}, {"n": "Toumi Malik", "p": "Chef PC", "m": "39696 G", "s": 69, "c": ["=", "R", "=PC", "=PC", "RC", "RC", "=", "=", "=", "=PC", "=PC", "=PC", "R", "=", "=", "=PC", "R", "R", "=", "=", "=", "=", "RC", "=PC", "=PC", "V", "=", "=", "=PC", "=PC", "RC", "R", "=", "=", "=", "=", "R", "=PC", "=PC"], "f": "wwppGGwwwpppwwwpwwwwwwGppOwwppGwwwwwwpp"}, {"n": "Khemiri Ramzi", "p": "PC", "m": "39676 H", "s": 68, "c": ["=PC", "=PC", "R", "R", "=PC", "=PC", "=PC", "=PC", "=PC", "R", "R", "V", "C", "C", "C", "C", "=PC", "=PC", "=PC", "=PC", "=PC", "=PC", "=PC", "RC", "RC", "=PC", "=PC", "=PC", "RC", "RC", "=PC", "=PC", "=PC", "=PC", "=PC", "=PC", "=PC", "R", "R"], "f": "wwwwwwwwwwwOggggwwwwwwwGGwwwGGwwwwwwwww"}, {"n": "Hemissi Sabri", "p": "PC", "m": "46594 T", "s": 31, "c": ["Ret", "Rap", "RC", "R", "Ral", "Ral", "Ral", "Ral", "Ral", "Ral", "R", "+L5/VN", "=PC", "=PC", "=PC", "Rap", "Rap", "R", "Rap", "Rap", "Rap", "Rap", "Rap", "Rap", "R", "Ral", "Ral", "Ral", "Ral", "Ral", "Ral", "R", "Ret", "Ret", "=", "=", "=", "=", "R"], "f": "bbGwbbbbbbwvwwwbbwbbbbbbwbbbbbbwbbwwwww"}, {"n": "Oueslati Amor", "p": "B.Rapport d'incid.", "m": "38624 F", "s": 64, "c": ["C", "C", "R", "R", "", "", "", "", "", "R", "R", "", "", "", "F", "C", "R", "R", "C", "C", "C", "C", "C", "R", "R", "", "", "", "", "", "R", "R", "", "", "", "", "", "R", "R"], "f": "ggwwwwwwwwwwwwggwwgggggwwwwwwwwwwwwwwww"}, {"n": "Meftahi Henda", "p": "B.Ralentissement", "m": "39949 H", "s": 109, "c": ["", "", "", "R", "C", "C", "C", "C", "C", "C", "R", "", "", "", "", "", "", "R", "", "", "", "", "", "", "R", "C", "C", "C", "C", "C", "C", "R", "", "", "", "", "", "", "R"], "f": "wwwwggggggwwwwwwwwwwwwwwwggggggwwwwwwww"}, {"n": "Ben Mahfoudh Rafaa", "p": "B.Retard", "m": "39420 D", "s": 24, "c": ["C", "", "", "R", "", "", "", "", "", "", "R", "", "", "", "", "", "", "R", "", "", "", "", "", "", "R", "", "", "", "", "", "", "R", "C", "C", "", "", "", "", "R"], "f": "gwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwggwwwww"}, {"n": "Besbes Adel", "p": "Régulateur", "m": "39417 A", "s": 23, "c": ["R", "C", "C", "C", "C", "R", "C", "C", "R", "C", "C", "C", "C", "R", "C", "C", "R", "C", "C", "C", "C", "R", "C", "C", "R", "C", "C", "C", "C", "R", "C", "", "", "", "", "", "", "", ""], "f": "wggggwggwggggwggwggggwggwggggwgOOOOOOOO"}, {"n": "Cherni Hichem", "p": "Régulateur", "m": "46788 A", "s": 49, "c": ["+L5", "-VN", "-L5", "R", "Ret", "+VN/L5", "+L5", "-L5/VN", "-VN", "+VN", "R", "-L5", "+VN", "-L5", "-VN", "R", "+VN", "-L5", "-VN", "R", "R", "+L5", "+VN", "-L5", "R", "+VN", "-L5", "-L5", "-VN", "+L5", "R", "R", "R", "+L5", "+VN", "-L5", "-VN", "+L5", "R"], "f": "wwwwbvwvwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww"}, {"n": "Ben Ouezdou Marouen", "p": "Régulateur", "m": "49042 H", "s": 28, "c": ["C", "C", "R", "+L5", "+VN", "-L5", "-VN", "R/N L5", "N VN", "/", "R", "V", "+L5", "-VN", "-L5", "R/N VN", "N L5", "/", "R", "+L5", "+VN", "-L5", "-VN", "R/N L5", "N VN", "/", "R", "+VN", "+L5", "-VN", "-L5", "R/N VN", "N L5", "/", "R", "+L5", "+VN", "-L5", "-VN"], "f": "ggwwwwwwwwwOwwwwwwwwwwwwwwwwwwwwwwwwwww"}, {"n": "Tissaoui Taoufik", "p": "Régulateur", "m": "49116 X", "s": 41, "c": ["N", "/", "R", "+VN", "+L5", "-VN", "-L5", "R/N VN", "N L5", "/", "R", "RC", "RC", "RC", "RC", "R/N L5", "N VN", "/", "R", "+VN", "+L5", "-VN", "-L5", "R/N VN", "N L5", "/", "R", "+L5", "+VN", "-L5", "-VN", "R/N L5", "N VN", "/", "R", "+VN", "+L5", "-VN", "-L5"], "f": "vwwwwwwwwwwGGGGwwwwwwwwwwwwwwwwwwwwwwww"}, {"n": "Achouri Mohamed", "p": "Régulateur", "m": "46790 C", "s": 30, "c": ["-VN", "R/N L5", "N VN", "/", "R", "C", "C", "C", "-L5", "R/N VN", "N L5", "/", "R", "+L5", "+VN", "-L5", "-VN", "R/N L5", "N VN", "/", "R", "+VN", "+L5", "-VN", "-L5", "R/N VN", "N L5", "/", "R", "C", "+VN", "-L5", "-VN", "R/N L5", "N VN", "/", "R", "+VN", "+L5"], "f": "wwwwwgggwwwwwwwwwwwwwwwwwwwwwgwwwwwwwww"}, {"n": "Zekri Oussema", "p": "Régulateur", "m": "46430 Z", "s": 65, "c": ["-L5", "R/N VN", "N L5", "/", "R", "C", "+VN", "+L5", "+VN", "R/N L5", "N VN", "/", "R", "+VN", "+L5", "-VN", "-L5", "R/N VN", "N L5", "/", "R", "C", "C", "+VN", "-VN", "R/N L5", "N VN", "/", "R", "+VN", "+L5", "-VN", "-L5", "R/N VN", "N L5", "/", "R", "RC", "+VN"], "f": "wwwwwgwwwwwwwwwwwwwwwggwwwwwwwwwwwwwwGw"}, {"n": "Djobbi Fahd", "p": "Régulateur", "m": "49044 K", "s": 70, "c": ["+VN", "-L5", "-VN", "R/N L5", "N VN", "/", "R", "+VN", "+L5", "-VN/L5", "-L5/VN", "R/N VN", "N L5", "/", "R", "RC", "RC", "RC", "RC", "R/N L5", "N VN", "/", "R", "RC", "RC", "RC", "RC", "R/N VN", "N L5", "/", "R", "+L5", "+VN", "-L5", "-VN", "R/N L5", "N VN", "/", "R"], "f": "wwwwwwwwwvvwwwwGGGGwwwwGGGGwwwwwwwwwwww"}, {"n": "Guantassi Hamdi", "p": "Régulateur", "m": "49041 G", "s": 27, "c": ["RC", "RC", "C", "R/N VN", "N L5", "/", "R", "C", "C", "C", "C", "R/N L5", "N VN", "/", "R", "+VN/L5", "+L5", "-VN", "-L5", "R/N VN", "N L5", "/", "R", "+L5", "+VN/L5", "-L5/VN", "-VN", "R/N L5", "N VN", "/", "R", "+VN", "+L5", "-VN", "-L5", "R/N VN", "N L5", "/", "R"], "f": "GGgwwwwggggwwwwvwwwwwwwwvvwwwwwwwwwwwww"}, {"n": "Talbi Alaeddine", "p": "Régulateur", "m": "46451 Z", "s": 49, "c": ["R", "+L5", "+VN", "-L5", "A", "R/N L5", "N VN", "/", "R", "RC", "+L5", "-VN", "-L5", "R/N VN", "N L5", "/", "R", "+L5", "+VN", "-L5", "-VN", "R/N L5", "N VN", "/", "R", "V", "+L5", "-VN", "-L5", "R/N VN", "N L5", "/", "R", "RC", "RC", "C", "C", "R/N L5", "N VN"], "f": "wwwwwwwwwGwwwwwwwwwwwwwwwOwwwwwwwGGggww"}, {"n": "Hannachi Mondher", "p": "Régulateur", "m": "39486 G", "s": 48, "c": ["R", "+VN", "+L5", "-VN", "-L5/VN", "R/N VN", "N L5", "/", "R", "+L5", "+VN", "V", "-VN", "R/N L5", "N VN", "/", "R", "+VN", "+L5", "-VN", "-L5", "R/N VN", "N L5", "/", "R", "+L5", "+VN", "RC", "C", "R/N L5", "N VN", "/", "R", "+VN", "+L5", "-VN", "-L5", "R/N VN", "N L5"], "f": "wwwwvwwwwwwOwwwwwwwwwwwwwwwGgwwwwwwwwww"}];
 const RECAP = [{"n": "Nasri Ridha", "m": "38873 C", "rc": {"reliquat": 0, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 0, "pris": 0, "report": 0}, "conge": {"reliquat": 19, "autorises": 42, "valides": 19, "pris": 0, "perdus": 0, "report": 19}}, {"n": "Agent 00A", "m": "00A", "rc": {"reliquat": 0, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 0, "pris": 0, "report": 0}, "conge": {"reliquat": 42, "autorises": 42, "valides": 42, "pris": 0, "perdus": 0, "report": 42}}, {"n": "Agent 00B", "m": "00B", "rc": {"reliquat": 0, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 0, "pris": 0, "report": 0}, "conge": {"reliquat": 42, "autorises": 42, "valides": 42, "pris": 0, "perdus": 0, "report": 42}}, {"n": "Toumi Malik", "m": "39696 G", "rc": {"reliquat": 4, "double": 0, "depl": 2, "aid": 0, "except": null, "valides": 6, "pris": 4, "report": 2}, "conge": {"reliquat": 69, "autorises": 42, "valides": 69, "pris": 0, "perdus": 0, "report": 69}}, {"n": "Khemiri Ramzi", "m": "39676 H", "rc": {"reliquat": 0, "double": 0, "depl": 4, "aid": 0, "except": null, "valides": 4, "pris": 4, "report": 0}, "conge": {"reliquat": 68, "autorises": 42, "valides": 68, "pris": 4, "perdus": 0, "report": 64}}, {"n": "Hannachi Mondher", "m": "39486 G", "rc": {"reliquat": 0, "double": 1, "depl": 0, "aid": 0, "except": null, "valides": 1, "pris": 1, "report": 0}, "conge": {"reliquat": 48, "autorises": 42, "valides": 48, "pris": 1, "perdus": 0, "report": 47}}, {"n": "Hemissi Sabri", "m": "46594 T", "rc": {"reliquat": 2, "double": 1, "depl": 1, "aid": 0, "except": null, "valides": 4, "pris": 1, "report": 3}, "conge": {"reliquat": 31, "autorises": 42, "valides": 31, "pris": 0, "perdus": 0, "report": 31}}, {"n": "Agent 00C", "m": "00C", "rc": {"reliquat": 0, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 0, "pris": 0, "report": 0}, "conge": {"reliquat": 42, "autorises": 42, "valides": 42, "pris": 0, "perdus": 0, "report": 42}}, {"n": "Agent 00D", "m": "00D", "rc": {"reliquat": 0, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 0, "pris": 0, "report": 0}, "conge": {"reliquat": 42, "autorises": 42, "valides": 42, "pris": 0, "perdus": 0, "report": 42}}, {"n": "Agent 00E", "m": "00E", "rc": {"reliquat": 0, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 0, "pris": 0, "report": 0}, "conge": {"reliquat": 42, "autorises": 42, "valides": 42, "pris": 0, "perdus": 0, "report": 42}}, {"n": "Oueslati Amor", "m": "38624 F", "rc": {"reliquat": 0, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 0, "pris": 0, "report": 0}, "conge": {"reliquat": 64, "autorises": 27, "valides": 64, "pris": 8, "perdus": 0, "report": 56}}, {"n": "Agent 00F", "m": "00F", "rc": {"reliquat": 2, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 2, "pris": 0, "report": 2}, "conge": {"reliquat": 27, "autorises": 27, "valides": 27, "pris": 0, "perdus": 0, "report": 27}}, {"n": "Agent 00G", "m": "00G", "rc": {"reliquat": 2, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 2, "pris": 0, "report": 2}, "conge": {"reliquat": 27, "autorises": 27, "valides": 27, "pris": 0, "perdus": 0, "report": 27}}, {"n": "Meftahi Henda", "m": "39949 H", "rc": {"reliquat": 0, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 0, "pris": 0, "report": 0}, "conge": {"reliquat": 109, "autorises": 42, "valides": 109, "pris": 12, "perdus": 0, "report": 97}}, {"n": "Agent 00H", "m": "00H", "rc": {"reliquat": 2, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 2, "pris": 0, "report": 2}, "conge": {"reliquat": 42, "autorises": 42, "valides": 42, "pris": 0, "perdus": 0, "report": 42}}, {"n": "Agent 00I", "m": "00I", "rc": {"reliquat": 2, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 2, "pris": 0, "report": 2}, "conge": {"reliquat": 42, "autorises": 42, "valides": 42, "pris": 0, "perdus": 0, "report": 42}}, {"n": "Ben Mahfoudh Rafaa", "m": "39420 D", "rc": {"reliquat": 0, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 0, "pris": 0, "report": 0}, "conge": {"reliquat": 24, "autorises": 42, "valides": 24, "pris": 1, "perdus": 0, "report": 23}}, {"n": "Agent 00J", "m": "00J", "rc": {"reliquat": 2, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 2, "pris": 0, "report": 2}, "conge": {"reliquat": 42, "autorises": 42, "valides": 42, "pris": 0, "perdus": 0, "report": 42}}, {"n": "Agent 00K", "m": "00K", "rc": {"reliquat": 2, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 2, "pris": 0, "report": 2}, "conge": {"reliquat": 42, "autorises": 42, "valides": 42, "pris": 0, "perdus": 0, "report": 42}}, {"n": "Besbes Adel", "m": "39417 A", "rc": {"reliquat": 0, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 0, "pris": 0, "report": 0}, "conge": {"reliquat": 23, "autorises": 35, "valides": 23, "pris": 23, "perdus": 0, "report": 0}}, {"n": "Cherni Hichem", "m": "46788 A", "rc": {"reliquat": 0, "double": 2, "depl": 0, "aid": 0, "except": null, "valides": 2, "pris": 0, "report": 2}, "conge": {"reliquat": 49, "autorises": 42, "valides": 49, "pris": 0, "perdus": 0, "report": 49}}, {"n": "Ben Ouezdou Marouen", "m": "49042 H", "rc": {"reliquat": 0, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 0, "pris": 0, "report": 0}, "conge": {"reliquat": 28, "autorises": 42, "valides": 28, "pris": 2, "perdus": 0, "report": 26}}, {"n": "Tissaoui Taoufik", "m": "49116 X", "rc": {"reliquat": 4, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 4, "pris": 4, "report": 0}, "conge": {"reliquat": 41, "autorises": 42, "valides": 41, "pris": 0, "perdus": 0, "report": 41}}, {"n": "Achouri Mohamed", "m": "46790 C", "rc": {"reliquat": 0, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 0, "pris": 0, "report": 0}, "conge": {"reliquat": 30, "autorises": 42, "valides": 30, "pris": 4, "perdus": 0, "report": 26}}, {"n": "Zekri Oussema", "m": "46430 Z", "rc": {"reliquat": 1, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 1, "pris": 0, "report": 1}, "conge": {"reliquat": 65, "autorises": 42, "valides": 65, "pris": 3, "perdus": 0, "report": 62}}, {"n": "Djobbi Fahd", "m": "49044 K", "rc": {"reliquat": 9, "double": 2, "depl": 0, "aid": 0, "except": null, "valides": 11, "pris": 8, "report": 3}, "conge": {"reliquat": 70, "autorises": 42, "valides": 70, "pris": 0, "perdus": 0, "report": 70}}, {"n": "Guantassi Hamdi", "m": "49041 G", "rc": {"reliquat": 2, "double": 3, "depl": 0, "aid": 0, "except": null, "valides": 5, "pris": 2, "report": 3}, "conge": {"reliquat": 27, "autorises": 42, "valides": 27, "pris": 5, "perdus": 0, "report": 22}}, {"n": "Talbi Alaeddine", "m": "46451 Z", "rc": {"reliquat": 3, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 3, "pris": 1, "report": 2}, "conge": {"reliquat": 49, "autorises": 42, "valides": 49, "pris": 0, "perdus": 0, "report": 49}}, {"n": "Beltifa Mourad", "m": "39224 W", "rc": {"reliquat": 0, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 0, "pris": 0, "report": 0}, "conge": {"reliquat": 0, "autorises": 4, "valides": 0, "pris": 0, "perdus": 0, "report": 0}}, {"n": "Agent 00L", "m": "00L", "rc": {"reliquat": 0, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 0, "pris": 0, "report": 0}, "conge": {"reliquat": 42, "autorises": 42, "valides": 42, "pris": 0, "perdus": 0, "report": 42}}, {"n": "Agent 00M", "m": "00M", "rc": {"reliquat": 0, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 0, "pris": 0, "report": 0}, "conge": {"reliquat": 42, "autorises": 42, "valides": 42, "pris": 0, "perdus": 0, "report": 42}}, {"n": "Agent 00N", "m": "00N", "rc": {"reliquat": 0, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 0, "pris": 0, "report": 0}, "conge": {"reliquat": 42, "autorises": 42, "valides": 42, "pris": 0, "perdus": 0, "report": 42}}, {"n": "Agent 00O", "m": "00O", "rc": {"reliquat": 0, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 0, "pris": 0, "report": 0}, "conge": {"reliquat": 42, "autorises": 42, "valides": 42, "pris": 0, "perdus": 0, "report": 42}}, {"n": "Agent 00P", "m": "00P", "rc": {"reliquat": 0, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 0, "pris": 0, "report": 0}, "conge": {"reliquat": 42, "autorises": 42, "valides": 42, "pris": 0, "perdus": 0, "report": 42}}, {"n": "Agent 00Q", "m": "00Q", "rc": {"reliquat": 0, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 0, "pris": 0, "report": 0}, "conge": {"reliquat": 42, "autorises": 42, "valides": 42, "pris": 0, "perdus": 0, "report": 42}}, {"n": "Agent 00R", "m": "00R", "rc": {"reliquat": 0, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 0, "pris": 0, "report": 0}, "conge": {"reliquat": 42, "autorises": 42, "valides": 42, "pris": 0, "perdus": 0, "report": 42}}, {"n": "Agent 00S", "m": "00S", "rc": {"reliquat": 0, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 0, "pris": 0, "report": 0}, "conge": {"reliquat": 42, "autorises": 42, "valides": 42, "pris": 0, "perdus": 0, "report": 42}}, {"n": "Agent 00T", "m": "00T", "rc": {"reliquat": 0, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 0, "pris": 0, "report": 0}, "conge": {"reliquat": 42, "autorises": 42, "valides": 42, "pris": 0, "perdus": 0, "report": 42}}, {"n": "Agent 00U", "m": "00U", "rc": {"reliquat": 0, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 0, "pris": 0, "report": 0}, "conge": {"reliquat": 42, "autorises": 42, "valides": 42, "pris": 0, "perdus": 0, "report": 42}}];
+const AID = {"annee": 2026, "years_fitr": [2026, 2025, 2024, 2023, 2022, 2021, 2026, 2025, 2024, 2023, 2022, 2021], "years_adha": [2026, 2025, 2024, 2023, 2022, 2021], "datesN1": {"fitr": "2027-03-20", "adha": "2027-05-27"}, "retraites": {"38873 C": "2027-03-31", "00A": "1956-12-31", "00B": "1956-12-31", "39696 G": "2037-02-28", "39676 H": "2035-10-31", "39486 G": "2029-06-30", "46594 T": "2043-07-31", "00C": "1956-12-31", "00D": "1956-12-31", "00E": "1956-12-31", "38624 F": "2029-07-31", "00F": "1961-12-31", "00G": "1961-12-31", "39949 H": "2033-06-30", "00H": "1956-12-31", "00I": "1956-12-31", "39420 D": "2031-08-31", "00J": "1956-12-31", "00K": "1956-12-31", "39417 A": "2026-10-31", "46788 A": "2047-06-30", "49042 H": "2051-05-31", "49116 X": "2052-09-30", "46790 C": "2041-04-30", "46430 Z": "2044-03-31", "49044 K": "2050-03-31", "49041 G": "2054-02-28", "46451 Z": "2045-06-30", "39224 W": "2026-01-31", "00L": "1956-12-31", "00M": "1956-12-31", "00N": "1956-12-31", "00O": "1956-12-31", "00P": "1956-12-31", "00Q": "1956-12-31", "00R": "1956-12-31", "00S": "1956-12-31", "00T": "1956-12-31", "00U": "1956-12-31"}, "agents": [{"n": "Nasri Ridha", "p": "B.Horaires", "m": "38873 C", "fitr": ["C", null, null, null, null, null, "R", null, null, null, null, null], "adha": ["R", null, null, null, null, null]}, {"n": "Agent 00A", "p": "B.Horaires", "m": "00A", "fitr": [null, null, null, null, null, null, null, null, null, null, null, null], "adha": [null, null, null, null, null, null]}, {"n": "Agent 00B", "p": "B.Horaires", "m": "00B", "fitr": [null, null, null, null, null, null, null, null, null, null, null, null], "adha": [null, null, null, null, null, null]}, {"n": "Toumi Malik", "p": "Chef PC", "m": "39696 G", "fitr": [null, null, null, null, null, null, null, null, null, null, null, null], "adha": [null, null, null, null, null, null]}, {"n": "Khemiri Ramzi", "p": "PC", "m": "39676 H", "fitr": [null, null, null, null, null, null, "RC", null, null, null, null, null], "adha": ["RC", null, null, null, null, null]}, {"n": "Hannachi Mondher", "p": "Régulateur", "m": "39486 G", "fitr": ["R", null, null, null, null, null, null, null, null, null, null, null], "adha": [null, null, null, null, null, null]}, {"n": "Hemissi Sabri", "p": "B.Horaires", "m": "46594 T", "fitr": [null, null, null, null, null, null, null, null, null, null, null, null], "adha": [null, null, null, null, null, null]}, {"n": "Agent 00C", "p": "PC", "m": "00C", "fitr": [null, null, null, null, null, null, null, null, null, null, null, null], "adha": [null, null, null, null, null, null]}, {"n": "Agent 00D", "p": "PC", "m": "00D", "fitr": [null, null, null, null, null, null, null, null, null, null, null, null], "adha": [null, null, null, null, null, null]}, {"n": "Agent 00E", "p": "PC", "m": "00E", "fitr": [null, null, null, null, null, null, null, null, null, null, null, null], "adha": [null, null, null, null, null, null]}, {"n": "Oueslati Amor", "p": "B.Rapport d'incid.", "m": "38624 F", "fitr": ["F", null, null, null, null, null, "F", null, null, null, null, null], "adha": ["F", null, null, null, null, null]}, {"n": "Agent 00F", "p": "B.Rapport d'incid.", "m": "00F", "fitr": [null, null, null, null, null, null, null, null, null, null, null, null], "adha": [null, null, null, null, null, null]}, {"n": "Agent 00G", "p": "B.Rapport d'incid.", "m": "00G", "fitr": [null, null, null, null, null, null, null, null, null, null, null, null], "adha": [null, null, null, null, null, null]}, {"n": "Meftahi Henda", "p": "B.Ralentissement", "m": "39949 H", "fitr": [null, null, null, null, null, null, "RC", null, null, null, null, null], "adha": ["RC", null, null, null, null, null]}, {"n": "Agent 00H", "p": "B.Ralentissement", "m": "00H", "fitr": [null, null, null, null, null, null, null, null, null, null, null, null], "adha": [null, null, null, null, null, null]}, {"n": "Agent 00I", "p": "B.Ralentissement", "m": "00I", "fitr": [null, null, null, null, null, null, null, null, null, null, null, null], "adha": [null, null, null, null, null, null]}, {"n": "Ben Mahfoudh Rafaa", "p": "B.Retard", "m": "39420 D", "fitr": [null, null, null, null, null, null, "C", null, null, null, null, null], "adha": ["C", null, null, null, null, null]}, {"n": "Agent 00J", "p": "B.Retard", "m": "00J", "fitr": [null, null, null, null, null, null, null, null, null, null, null, null], "adha": [null, null, null, null, null, null]}, {"n": "Agent 00K", "p": "B.Retard", "m": "00K", "fitr": [null, null, null, null, null, null, null, null, null, null, null, null], "adha": [null, null, null, null, null, null]}, {"n": "Besbes Adel", "p": "Régulateur", "m": "39417 A", "fitr": [null, null, null, null, null, null, "C", null, null, null, null, null], "adha": ["C", null, null, null, null, null]}, {"n": "Cherni Hichem", "p": "Régulateur", "m": "46788 A", "fitr": [null, null, null, null, null, null, "C", null, null, null, null, null], "adha": ["C", null, null, null, null, null]}, {"n": "Ben Ouezdou Marouen", "p": "Régulateur", "m": "49042 H", "fitr": [null, null, null, null, null, null, "C", null, null, null, null, null], "adha": ["C", null, null, null, null, null]}, {"n": "Tissaoui Taoufik", "p": "Régulateur", "m": "49116 X", "fitr": [null, null, null, null, null, null, null, null, null, null, null, null], "adha": [null, null, null, null, null, null]}, {"n": "Achouri Mohamed", "p": "Régulateur", "m": "46790 C", "fitr": [null, null, null, null, null, null, null, null, null, null, null, null], "adha": [null, null, null, null, null, null]}, {"n": "Zekri Oussema", "p": "Régulateur", "m": "46430 Z", "fitr": [null, null, null, null, null, null, null, null, null, null, null, null], "adha": [null, null, null, null, null, null]}, {"n": "Djobbi Fahd", "p": "Régulateur", "m": "49044 K", "fitr": [null, null, null, null, null, null, null, null, null, null, null, null], "adha": [null, null, null, null, null, null]}, {"n": "Guantassi Hamdi", "p": "Régulateur", "m": "49041 G", "fitr": [null, null, null, null, null, null, null, null, null, null, null, null], "adha": [null, null, null, null, null, null]}, {"n": "Talbi Alaeddine", "p": "Régulateur", "m": "46451 Z", "fitr": ["R", null, null, null, null, null, "A", null, null, null, null, null], "adha": ["A", null, null, null, null, null]}, {"n": "Beltifa Mourad", "p": "Régulateur", "m": "39224 W", "fitr": [null, null, null, null, null, null, null, null, null, null, null, null], "adha": [null, null, null, null, null, null]}, {"n": "Agent 00L", "p": "Régulateur", "m": "00L", "fitr": [null, null, null, null, null, null, null, null, null, null, null, null], "adha": [null, null, null, null, null, null]}, {"n": "Agent 00M", "p": "Régulateur", "m": "00M", "fitr": [null, null, null, null, null, null, null, null, null, null, null, null], "adha": [null, null, null, null, null, null]}, {"n": "Agent 00N", "p": "Régulateur", "m": "00N", "fitr": [null, null, null, null, null, null, null, null, null, null, null, null], "adha": [null, null, null, null, null, null]}, {"n": "Agent 00O", "p": "Régulateur", "m": "00O", "fitr": [null, null, null, null, null, null, null, null, null, null, null, null], "adha": [null, null, null, null, null, null]}, {"n": "Agent 00P", "p": "Régulateur", "m": "00P", "fitr": [null, null, null, null, null, null, null, null, null, null, null, null], "adha": [null, null, null, null, null, null]}, {"n": "Agent 00Q", "p": "Régulateur", "m": "00Q", "fitr": [null, null, null, null, null, null, null, null, null, null, null, null], "adha": [null, null, null, null, null, null]}, {"n": "Agent 00R", "p": "Régulateur", "m": "00R", "fitr": [null, null, null, null, null, null, null, null, null, null, null, null], "adha": [null, null, null, null, null, null]}, {"n": "Agent 00S", "p": "Régulateur", "m": "00S", "fitr": [null, null, null, null, null, null, null, null, null, null, null, null], "adha": [null, null, null, null, null, null]}, {"n": "Agent 00T", "p": "Régulateur", "m": "00T", "fitr": [null, null, null, null, null, null, null, null, null, null, null, null], "adha": [null, null, null, null, null, null]}, {"n": "Agent 00U", "p": "Régulateur", "m": "00U", "fitr": [null, null, null, null, null, null, null, null, null, null, null, null], "adha": [null, null, null, null, null, null]}]};
 
 const DOW=['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'];
 const DOWL=['dimanche','lundi','mardi','mercredi','jeudi','vendredi','samedi'];
@@ -411,13 +500,9 @@ function parseT(c){
   m=c.match(/^(?:R\/)?N(?:\s+(.+))?$/);
   if(m){
     const isRepos = c.startsWith('R/');
-    return {
-      t: isRepos ? 'R' : 'N',
-      k: c,
+    return {t: isRepos ? 'R' : 'N', k: c,
       l: isRepos ? 'Repos (avant nuit)' : 'Nuit',
-      p: m[1] ? sp(m[1]) : '',
-      h: isRepos ? '' : HRS.N
-    };
+      p: m[1] ? sp(m[1]) : '', h: isRepos ? '' : HRS.N};
   }
   return {t:'X',k:c,l:c,p:'',h:''};
 }
@@ -445,12 +530,10 @@ const countAgents = n => n === 0 ? 'aucun agent'
 $('orgline').innerHTML = CFG.org1.replace(/&/g,'&amp;')+'<br>'+CFG.org2.replace(/&/g,'&amp;');
 $('titleline').textContent = CFG.title;
 
-// ---- Logo + favicon ----
 (function(){
   if (CFG.logoFile) {
     const img = document.getElementById('logoImg');
-    img.src = CFG.logoFile;
-    img.hidden = false;
+    img.src = CFG.logoFile; img.hidden = false;
     document.getElementById('mainHeader').classList.add('has-logo');
   }
   const fav = document.getElementById('favicon');
@@ -458,15 +541,12 @@ $('titleline').textContent = CFG.title;
   else if (CFG.logoFile) fav.href = CFG.logoFile;
 })();
 
-// ---- Sélecteur de mois + navigation inter-mois ----
 (function(){
   const selfId = (CFG.monthName + CFG.year).toLowerCase()
       .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
       .replace(/[^a-z0-9]/g,'');
-
   const selMois = document.getElementById('monthSelect');
   selMois.innerHTML = '<option>' + cap(CFG.monthName) + ' ' + CFG.year + '</option>';
-
   fetch('mois.json', {cache: 'no-store'})
     .then(r => r.ok ? r.json() : null)
     .then(data => {
@@ -476,8 +556,7 @@ $('titleline').textContent = CFG.title;
       selMois.innerHTML = '';
       sorted.forEach(m => {
         const opt = document.createElement('option');
-        opt.value = m.file;
-        opt.textContent = m.label;
+        opt.value = m.file; opt.textContent = m.label;
         if (m.id === selfId) opt.selected = true;
         selMois.appendChild(opt);
       });
@@ -497,8 +576,7 @@ $('titleline').textContent = CFG.title;
           a.href = n.file; a.textContent = n.label + ' →'; a.hidden = false;
         }
       }
-    })
-    .catch(() => {});
+    }).catch(() => {});
 })();
 
 const sel=$('sel');
@@ -509,9 +587,7 @@ const slug=n=>n.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase()
 
 // ===== ONGLET RC / CONGÉS =====
 const RECAP_BY_SLUG = {};
-if (Array.isArray(RECAP)) {
-  RECAP.forEach(r => { RECAP_BY_SLUG[slug(r.n)] = r; });
-}
+if (Array.isArray(RECAP)) RECAP.forEach(r => { RECAP_BY_SLUG[slug(r.n)] = r; });
 
 function recLineHTML(label, v, opts){
   opts = opts || {};
@@ -523,16 +599,12 @@ function recLineHTML(label, v, opts){
   if (opts.sub)    cls.push('sub');
   if (opts.first)  cls.push('first');
   if (opts.last)   cls.push('last');
-  const subTxt = opts.subtitle
-    ? '<span class="sub">(' + opts.subtitle + ')</span>' : '';
+  const subTxt = opts.subtitle ? '<span class="sub">(' + opts.subtitle + ')</span>' : '';
   const vStr = (v === null || v === undefined)
     ? '<span style="color:var(--muted);font-weight:500">—</span>' : v;
   return `<div class="rec-line${cls.length ? ' ' + cls.join(' ') : ''}">
-    <span class="k">${label}${subTxt}</span>
-    <span class="v">${vStr}</span>
-  </div>`;
+    <span class="k">${label}${subTxt}</span><span class="v">${vStr}</span></div>`;
 }
-
 function rcCardRecap(d){
   const label = d.pris + ' pris · ' + d.report + ' à reporter';
   const html =
@@ -545,12 +617,9 @@ function rcCardRecap(d){
     + recLineHTML('Repos Compensatoires validés', d.valides, {key:true, blue:true})
     + recLineHTML('Pris ce mois', d.pris, {key:true, orange:true})
     + recLineHTML('À reporter',   d.report, {key:true, green:true});
-  return `<div class="rec-card rc">
-    <h3>Repos Compensatoires (RC)<small>${label}</small></h3>
-    <div class="rec-lines">${html}</div>
-  </div>`;
+  return `<div class="rec-card rc"><h3>Repos Compensatoires (RC)<small>${label}</small></h3>
+    <div class="rec-lines">${html}</div></div>`;
 }
-
 function cgCardRecap(d){
   const label = d.pris + ' pris · ' + d.report + ' à reporter';
   const html =
@@ -559,56 +628,159 @@ function cgCardRecap(d){
     + recLineHTML('Congés validés', d.valides, {key:true, blue:true})
     + recLineHTML('Pris ce mois', d.pris, {key:true, orange:true})
     + recLineHTML('À reporter',   d.report, {key:true, green:true});
-  return `<div class="rec-card cg">
-    <h3>Congés (C)<small>${label}</small></h3>
-    <div class="rec-lines">${html}</div>
-  </div>`;
+  return `<div class="rec-card cg"><h3>Congés (C)<small>${label}</small></h3>
+    <div class="rec-lines">${html}</div></div>`;
 }
-
 function droitCardRecap(autorises){
-  return `<div class="rec-card droit">
-    <div class="row">
-      <span class="k">Congé annuel autorisé (${CFG.year})</span>
-      <span class="v">${autorises} jours</span>
-    </div>
-  </div>`;
+  return `<div class="rec-card droit"><div class="row">
+    <span class="k">Congé annuel autorisé (${CFG.year})</span>
+    <span class="v">${autorises} jours</span></div></div>`;
 }
-
 function drawRecap(){
-  const nameEl = $('rec-name');
-  const metaEl = $('rec-meta');
-  const container = $('rec-content');
-
+  const nameEl = $('rec-name'), metaEl = $('rec-meta'), container = $('rec-content');
   if (sel.value === '' || AG[+sel.value] === undefined) {
     nameEl.textContent = 'Choisissez un agent dans « Mon planning »';
     metaEl.textContent = '';
-    container.innerHTML =
-      '<p class="note">Sélectionnez d\'abord votre nom dans l\'onglet ' +
-      '<b>Mon planning</b>, puis revenez ici.</p>';
+    container.innerHTML = '<p class="note">Sélectionnez d\'abord votre nom dans l\'onglet <b>Mon planning</b>, puis revenez ici.</p>';
     return;
   }
-
   const a = AG[+sel.value];
   nameEl.textContent = a.n;
   metaEl.innerHTML = `<span class="mat">${a.m}</span>`;
-
   const rec = RECAP_BY_SLUG[slug(a.n)];
   if (!rec) {
-    container.innerHTML =
-      '<p class="note">Aucune donnée RC / Congés disponible pour cet agent.</p>';
+    container.innerHTML = '<p class="note">Aucune donnée RC / Congés disponible pour cet agent.</p>';
     return;
   }
-
-  container.innerHTML =
-    '<div class="recap-duo">' +
-      '<div>' + rcCardRecap(rec.rc) + '</div>' +
-      '<div class="recap-col-right">' +
-        droitCardRecap(rec.conge.autorises) +
-        cgCardRecap(rec.conge) +
-      '</div>' +
-    '</div>';
+  container.innerHTML = '<div class="recap-duo"><div>' + rcCardRecap(rec.rc) + '</div>' +
+    '<div class="recap-col-right">' + droitCardRecap(rec.conge.autorises) +
+    cgCardRecap(rec.conge) + '</div></div>';
 }
 
+// ===== ONGLET AÏD =====
+const CODE_INFO = {
+  'C':  { label:'Congé',              cls:'c'  },
+  'R':  { label:'Repos',              cls:'r'  },
+  'RC': { label:'Repos compensatoire',cls:'rc' },
+  'F':  { label:'Férié',              cls:'f'  },
+  'A':  { label:'Absent',             cls:'a'  }
+};
+
+function aidIsBureau(a){ return /^B\./i.test((a.p||'').trim()); }
+function aidIsFictif(a){ return (a.m||'').trim().length < 5; }
+function aidIsAlreadyRetired(a){
+  if (!AID || !AID.retraites) return false;
+  const d = AID.retraites[a.m];
+  if (!d) return false;
+  return new Date(d) < new Date();
+}
+function aidIsPartantBefore(a, aidKey){
+  if (!AID || !AID.retraites) return false;
+  const d = AID.retraites[a.m];
+  if (!d) return false;
+  const n1 = AID.datesN1 && AID.datesN1[aidKey];
+  if (!n1) return false;
+  const dateRetr = new Date(d);
+  const dateAid = new Date(n1);
+  return dateRetr >= new Date() && dateRetr < dateAid;
+}
+
+function buildAidCard(aidKey, title, subtitle, icon, cls){
+  const base = (AID.agents || []).filter(a =>
+    !aidIsBureau(a) && !aidIsFictif(a) && !aidIsAlreadyRetired(a)
+  );
+  const prio = [], off = [], retr = [];
+  base.forEach(a => {
+    if (aidIsPartantBefore(a, aidKey)) retr.push(a);
+    else if (a[aidKey] && a[aidKey][0] === null) prio.push(a);
+    else off.push(a);
+  });
+
+  const prioHTML = prio.map(a => `<li><div class="info">
+    <span class="nm">${a.n}</span>
+    <span class="meta">${a.m} · ${a.p}</span></div></li>`).join('')
+    || '<li style="color:var(--muted);font-style:italic;padding:8px 0">Aucun</li>';
+
+  const offHTML = off.map(a => {
+    const code = (a[aidKey] && a[aidKey][0]) || '';
+    const info = CODE_INFO[code] || { label: code, cls: 'f' };
+    return `<li><div class="info">
+      <span class="nm">${a.n}</span>
+      <span class="meta">${a.m} · ${a.p}</span></div>
+      <span class="badge ${info.cls}">${code} · ${info.label}</span></li>`;
+  }).join('') || '<li style="color:var(--muted);font-style:italic;padding:8px 0">Aucun</li>';
+
+  const retrHTML = retr.map(a => `<li><div class="info">
+    <span class="nm">${a.n}</span>
+    <span class="meta">${a.m} · ${a.p}</span></div></li>`).join('');
+
+  const retrHint = retr.length === 1
+    ? `Cet agent n'est plus concerné par la priorité du prochain ${title} suite à son départ à la retraite.`
+    : `Ces agents ne sont plus concernés par la priorité du prochain ${title} suite à leur départ à la retraite.`;
+
+  const retrBlock = retr.length > 0
+    ? `<div class="retr-block"><h4>🎓 Quittent l'effectif</h4>
+         <p class="hint">${retrHint}</p><ul>${retrHTML}</ul></div>`
+    : '';
+
+  return `<div class="aid-card ${cls}">
+    <header><span class="icon">${icon}</span><div>
+      <h3>${title}</h3><span class="sub">${subtitle}</span></div></header>
+    <div class="aid-stats">
+      <div class="aid-stat prio"><div class="n">${prio.length}</div>
+        <div class="l">Prioritaires</div></div>
+      <div class="aid-stat off"><div class="n">${off.length}</div>
+        <div class="l">Non prioritaires</div></div>
+      <div class="aid-stat retr"><div class="n">${retr.length}</div>
+        <div class="l">🎓 Retraite</div></div>
+    </div>
+    <div class="prio-block">
+      <h4>⭐ Prioritaires pour ${(AID && AID.annee ? AID.annee + 1 : '')}</h4>
+      <p class="hint">Ces agents ont travaillé lors de ${title}
+        ${AID ? AID.annee : ''} et seront toujours en activité en
+        ${AID ? AID.annee + 1 : ''}.</p>
+      <ul class="prio-list">${prioHTML}</ul>
+    </div>
+    <details class="off-block" open>
+      <summary>N'ont pas travaillé en ${AID ? AID.annee : ''} — non prioritaires (${off.length})</summary>
+      <ul>${offHTML}</ul>
+    </details>
+    ${retrBlock}
+  </div>`;
+}
+
+function drawAid(){
+  // Règles (année dynamique)
+  if (AID && AID.annee) {
+    $('ruleNoWork').innerHTML =
+      `L'agent s'étant trouvé en <b>Congé (C)</b>,
+       <b>Congé exceptionnel (Cexp)</b>, <b>Repos (R)</b>,
+       <b>Repos compensatoire (RC)</b>, <b>Férié (F)</b>,
+       <b>Maladie (M)</b> ou <b>Absent (A)</b> lors de l'un des
+       deux Aïds en ${AID.annee} <b>ne sera pas prioritaire</b> au prochain
+       <span class="hl-blue">même Aïd</span>.`;
+    $('ruleRepos').innerHTML =
+      `L'agent en position de <b>Repos (R)</b> lors d'un prochain
+       <span class="hl-blue">Aïd</span> n'est en aucun cas tenu d'assurer
+       le service lors de ce dernier, <b>même s'il n'est pas
+       prioritaire</b>.`;
+
+    $('aidGrid').innerHTML =
+        buildAidCard('fitr', "Aïd el-Fitr", `Année ${AID.annee}`, '🌙', 'fitr')
+      + buildAidCard('adha', "Aïd al-Adha", `Année ${AID.annee}`, '🐑', 'adha');
+  } else {
+    $('aidGrid').innerHTML =
+      '<p class="note">Aucune donnée Aïd disponible. ' +
+      'Lancez un export « Pointage Début du mois » pour la générer.</p>';
+  }
+}
+
+// Toggle règles
+document.getElementById('rulesToggle').addEventListener('click', () => {
+  document.getElementById('rulesBox').classList.toggle('collapsed');
+});
+
+// ===== Rendu planning / jour / tableau =====
 function drawAgent(){
   if(sel.value===''){$('wn').textContent='Choisissez votre nom dans la liste';
     $('wp').textContent='';$('grid').innerHTML='';$('stats').innerHTML='';drawRecap();return}
@@ -653,12 +825,12 @@ function drawAgent(){
     const t = chip.dataset.t;
     const on = () => grid.querySelectorAll('.cell[data-type="'+t+'"]')
                        .forEach(c => c.classList.add('hl'));
-    const off = () => grid.querySelectorAll('.cell.hl')
+    const off2 = () => grid.querySelectorAll('.cell.hl')
                        .forEach(c => c.classList.remove('hl'));
     chip.addEventListener('mouseenter', on);
-    chip.addEventListener('mouseleave', off);
+    chip.addEventListener('mouseleave', off2);
     chip.addEventListener('touchstart', on, {passive:true});
-    chip.addEventListener('touchend',   off);
+    chip.addEventListener('touchend',   off2);
   });
   drawRecap();
 }
@@ -703,8 +875,7 @@ function drawDay(scroll){
            ['B','Bureaux RRR (Ret / Rap / Ral)'],['RC','Repos compensatoire (RC)'],
            ['R','Repos (R, R/N)'],['C','Congé (C)'],['F','Férié (F)'],['D','D'],
            ['A','Absent (A)'],['Cexp','Congé exceptionnel (Cexp)'],
-           ['Mal','Maladie (M)'],['V','Visite médicale (V)'],
-           ['FOR','Formation (FOR)']];
+           ['Mal','Maladie (M)'],['V','Visite médicale (V)'],['FOR','Formation (FOR)']];
   let h='';
   G.forEach(([t,l])=>{const L=by[t];if(!L)return;
     h+='<div class="grp"><h3>'+l+' <span>'
@@ -740,8 +911,7 @@ function drawTable(){
       const isA = (raw||'').trim() === 'A';
       const endCls = (i===today && r===lastRow) ? ' tdy-end' : '';
       h+='<td style="color:'+fc(fl)+'" class="cd f-'+fl
-        +(isA?' code-A':'')
-        +(i===NOV-1?' mois':'')+(i===today?' tdy':'')+endCls
+        +(isA?' code-A':'')+(i===NOV-1?' mois':'')+(i===today?' tdy':'')+endCls
         +'" title="'+raw+'">'+raw+'</td>';
     });
     h+='</tr>';
@@ -754,73 +924,54 @@ function drawTable(){
 }
 
 function tab(n){
-  ['agent','jour','tab','rec'].forEach(k=>{
+  ['agent','jour','tab','rec','aid'].forEach(k=>{
     $('v-'+k).hidden = (n!==k);
     $('tab-'+k).setAttribute('aria-selected',String(n===k));
   });
   store.set('tab',n); window.scrollTo(0,0);
   if(n==='jour') drawDay(true);
   if(n==='rec')  drawRecap();
+  if(n==='aid')  drawAid();
 }
-['agent','jour','tab','rec'].forEach(k=>$('tab-'+k).onclick=()=>tab(k));
+['agent','jour','tab','rec','aid'].forEach(k=>$('tab-'+k).onclick=()=>tab(k));
 sel.onchange=drawAgent;
 
 const hs=(location.hash||'').slice(1);
 const hi=AG.findIndex(a=>slug(a.n)===hs);
 const savedAgent=store.get('agent');
 let idxFromSaved = -1;
-if (savedAgent) {
-  idxFromSaved = AG.findIndex(a => slug(a.n) === savedAgent);
-}
+if (savedAgent) idxFromSaved = AG.findIndex(a => slug(a.n) === savedAgent);
 if(hi>=0) sel.value=hi;
 else if(idxFromSaved >= 0) sel.value=idxFromSaved;
 else sel.value='';
-drawAgent(); drawDay(false); drawTable();
+drawAgent(); drawDay(false); drawTable(); drawAid();
 const savedTab = store.get('tab');
 if (hs === 'jour') tab('jour');
 else if (hs === 'pointage' || hs === 'tableau') tab('tab');
 else if (hs === 'recap' || hs === 'rc' || hs === 'conges') tab('rec');
+else if (hs === 'aid' || hs === 'aids') tab('aid');
 else if (savedTab === 'jour') tab('jour');
 else if (savedTab === 'tab') tab('tab');
 else if (savedTab === 'rec') tab('rec');
+else if (savedTab === 'aid') tab('aid');
 
-// ---- Header rétractable au scroll (mobile uniquement) ----
 (function(){
   const header = document.getElementById('mainHeader');
   if (!header) return;
-  let lastY = window.scrollY || 0;
-  let ticking = false;
-  const THRESHOLD = 6;
-  const TOP_ZONE  = 40;
-  const isMobile  = () => window.innerWidth <= 700;
-
+  let lastY = window.scrollY || 0, ticking = false;
+  const isMobile = () => window.innerWidth <= 700;
   function updateHeader(){
-    if (!isMobile()) {
-      header.classList.remove('header-hidden');
-      ticking = false;
-      return;
-    }
+    if (!isMobile()) { header.classList.remove('header-hidden'); ticking = false; return; }
     const currentY = window.scrollY;
     const delta = currentY - lastY;
-
-    if (currentY <= TOP_ZONE) {
-      header.classList.remove('header-hidden');
-    } else if (delta > THRESHOLD) {
-      header.classList.add('header-hidden');
-    } else if (delta < -THRESHOLD) {
-      header.classList.remove('header-hidden');
-    }
-    lastY = currentY;
-    ticking = false;
+    if (currentY <= 40) header.classList.remove('header-hidden');
+    else if (delta > 6) header.classList.add('header-hidden');
+    else if (delta < -6) header.classList.remove('header-hidden');
+    lastY = currentY; ticking = false;
   }
-
   window.addEventListener('scroll', () => {
-    if (!ticking) {
-      window.requestAnimationFrame(updateHeader);
-      ticking = true;
-    }
+    if (!ticking) { window.requestAnimationFrame(updateHeader); ticking = true; }
   }, {passive: true});
-
   window.addEventListener('resize', () => {
     if (!isMobile()) header.classList.remove('header-hidden');
   });
