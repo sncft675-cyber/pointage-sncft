@@ -3,7 +3,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Pointage Régulation et PC</title>
 <link rel="icon" id="favicon" href="data:,">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
 <style>
 :root{
   --bg:#eef2f7; --surface:#ffffff; --fg:#16222f; --muted:#5d6b7b; --line:#d3dbe6;
@@ -37,7 +37,6 @@ body{margin:0;background:var(--bg);color:var(--fg);
   font:16px/1.4 var(--font-b);font-family:var(--font-b)}
 .wrap{max-width:1100px;margin:0 auto;padding-inline:16px;padding-block:0 40px}
 
-/* ===== Header ===== */
 header{background:var(--head);color:var(--head-fg);margin-inline:-16px;
   padding:18px 16px 0;position:sticky;top:0;z-index:5}
 .top-row{display:flex;align-items:center;gap:16px;margin-bottom:8px;min-height:64px}
@@ -50,7 +49,6 @@ header:not(.has-logo) .top-row{justify-content:center;text-align:center}
 header:not(.has-logo) .top-row .org{text-align:center}
 header h1{font:700 24px/1.15 var(--font-d);margin:6px 0 10px;letter-spacing:.01em}
 
-/* ===== MOBILE : header compact + rétractable ===== */
 @media (max-width:700px){
   .logo{display:none !important}
   header{padding:10px 12px 0;
@@ -65,19 +63,17 @@ header h1{font:700 24px/1.15 var(--font-d);margin:6px 0 10px;letter-spacing:.01e
   .month-select{font-size:16px;padding:8px 30px 8px 12px;letter-spacing:.08em}
   .nav-bar{padding:2px 0 4px;font-size:11px;min-height:auto}
   .nav-link{padding:3px 8px;font-size:11px}
-  .tabs button{font-size:14px;padding:6px 4px}
+  .tabs button{font-size:13px;padding:6px 4px}
 }
-/* Téléphone en paysage : header ultra compact */
 @media (max-height:500px) and (max-width:900px){
   header{padding:6px 12px 0}
   .top-row{display:none}
   header h1{font-size:14px;margin:0 0 4px}
   .month-select{font-size:14px;padding:6px 26px 6px 10px}
   .nav-bar{padding:0 0 3px}
-  .tabs button{font-size:13px;padding:5px 4px}
+  .tabs button{font-size:12px;padding:5px 4px}
 }
 
-/* ===== Sélecteur de mois ===== */
 .month-select-wrap{position:relative;margin:0 0 10px}
 .month-select{
   width:100%;
@@ -118,8 +114,8 @@ header h1{font:700 24px/1.15 var(--font-d);margin:6px 0 10px;letter-spacing:.01e
 .nav-link[hidden]{display:none}
 .nav-home{flex:none;max-width:none}
 .tabs{display:flex;gap:4px}
-.tabs button{flex:1;min-width:0;font:600 17px var(--font-d);letter-spacing:.03em;
-  text-transform:uppercase;padding:10px 8px;border:0;border-radius:6px 6px 0 0;
+.tabs button{flex:1;min-width:0;font:600 15px var(--font-d);letter-spacing:.03em;
+  text-transform:uppercase;padding:10px 6px;border:0;border-radius:6px 6px 0 0;
   background:transparent;color:var(--head-fg);opacity:.7;cursor:pointer}
 .tabs button[aria-selected="true"]{background:var(--bg);color:var(--fg);opacity:1}
 :focus-visible{outline:3px solid var(--accent);outline-offset:2px}
@@ -239,9 +235,71 @@ table.t{border-collapse:separate;border-spacing:0;font-size:13px;width:max-conte
 .t td.mois{border-right:2px solid var(--fg)}
 .hint,.note{font-size:13px;color:var(--muted)}
 @media (max-width:420px){
-  .tabs button{font-size:15px;padding-inline:2px}
+  .tabs button{font-size:13px;padding-inline:2px}
   .cell{min-height:60px}.cell .k{font-size:clamp(12px,4.2vw,18px)}
 }
+
+/* ===== Onglet RC / Congés ===== */
+.recap-who{display:flex;flex-wrap:wrap;gap:4px 12px;align-items:baseline;
+  justify-content:space-between}
+.recap-who b{font:700 28px/1.1 var(--font-d)}
+.recap-who .meta{color:var(--muted);font-size:16px}
+.recap-who .meta .mat{font-weight:700;color:var(--accent);
+  letter-spacing:.03em}
+.recap-duo{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+.recap-col-right{display:flex;flex-direction:column;gap:14px}
+@media (max-width:640px){.recap-duo{grid-template-columns:1fr}}
+
+.rec-card{background:var(--surface);border:1px solid var(--line);
+  border-radius:12px;overflow:hidden;display:flex;flex-direction:column}
+.rec-card h3{margin:0;padding:12px 16px;font:700 18px var(--font-d);
+  letter-spacing:.05em;text-transform:uppercase;color:#fff;
+  display:flex;justify-content:space-between;align-items:baseline;
+  gap:10px;flex-wrap:wrap}
+.rec-card.rc h3{background:#8064a2}
+.rec-card.cg h3{background:#4f6228}
+.rec-card h3 small{font:500 12px var(--font-b);letter-spacing:0;
+  text-transform:none;opacity:.9}
+
+.rec-card.droit{background:linear-gradient(to right,
+  rgba(79,98,40,.10),rgba(79,98,40,.03));border-color:rgba(79,98,40,.4)}
+.rec-card.droit .row{display:flex;justify-content:space-between;
+  align-items:baseline;padding:14px 16px;gap:10px;flex-wrap:wrap}
+.rec-card.droit .k{font:700 14px var(--font-b);color:#4f6228;
+  letter-spacing:.03em;text-transform:uppercase}
+.rec-card.droit .v{font:700 24px var(--font-d);color:#4f6228;
+  font-variant-numeric:tabular-nums;line-height:1}
+
+.rec-lines{display:flex;flex-direction:column}
+.rec-line{display:flex;justify-content:space-between;align-items:flex-start;
+  padding:9px 16px;border-top:1px solid var(--line);font-size:14px;
+  gap:8px;background:var(--surface)}
+.rec-line:first-child{border-top:0}
+.rec-line .k{color:var(--muted);display:flex;flex-direction:column;gap:2px}
+.rec-line .k .sub{font-size:11px;font-style:italic;
+  color:rgba(93,107,123,.85);font-weight:400}
+.rec-line .v{font:700 17px var(--font-d);font-variant-numeric:tabular-nums;
+  flex:none}
+
+.rec-line.key{align-items:baseline}
+.rec-line.key .k{color:var(--fg);font-weight:600;font-style:normal}
+.rec-line.key .v{font-size:24px;font-weight:700}
+
+.rec-line.key.blue{background:rgba(46,111,174,.06);
+  border-top:2px solid rgba(46,111,174,.25)}
+.rec-line.key.blue .v{color:var(--accent)}
+.rec-line.key.orange{background:rgba(199,125,30,.08);
+  border-top:2px solid rgba(199,125,30,.30)}
+.rec-line.key.orange .k{color:#8a5410}
+.rec-line.key.orange .v{color:#c77d1e}
+.rec-line.key.green{background:rgba(61,139,61,.07);
+  border-top:2px solid rgba(61,139,61,.28)}
+.rec-line.key.green .k{color:#2b632b}
+.rec-line.key.green .v{color:#3d8b3d}
+
+.rec-line.sub{background:var(--surface)}
+.rec-line.sub.first{border-top:2px solid var(--line)}
+.rec-line.sub.last{border-bottom:2px solid var(--line)}
 </style></head><body>
 <div class="wrap">
 <header id="mainHeader">
@@ -264,6 +322,7 @@ table.t{border-collapse:separate;border-spacing:0;font-size:13px;width:max-conte
     <button role="tab" id="tab-agent" aria-selected="true" aria-controls="v-agent">Mon planning</button>
     <button role="tab" id="tab-jour" aria-selected="false" aria-controls="v-jour">Par jour</button>
     <button role="tab" id="tab-tab" aria-selected="false" aria-controls="v-tab">Pointage complet</button>
+    <button role="tab" id="tab-rec" aria-selected="false" aria-controls="v-rec">RC / Congés</button>
   </div>
 </header>
 
@@ -290,11 +349,20 @@ table.t{border-collapse:separate;border-spacing:0;font-size:13px;width:max-conte
   <div class="tw"><table class="t" id="tbl"></table></div>
   <div class="leg"></div>
 </section>
+
+<section id="v-rec" role="tabpanel" aria-labelledby="tab-rec" hidden>
+  <div class="recap-who">
+    <b id="rec-name">Choisissez un agent dans « Mon planning »</b>
+    <span class="meta" id="rec-meta"></span>
+  </div>
+  <div id="rec-content"></div>
+</section>
 </div>
 
 <script>
 const CFG = {"org1": "SOCIETE NATIONALE DES CHEMINS DE FER TUNISIENS", "org2": "Département Gestion Des Circulations Ferroviaires", "title": "Pointage du personnel de la Régulation et PC Tunis", "year": 2026, "month": 8, "monthName": "septembre", "nextMonthName": "octobre", "ndays": 39, "novStart": 30, "logoFile": "logo.svg", "faviconFile": "favicon.svg"};
-const AG = [{"n": "Nasri Ridha", "p": "B.Programmation", "m": "38873 C", "s": 30, "c": ["=", "=", "=", "=", "=", "R", "=", "=", "=", "=", "=", "=", "R", "C", "C", "C", "C", "C", "C", "R", "C", "C", "C", "C", "C", "=", "R", "=", "=", "=", "=", "=", "=", "R", "=", "=", "=", "=", "="], "f": "wwwwwwwwwwwwwggggggwgggggwwwwwwwwwwwwww"}, {"n": "Cherni Hichem", "p": "B.Programmation", "m": "46788 A", "s": 49, "c": ["=", "Ret", "Ret", "Ret", "RC", "R", "Ret", "Ret", "-VN", "+VN", "Ret", "RC", "R", "Cexp", "Cexp", "Cexp", "Cexp", "Cexp", "Cexp", "Cexp", "R", "Ret", "=", "=", "=", "R", "+L5", "V", "Ral", "Ral", "+L5", "-VN", "-L5", "R", "Ret", "+VN/L5", "+L5", "-L5", "-VN"], "f": "wbbbGwbbwwbGwwwwwwwwwbwwwwwObbwwwwbvwww"}, {"n": "Toumi Malik", "p": "Chef PC", "m": "39696 G", "s": 69, "c": ["=", "Ret", "=", "=PC", "=PC", "R", "=", "=", "=", "=", "R", "=PC", "=PC", "=", "=", "=", "=", "=", "R", "=PC", "=PC", "=", "=", "=", "=PC", "=PC", "R", "=", "=", "=", "=", "R", "=PC", "=PC", "RC", "RC", "=", "=", "="], "f": "wbwppwwwwwwppwwwwwwppwwwppwwwwwwppGGwww"}, {"n": "Khemiri Ramzi", "p": "PC", "m": "39676 H", "s": 68, "c": ["=PC", "=PC", "=PC", "R", "R", "=PC", "=PC", "=PC", "=PC", "=PC", "=PC", "R", "R", "=PC", "=PC", "=PC", "=PC", "=PC", "=PC", "RC", "RC", "=PC", "=PC", "=PC", "RC", "RC", "=PC", "=PC", "=PC", "=PC", "=PC", "=PC", "R", "R", "=PC", "=PC", "=PC", "=PC", "=PC"], "f": "wwwwwwwwwwwwwwwwwwwGGwwwGGwwwwwwwwwwwww"}, {"n": "Hemissi Sabri", "p": "PC", "m": "46594 T", "s": 31, "c": ["RC", "RC", "RC", "RC", "RC", "R", "RC", "RC", "RC", "RC", "RC", "RC", "R", "RC", "Ret", "RC", "RC", "-L5/VN", "-VN/L5", "R", "-VN", "+VN", "+L5", "-VN", "-L5", "+VN", "R", "-VN/L5", "-L5", "Ret", "Ret", "Rap", "RC", "R", "Ral", "Ral", "Ral", "Ral", "Ral"], "f": "GGGGGwGGGGGGwGbGGvvwwwwwwwwvwbbbGwbbbbb"}, {"n": "Oueslati Amor", "p": "B.Rapport d'incid.", "m": "38624 F", "s": 68, "c": ["", "", "", "", "R", "R", "", "", "C", "C", "", "R", "R", "", "", "", "C", "C", "R", "R", "", "", "", "", "", "R", "R", "", "", "", "C", "C", "R", "R", "", "", "", "", ""], "f": "wwwwwwwwggwwwwwwggwwwwwwwwwwwwggwwwwwww"}, {"n": "Meftahi Henda", "p": "B.Ralentissement", "m": "39949 H", "s": 109, "c": ["", "", "", "", "", "R", "", "", "", "", "", "", "R", "", "", "", "", "", "", "R", "", "", "", "", "", "", "R", "", "", "", "", "", "", "R", "C", "C", "C", "C", "C"], "f": "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwggggg"}, {"n": "Ben Mahfoudh Rafaa", "p": "B.Retard", "m": "39420 D", "s": 26, "c": ["", "C", "", "", "", "R", "", "", "", "", "", "", "R", "", "C", "", "", "", "", "R", "", "", "", "", "", "", "R", "", "", "RC", "C", "", "", "R", "", "", "", "", ""], "f": "wgwwwwwwwwwwwwgwwwwwwwwwwwwwwGgwwwwwwww"}, {"n": "Besbes Adel", "p": "Régulateur", "m": "39417 A", "s": 35, "c": ["RC", "+L5", "+VN", "-L5", "-VN", "R/N L5", "N VN", "/", "R", "RC", "+L5", "-VN", "-L5", "R", "C", "C", "R", "C", "C", "C", "C", "R", "C", "C", "R", "C", "C", "C", "C", "R", "R", "C", "C", "C", "C", "R", "C", "C", "R"], "f": "GwwwwwwwwGwwwwggwggggwggwggggwwggggwggw"}, {"n": "Ben Ouezdou Marouen", "p": "Régulateur", "m": "49042 H", "s": 36, "c": ["R", "RC", "RC", "RC", "RC", "R", "RC", "RC", "R", "RC", "RC", "Cexp", "Cexp", "Cexp", "R", "R", "RC", "RC", "RC", "C", "C", "R", "C", "C", "R", "C", "C", "C", "C", "R", "C", "C", "R", "+L5", "+VN", "-L5", "-VN", "R/N L5", "N VN"], "f": "wGGGGwGGwGGwwwwwGGGggwggwggggwggwwwwwww"}, {"n": "Tissaoui Taoufik", "p": "Régulateur", "m": "49116 X", "s": 41, "c": ["R", "+VN", "+L5", "-VN", "-L5", "R/N VN", "N L5", "/", "R", "+L5", "+VN", "-L5", "-VN", "R/N", "N", "/", "R", "+VN", "+L5", "-VN/L5", "-L5", "R/N", "N", "/", "R", "+L5", "+VN", "V", "-VN", "R/N", "N", "/", "R", "+VN", "+L5", "-VN", "-L5", "R/N VN", "N L5"], "f": "wwwwwwwwwwwwwvvwwwwvwvvwwwwOwvvwwwwwwww"}, {"n": "Achouri Mohamed", "p": "Régulateur", "m": "46790 C", "s": 30, "c": ["N VN", "/", "R", "+VN", "+L5", "-VN", "-L5", "R/N VN", "N L5", "/", "R", "+L5", "+VN", "-L5", "-VN", "R/N L5", "N VN", "/", "R", "+VN", "+L5", "-VN", "-L5", "R/N VN", "N L5", "/", "R", "+L5", "+VN", "-L5", "-VN", "R/N L5", "N VN", "/", "R", "C", "C", "-VN", "-L5"], "f": "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwggww"}, {"n": "Zekri Oussema", "p": "Régulateur", "m": "46430 Z", "s": 65, "c": ["N L5", "/", "R", "+L5", "+VN", "-L5", "-VN", "R/N L5", "N VN", "/", "R", "+VN", "+L5", "-VN", "-L5", "R/N VN", "N L5", "/", "R", "+L5", "+VN", "-L5", "-VN", "R/N L5", "N VN", "/", "R", "+VN", "+L5", "-VN", "-L5", "R/N VN", "N L5", "/", "R", "C", "+VN", "+L5", "+VN"], "f": "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwgwww"}, {"n": "Djobbi Fahd", "p": "Régulateur", "m": "49044 K", "s": 70, "c": ["RC", "R/N L5", "N VN", "/", "R", "+VN", "+L5", "-VN/L5", "-L5", "R/N VN", "N L5", "/", "R", "+L5/VN", "+VN/L5", "-L5/VN", "-VN/L5", "R/N L5", "N VN", "/", "R", "RC", "RC", "RC", "RC", "R/N VN", "N L5", "/", "R", "+L5/VN", "+VN", "-L5", "-VN", "R/N L5", "N VN", "/", "R", "+VN", "+L5"], "f": "GwwwwwwvwwwwwvvvvwwwwGGGGwwwwvwwwwwwwww"}, {"n": "Guantassi Hamdi", "p": "Régulateur", "m": "49041 G", "s": 27, "c": ["-L5/VN", "R/N VN", "N L5", "/", "R", "+L5", "+VN", "RC", "RC", "R/N L5", "N VN", "/", "R", "RC", "RC", "RC", "RC", "R/N VN", "N L5", "/", "R", "+L5", "+VN", "-L5", "-VN", "R/N L5", "N VN", "/", "R", "RC", "RC", "RC", "C", "R/N VN", "N L5", "/", "R", "C", "C"], "f": "vwwwwwwGGwwwwGGGGwwwwwwwwwwwwGGGgwwwwgg"}, {"n": "Talbi Alaeddine", "p": "Régulateur", "m": "46451 Z", "s": 49, "c": ["+VN", "-L5", "-VN", "R/N L5", "N VN", "/", "R", "+VN", "+L5", "-VN", "-L5", "R/N VN", "N L5", "/", "R", "+L5/VN", "+VN/L5", "+L5", "+VN", "R/N L5", "N VN", "/", "R", "+VN", "+L5", "-VN", "-L5", "R/N VN", "N L5", "/", "R", "+L5", "+VN", "-L5", "A", "R/N L5", "N VN", "/", "R"], "f": "wwwwwwwwwwwwwwwvvwwwwwwwwwwwwwwwwwwwwww"}, {"n": "Hannachi Mondher", "p": "Régulateur", "m": "39486 G", "s": 50, "c": ["+L5", "-VN", "-L5", "R/N VN", "N L5", "/", "R", "+L5", "+VN", "-L5", "-VN", "R/N L5", "N VN", "/", "R", "Cexp", "Cexp", "C", "C", "R/N VN", "N L5", "/", "R", "+L5", "+VN", "-L5", "-VN", "R/N L5", "N VN", "/", "R", "+VN", "+L5", "-VN", "-L5/VN", "R/N VN", "N L5", "/", "R"], "f": "wwwwwwwwwwwwwwwwwggwwwwwwwwwwwwwwwvwwww"}];
+const AG = [{"n": "Nasri Ridha", "p": "B.Programmation", "m": "38873 C", "s": 30, "c": ["=", "=", "=", "=", "=", "R", "=", "=", "=", "=", "=", "=", "R", "C", "C", "C", "C", "C", "C", "R", "C", "C", "C", "C", "C", "=", "R", "=", "=", "=", "=", "=", "=", "R", "=", "=", "=", "=", "="], "f": "wwwwwwwwwwwwwggggggwgggggwwwwwwwwwwwwww"}, {"n": "Cherni Hichem", "p": "B.Programmation", "m": "46788 A", "s": 49, "c": ["=", "Ret", "Ret", "Ret", "RC", "R", "Ret", "Ret", "-VN", "+VN", "Ret", "RC", "R", "Cexp", "Cexp", "Cexp", "Cexp", "Cexp", "Cexp", "Cexp", "R", "Ret", "=", "=", "=", "R", "+L5", "V", "Ral", "Ral", "+L5", "-VN", "-L5", "R", "Ret", "+VN/L5", "+L5", "-L5/VN", "-VN"], "f": "wbbbGwbbwwbGwwwwwwwwwbwwwwwObbwwwwbvwvw"}, {"n": "Toumi Malik", "p": "Chef PC", "m": "39696 G", "s": 69, "c": ["=", "Ret", "=", "=PC", "=PC", "R", "=", "=", "=", "=", "R", "=PC", "=PC", "=", "=", "=", "=", "=", "R", "=PC", "=PC", "=", "=", "=", "=PC", "=PC", "R", "=", "=", "=", "=", "R", "=PC", "=PC", "RC", "RC", "=", "=", "="], "f": "wbwppwwwwwwppwwwwwwppwwwppwwwwwwppGGwww"}, {"n": "Khemiri Ramzi", "p": "PC", "m": "39676 H", "s": 68, "c": ["=PC", "=PC", "=PC", "R", "R", "=PC", "=PC", "=PC", "=PC", "=PC", "=PC", "R", "R", "=PC", "=PC", "=PC", "=PC", "=PC", "=PC", "RC", "RC", "=PC", "=PC", "=PC", "RC", "RC", "=PC", "=PC", "=PC", "=PC", "=PC", "=PC", "R", "R", "=PC", "=PC", "=PC", "=PC", "=PC"], "f": "wwwwwwwwwwwwwwwwwwwGGwwwGGwwwwwwwwwwwww"}, {"n": "Hemissi Sabri", "p": "PC", "m": "46594 T", "s": 31, "c": ["RC", "RC", "RC", "RC", "RC", "R", "RC", "RC", "RC", "RC", "RC", "RC", "R", "RC", "Ret", "RC", "RC", "-L5/VN", "-VN/L5", "R", "-VN", "+VN", "+L5", "-VN", "-L5", "+VN", "R", "-VN/L5", "-L5", "Ret", "Ret", "Rap", "RC", "R", "Ral", "Ral", "Ral", "Ral", "Ral"], "f": "GGGGGwGGGGGGwGbGGvvwwwwwwwwvwbbbGwbbbbb"}, {"n": "Oueslati Amor", "p": "B.Rapport d'incid.", "m": "38624 F", "s": 68, "c": ["", "", "", "", "R", "R", "", "", "C", "C", "", "R", "R", "", "", "", "C", "C", "R", "R", "", "", "", "", "", "R", "R", "", "", "", "C", "C", "R", "R", "", "", "", "", ""], "f": "wwwwwwwwggwwwwwwggwwwwwwwwwwwwggwwwwwww"}, {"n": "Meftahi Henda", "p": "B.Ralentissement", "m": "39949 H", "s": 109, "c": ["", "", "", "", "", "R", "", "", "", "", "", "", "R", "", "", "", "", "", "", "R", "", "", "", "", "", "", "R", "", "", "", "", "", "", "R", "C", "C", "C", "C", "C"], "f": "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwggggg"}, {"n": "Ben Mahfoudh Rafaa", "p": "B.Retard", "m": "39420 D", "s": 26, "c": ["", "C", "", "", "", "R", "", "", "", "", "", "", "R", "", "C", "", "", "", "", "R", "", "", "", "", "", "", "R", "", "", "RC", "C", "", "", "R", "", "", "", "", ""], "f": "wgwwwwwwwwwwwwgwwwwwwwwwwwwwwGgwwwwwwww"}, {"n": "Besbes Adel", "p": "Régulateur", "m": "39417 A", "s": 35, "c": ["RC", "+L5", "+VN", "-L5", "-VN", "R/N L5", "N VN", "/", "R", "RC", "+L5", "-VN", "-L5", "R", "C", "C", "R", "C", "C", "C", "C", "R", "C", "C", "R", "C", "C", "C", "C", "R", "R", "C", "C", "C", "C", "R", "C", "C", "R"], "f": "GwwwwwwwwGwwwwggwggggwggwggggwwggggwggw"}, {"n": "Ben Ouezdou Marouen", "p": "Régulateur", "m": "49042 H", "s": 36, "c": ["R", "RC", "RC", "RC", "RC", "R", "RC", "RC", "R", "RC", "RC", "Cexp", "Cexp", "Cexp", "R", "R", "RC", "RC", "RC", "C", "C", "R", "C", "C", "R", "C", "C", "C", "C", "R", "C", "C", "R", "+L5", "+VN", "-L5", "-VN", "R/N L5", "N VN"], "f": "wGGGGwGGwGGwwwwwGGGggwggwggggwggwwwwwww"}, {"n": "Tissaoui Taoufik", "p": "Régulateur", "m": "49116 X", "s": 41, "c": ["R", "+VN", "+L5", "-VN", "-L5", "R/N VN", "N L5", "/", "R", "+L5", "+VN", "-L5", "-VN", "R/N", "N", "/", "R", "+VN", "+L5", "-VN/L5", "-L5", "R/N", "N", "/", "R", "+L5", "+VN", "V", "-VN", "R/N", "N", "/", "R", "+VN", "+L5", "-VN", "-L5", "R/N VN", "N L5"], "f": "wwwwwwwwwwwwwvvwwwwvwvvwwwwOwvvwwwwwwww"}, {"n": "Achouri Mohamed", "p": "Régulateur", "m": "46790 C", "s": 30, "c": ["N VN", "/", "R", "+VN", "+L5", "-VN", "-L5", "R/N VN", "N L5", "/", "R", "+L5", "+VN", "-L5", "-VN", "R/N L5", "N VN", "/", "R", "+VN", "+L5", "-VN", "-L5", "R/N VN", "N L5", "/", "R", "+L5", "+VN", "-L5", "-VN", "R/N L5", "N VN", "/", "R", "C", "C", "C", "-L5"], "f": "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwgggw"}, {"n": "Zekri Oussema", "p": "Régulateur", "m": "46430 Z", "s": 65, "c": ["N L5", "/", "R", "+L5", "+VN", "-L5", "-VN", "R/N L5", "N VN", "/", "R", "+VN", "+L5", "-VN", "-L5", "R/N VN", "N L5", "/", "R", "+L5", "+VN", "-L5", "-VN", "R/N L5", "N VN", "/", "R", "+VN", "+L5", "-VN", "-L5", "R/N VN", "N L5", "/", "R", "C", "+VN", "+L5", "+VN"], "f": "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwgwww"}, {"n": "Djobbi Fahd", "p": "Régulateur", "m": "49044 K", "s": 70, "c": ["RC", "R/N L5", "N VN", "/", "R", "+VN", "+L5", "-VN/L5", "-L5", "R/N VN", "N L5", "/", "R", "+L5/VN", "+VN/L5", "-L5/VN", "-VN/L5", "R/N L5", "N VN", "/", "R", "RC", "RC", "RC", "RC", "R/N VN", "N L5", "/", "R", "+L5/VN", "+VN", "-L5", "-VN", "R/N L5", "N VN", "/", "R", "+VN", "+L5"], "f": "GwwwwwwvwwwwwvvvvwwwwGGGGwwwwvwwwwwwwww"}, {"n": "Guantassi Hamdi", "p": "Régulateur", "m": "49041 G", "s": 27, "c": ["-L5/VN", "R/N VN", "N L5", "/", "R", "+L5", "+VN", "RC", "RC", "R/N L5", "N VN", "/", "R", "RC", "RC", "RC", "RC", "R/N VN", "N L5", "/", "R", "+L5", "+VN", "-L5", "-VN", "R/N L5", "N VN", "/", "R", "RC", "RC", "RC", "C", "R/N VN", "N L5", "/", "R", "C", "C"], "f": "vwwwwwwGGwwwwGGGGwwwwwwwwwwwwGGGgwwwwgg"}, {"n": "Talbi Alaeddine", "p": "Régulateur", "m": "46451 Z", "s": 49, "c": ["+VN", "-L5", "-VN", "R/N L5", "N VN", "/", "R", "+VN", "+L5", "-VN", "-L5", "R/N VN", "N L5", "/", "R", "+L5/VN", "+VN/L5", "+L5", "+VN", "R/N L5", "N VN", "/", "R", "+VN", "+L5", "-VN", "-L5", "R/N VN", "N L5", "/", "R", "+L5", "+VN", "-L5", "A", "R/N L5", "N VN", "/", "R"], "f": "wwwwwwwwwwwwwwwvvwwwwwwwwwwwwwwwwwwwwww"}, {"n": "Hannachi Mondher", "p": "Régulateur", "m": "39486 G", "s": 50, "c": ["+L5", "-VN", "-L5", "R/N VN", "N L5", "/", "R", "+L5", "+VN", "-L5", "-VN", "R/N L5", "N VN", "/", "R", "Cexp", "Cexp", "C", "C", "R/N VN", "N L5", "/", "R", "+L5", "+VN", "-L5", "-VN", "R/N L5", "N VN", "/", "R", "+VN", "+L5", "-VN", "-L5/VN", "R/N VN", "N L5", "/", "R"], "f": "wwwwwwwwwwwwwwwwwggwwwwwwwwwwwwwwwvwwww"}];
+const RECAP = [{"n": "Nasri Ridha", "m": "38873 C", "rc": {"reliquat": 0, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 0, "pris": 0, "report": 0}, "conge": {"reliquat": 30, "autorises": 42, "valides": 30, "pris": 11, "perdus": 0, "report": 19}}, {"n": "Agent 00A", "m": "00A", "rc": {"reliquat": 0, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 0, "pris": 0, "report": 0}, "conge": {"reliquat": 42, "autorises": 42, "valides": 42, "pris": 0, "perdus": 0, "report": 42}}, {"n": "Agent 00B", "m": "00B", "rc": {"reliquat": 0, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 0, "pris": 0, "report": 0}, "conge": {"reliquat": 42, "autorises": 42, "valides": 42, "pris": 0, "perdus": 0, "report": 42}}, {"n": "Toumi Malik", "m": "39696 G", "rc": {"reliquat": 2, "double": 0, "depl": 2, "aid": 0, "except": null, "valides": 4, "pris": 0, "report": 4}, "conge": {"reliquat": 69, "autorises": 42, "valides": 69, "pris": 0, "perdus": 0, "report": 69}}, {"n": "Khemiri Ramzi", "m": "39676 H", "rc": {"reliquat": 0, "double": 0, "depl": 4, "aid": 0, "except": null, "valides": 4, "pris": 4, "report": 0}, "conge": {"reliquat": 68, "autorises": 42, "valides": 68, "pris": 0, "perdus": 0, "report": 68}}, {"n": "Hannachi Mondher", "m": "39486 G", "rc": {"reliquat": 0, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 0, "pris": 0, "report": 0}, "conge": {"reliquat": 50, "autorises": 42, "valides": 50, "pris": 2, "perdus": 0, "report": 48}}, {"n": "Hemissi Sabri", "m": "46594 T", "rc": {"reliquat": 11, "double": 3, "depl": 2, "aid": 0, "except": null, "valides": 16, "pris": 14, "report": 2}, "conge": {"reliquat": 31, "autorises": 42, "valides": 31, "pris": 0, "perdus": 0, "report": 31}}, {"n": "Agent 00C", "m": "00C", "rc": {"reliquat": 0, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 0, "pris": 0, "report": 0}, "conge": {"reliquat": 42, "autorises": 42, "valides": 42, "pris": 0, "perdus": 0, "report": 42}}, {"n": "Agent 00D", "m": "00D", "rc": {"reliquat": 0, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 0, "pris": 0, "report": 0}, "conge": {"reliquat": 42, "autorises": 42, "valides": 42, "pris": 0, "perdus": 0, "report": 42}}, {"n": "Agent 00E", "m": "00E", "rc": {"reliquat": 0, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 0, "pris": 0, "report": 0}, "conge": {"reliquat": 42, "autorises": 42, "valides": 42, "pris": 0, "perdus": 0, "report": 42}}, {"n": "Oueslati Amor", "m": "38624 F", "rc": {"reliquat": 0, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 0, "pris": 0, "report": 0}, "conge": {"reliquat": 68, "autorises": 27, "valides": 68, "pris": 4, "perdus": 0, "report": 64}}, {"n": "Agent 00F", "m": "00F", "rc": {"reliquat": 2, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 2, "pris": 0, "report": 2}, "conge": {"reliquat": 27, "autorises": 27, "valides": 27, "pris": 0, "perdus": 0, "report": 27}}, {"n": "Agent 00G", "m": "00G", "rc": {"reliquat": 2, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 2, "pris": 0, "report": 2}, "conge": {"reliquat": 27, "autorises": 27, "valides": 27, "pris": 0, "perdus": 0, "report": 27}}, {"n": "Meftahi Henda", "m": "39949 H", "rc": {"reliquat": 0, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 0, "pris": 0, "report": 0}, "conge": {"reliquat": 109, "autorises": 42, "valides": 109, "pris": 0, "perdus": 0, "report": 109}}, {"n": "Agent 00H", "m": "00H", "rc": {"reliquat": 2, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 2, "pris": 0, "report": 2}, "conge": {"reliquat": 42, "autorises": 42, "valides": 42, "pris": 0, "perdus": 0, "report": 42}}, {"n": "Agent 00I", "m": "00I", "rc": {"reliquat": 2, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 2, "pris": 0, "report": 2}, "conge": {"reliquat": 42, "autorises": 42, "valides": 42, "pris": 0, "perdus": 0, "report": 42}}, {"n": "Ben Mahfoudh Rafaa", "m": "39420 D", "rc": {"reliquat": 0, "double": 0, "depl": 0, "aid": 0, "except": 1, "valides": 1, "pris": 1, "report": 0}, "conge": {"reliquat": 26, "autorises": 42, "valides": 26, "pris": 2, "perdus": 0, "report": 24}}, {"n": "Agent 00J", "m": "00J", "rc": {"reliquat": 2, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 2, "pris": 0, "report": 2}, "conge": {"reliquat": 42, "autorises": 42, "valides": 42, "pris": 0, "perdus": 0, "report": 42}}, {"n": "Agent 00K", "m": "00K", "rc": {"reliquat": 2, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 2, "pris": 0, "report": 2}, "conge": {"reliquat": 42, "autorises": 42, "valides": 42, "pris": 0, "perdus": 0, "report": 42}}, {"n": "Besbes Adel", "m": "39417 A", "rc": {"reliquat": 2, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 2, "pris": 2, "report": 0}, "conge": {"reliquat": 35, "autorises": 35, "valides": 35, "pris": 12, "perdus": 0, "report": 23}}, {"n": "Cherni Hichem", "m": "46788 A", "rc": {"reliquat": 1, "double": 0, "depl": 1, "aid": 0, "except": null, "valides": 2, "pris": 2, "report": 0}, "conge": {"reliquat": 49, "autorises": 42, "valides": 49, "pris": 0, "perdus": 0, "report": 49}}, {"n": "Ben Ouezdou Marouen", "m": "49042 H", "rc": {"reliquat": 11, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 11, "pris": 11, "report": 0}, "conge": {"reliquat": 36, "autorises": 42, "valides": 36, "pris": 8, "perdus": 0, "report": 28}}, {"n": "Tissaoui Taoufik", "m": "49116 X", "rc": {"reliquat": 0, "double": 4, "depl": 0, "aid": 0, "except": null, "valides": 4, "pris": 0, "report": 4}, "conge": {"reliquat": 41, "autorises": 42, "valides": 41, "pris": 0, "perdus": 0, "report": 41}}, {"n": "Achouri Mohamed", "m": "46790 C", "rc": {"reliquat": 0, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 0, "pris": 0, "report": 0}, "conge": {"reliquat": 30, "autorises": 42, "valides": 30, "pris": 0, "perdus": 0, "report": 30}}, {"n": "Zekri Oussema", "m": "46430 Z", "rc": {"reliquat": 0, "double": 0, "depl": 0, "aid": 0, "except": 1, "valides": 1, "pris": 0, "report": 1}, "conge": {"reliquat": 65, "autorises": 42, "valides": 65, "pris": 0, "perdus": 0, "report": 65}}, {"n": "Djobbi Fahd", "m": "49044 K", "rc": {"reliquat": 7, "double": 6, "depl": 0, "aid": 0, "except": 1, "valides": 14, "pris": 5, "report": 9}, "conge": {"reliquat": 70, "autorises": 42, "valides": 70, "pris": 0, "perdus": 0, "report": 70}}, {"n": "Guantassi Hamdi", "m": "49041 G", "rc": {"reliquat": 8, "double": 1, "depl": 0, "aid": 0, "except": null, "valides": 9, "pris": 7, "report": 2}, "conge": {"reliquat": 27, "autorises": 42, "valides": 27, "pris": 0, "perdus": 0, "report": 27}}, {"n": "Talbi Alaeddine", "m": "46451 Z", "rc": {"reliquat": 1, "double": 2, "depl": 0, "aid": 0, "except": null, "valides": 3, "pris": 0, "report": 3}, "conge": {"reliquat": 49, "autorises": 42, "valides": 49, "pris": 0, "perdus": 0, "report": 49}}, {"n": "Beltifa Mourad", "m": "39224 W", "rc": {"reliquat": 0, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 0, "pris": 0, "report": 0}, "conge": {"reliquat": 0, "autorises": 4, "valides": 0, "pris": 0, "perdus": 0, "report": 0}}, {"n": "Agent 00L", "m": "00L", "rc": {"reliquat": 0, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 0, "pris": 0, "report": 0}, "conge": {"reliquat": 42, "autorises": 42, "valides": 42, "pris": 0, "perdus": 0, "report": 42}}, {"n": "Agent 00M", "m": "00M", "rc": {"reliquat": 0, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 0, "pris": 0, "report": 0}, "conge": {"reliquat": 42, "autorises": 42, "valides": 42, "pris": 0, "perdus": 0, "report": 42}}, {"n": "Agent 00N", "m": "00N", "rc": {"reliquat": 0, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 0, "pris": 0, "report": 0}, "conge": {"reliquat": 42, "autorises": 42, "valides": 42, "pris": 0, "perdus": 0, "report": 42}}, {"n": "Agent 00O", "m": "00O", "rc": {"reliquat": 0, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 0, "pris": 0, "report": 0}, "conge": {"reliquat": 42, "autorises": 42, "valides": 42, "pris": 0, "perdus": 0, "report": 42}}, {"n": "Agent 00P", "m": "00P", "rc": {"reliquat": 0, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 0, "pris": 0, "report": 0}, "conge": {"reliquat": 42, "autorises": 42, "valides": 42, "pris": 0, "perdus": 0, "report": 42}}, {"n": "Agent 00Q", "m": "00Q", "rc": {"reliquat": 0, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 0, "pris": 0, "report": 0}, "conge": {"reliquat": 42, "autorises": 42, "valides": 42, "pris": 0, "perdus": 0, "report": 42}}, {"n": "Agent 00R", "m": "00R", "rc": {"reliquat": 0, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 0, "pris": 0, "report": 0}, "conge": {"reliquat": 42, "autorises": 42, "valides": 42, "pris": 0, "perdus": 0, "report": 42}}, {"n": "Agent 00S", "m": "00S", "rc": {"reliquat": 0, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 0, "pris": 0, "report": 0}, "conge": {"reliquat": 42, "autorises": 42, "valides": 42, "pris": 0, "perdus": 0, "report": 42}}, {"n": "Agent 00T", "m": "00T", "rc": {"reliquat": 0, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 0, "pris": 0, "report": 0}, "conge": {"reliquat": 42, "autorises": 42, "valides": 42, "pris": 0, "perdus": 0, "report": 42}}, {"n": "Agent 00U", "m": "00U", "rc": {"reliquat": 0, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 0, "pris": 0, "report": 0}, "conge": {"reliquat": 42, "autorises": 42, "valides": 42, "pris": 0, "perdus": 0, "report": 42}}];
 
 const DOW=['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'];
 const DOWL=['dimanche','lundi','mardi','mercredi','jeudi','vendredi','samedi'];
@@ -439,9 +507,111 @@ AG.forEach((a,i)=>{const o=document.createElement('option');o.value=i;o.textCont
 const slug=n=>n.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase()
   .replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
 
+// ===== ONGLET RC / CONGÉS =====
+const RECAP_BY_SLUG = {};
+if (Array.isArray(RECAP)) {
+  RECAP.forEach(r => { RECAP_BY_SLUG[slug(r.n)] = r; });
+}
+
+function recLineHTML(label, v, opts){
+  opts = opts || {};
+  const cls = [];
+  if (opts.key)    cls.push('key');
+  if (opts.blue)   cls.push('blue');
+  if (opts.orange) cls.push('orange');
+  if (opts.green)  cls.push('green');
+  if (opts.sub)    cls.push('sub');
+  if (opts.first)  cls.push('first');
+  if (opts.last)   cls.push('last');
+  const subTxt = opts.subtitle
+    ? '<span class="sub">(' + opts.subtitle + ')</span>' : '';
+  const vStr = (v === null || v === undefined)
+    ? '<span style="color:var(--muted);font-weight:500">—</span>' : v;
+  return `<div class="rec-line${cls.length ? ' ' + cls.join(' ') : ''}">
+    <span class="k">${label}${subTxt}</span>
+    <span class="v">${vStr}</span>
+  </div>`;
+}
+
+function rcCardRecap(d){
+  const label = d.pris + ' pris · ' + d.report + ' à reporter';
+  const html =
+      recLineHTML('Reliquat au 1er du mois', d.reliquat, {key:true, blue:true})
+    + recLineHTML('Double Service', d.double, {sub:true, first:true})
+    + recLineHTML("Dépassement d'amplitude", d.depl, {sub:true})
+    + recLineHTML('AÏD', d.aid, {sub:true})
+    + recLineHTML('Exceptionnel', d.except, {sub:true, last:true,
+        subtitle:'Suite détachement pendant un jour de repos'})
+    + recLineHTML('Repos Compensatoires validés', d.valides, {key:true, blue:true})
+    + recLineHTML('Pris ce mois', d.pris, {key:true, orange:true})
+    + recLineHTML('À reporter',   d.report, {key:true, green:true});
+  return `<div class="rec-card rc">
+    <h3>Repos Compensatoires (RC)<small>${label}</small></h3>
+    <div class="rec-lines">${html}</div>
+  </div>`;
+}
+
+function cgCardRecap(d){
+  const label = d.pris + ' pris · ' + d.report + ' à reporter';
+  const html =
+      recLineHTML('Reliquat au 1er du mois', d.reliquat, {key:true, blue:true})
+    + recLineHTML('Perdus suite maladie', d.perdus, {sub:true, first:true, last:true})
+    + recLineHTML('Congés validés', d.valides, {key:true, blue:true})
+    + recLineHTML('Pris ce mois', d.pris, {key:true, orange:true})
+    + recLineHTML('À reporter',   d.report, {key:true, green:true});
+  return `<div class="rec-card cg">
+    <h3>Congés (C)<small>${label}</small></h3>
+    <div class="rec-lines">${html}</div>
+  </div>`;
+}
+
+function droitCardRecap(autorises){
+  return `<div class="rec-card droit">
+    <div class="row">
+      <span class="k">Congé annuel autorisé (${CFG.year})</span>
+      <span class="v">${autorises} jours</span>
+    </div>
+  </div>`;
+}
+
+function drawRecap(){
+  const nameEl = $('rec-name');
+  const metaEl = $('rec-meta');
+  const container = $('rec-content');
+
+  if (sel.value === '' || AG[+sel.value] === undefined) {
+    nameEl.textContent = 'Choisissez un agent dans « Mon planning »';
+    metaEl.textContent = '';
+    container.innerHTML =
+      '<p class="note">Sélectionnez d\'abord votre nom dans l\'onglet ' +
+      '<b>Mon planning</b>, puis revenez ici.</p>';
+    return;
+  }
+
+  const a = AG[+sel.value];
+  nameEl.textContent = a.n;
+  metaEl.innerHTML = `<span class="mat">${a.m}</span>`;
+
+  const rec = RECAP_BY_SLUG[slug(a.n)];
+  if (!rec) {
+    container.innerHTML =
+      '<p class="note">Aucune donnée RC / Congés disponible pour cet agent.</p>';
+    return;
+  }
+
+  container.innerHTML =
+    '<div class="recap-duo">' +
+      '<div>' + rcCardRecap(rec.rc) + '</div>' +
+      '<div class="recap-col-right">' +
+        droitCardRecap(rec.conge.autorises) +
+        cgCardRecap(rec.conge) +
+      '</div>' +
+    '</div>';
+}
+
 function drawAgent(){
   if(sel.value===''){$('wn').textContent='Choisissez votre nom dans la liste';
-    $('wp').textContent='';$('grid').innerHTML='';$('stats').innerHTML='';return}
+    $('wp').textContent='';$('grid').innerHTML='';$('stats').innerHTML='';drawRecap();return}
   const a=AG[+sel.value]; store.set('agent', slug(a.n));
   $('wn').textContent=a.n;
   $('wp').textContent=a.p+' · '+a.m
@@ -490,6 +660,7 @@ function drawAgent(){
     chip.addEventListener('touchstart', on, {passive:true});
     chip.addEventListener('touchend',   off);
   });
+  drawRecap();
 }
 
 const row=(k,l,h,c)=>'<div class="row"><i class="'+(c||'')+'">'+k+'</i><span>'+l+'</span><b>'+h+'</b></div>';
@@ -583,14 +754,15 @@ function drawTable(){
 }
 
 function tab(n){
-  ['agent','jour','tab'].forEach(k=>{
+  ['agent','jour','tab','rec'].forEach(k=>{
     $('v-'+k).hidden = (n!==k);
     $('tab-'+k).setAttribute('aria-selected',String(n===k));
   });
   store.set('tab',n); window.scrollTo(0,0);
   if(n==='jour') drawDay(true);
+  if(n==='rec')  drawRecap();
 }
-['agent','jour','tab'].forEach(k=>$('tab-'+k).onclick=()=>tab(k));
+['agent','jour','tab','rec'].forEach(k=>$('tab-'+k).onclick=()=>tab(k));
 sel.onchange=drawAgent;
 
 const hs=(location.hash||'').slice(1);
@@ -598,8 +770,6 @@ const hi=AG.findIndex(a=>slug(a.n)===hs);
 const savedAgent=store.get('agent');
 let idxFromSaved = -1;
 if (savedAgent) {
-  // Uniquement par slug — pas de fallback par index
-  // (évite les faux positifs si une vieille valeur numérique traîne)
   idxFromSaved = AG.findIndex(a => slug(a.n) === savedAgent);
 }
 if(hi>=0) sel.value=hi;
@@ -609,8 +779,10 @@ drawAgent(); drawDay(false); drawTable();
 const savedTab = store.get('tab');
 if (hs === 'jour') tab('jour');
 else if (hs === 'pointage' || hs === 'tableau') tab('tab');
+else if (hs === 'recap' || hs === 'rc' || hs === 'conges') tab('rec');
 else if (savedTab === 'jour') tab('jour');
 else if (savedTab === 'tab') tab('tab');
+else if (savedTab === 'rec') tab('rec');
 
 // ---- Header rétractable au scroll (mobile uniquement) ----
 (function(){
