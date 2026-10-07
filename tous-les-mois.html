@@ -3,10 +3,11 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Pointages SNCFT — Tous les mois</title>
 <link rel="icon" href="favicon.svg">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
 <style>
 :root{--bg:#eef2f7;--surface:#fff;--fg:#16222f;--muted:#5d6b7b;
   --line:#d3dbe6;--head:#3579bd;--head-fg:#fff;--accent:#2e6fae;
+  --year-current:#2e6fae;--year-past:#7a8794;
   --font-d:'Barlow Condensed','Arial Narrow',sans-serif;
   --font-b:'IBM Plex Sans',system-ui,sans-serif;}
 *{box-sizing:border-box}
@@ -32,18 +33,57 @@ header:not(.has-logo) .top-row .org{text-align:center}
   header h1{font-size:18px;text-align:left}
   header p{font-size:12px;text-align:left}
 }
-.list{display:grid;gap:8px;margin-top:20px}
-.mois-card{display:flex;justify-content:space-between;align-items:center;
-  padding:16px 20px;background:var(--surface);border:1px solid var(--line);
-  border-radius:10px;text-decoration:none;color:var(--fg);
-  transition:transform .1s,box-shadow .1s,border-color .1s}
-.mois-card:hover{transform:translateY(-1px);
-  box-shadow:0 4px 12px rgba(46,111,174,.15);border-color:var(--accent)}
-.mois-nom{font-family:var(--font-d);font-size:22px;letter-spacing:.02em;font-weight:600}
-.mois-fleche{color:var(--accent);font-size:22px}
+.list{display:flex;flex-direction:column;gap:12px;margin-top:20px}
 .vide{text-align:center;color:var(--muted);padding:30px}
 .footer{text-align:center;color:var(--muted);font-size:12px;
   margin-top:30px;font-style:italic}
+
+/* ===== Bloc année (repliable) ===== */
+.year-block{background:var(--surface);border:1px solid var(--line);
+  border-radius:12px;overflow:hidden;transition:box-shadow .15s}
+.year-block:hover{box-shadow:0 2px 8px rgba(46,111,174,.08)}
+.year-header{display:flex;align-items:center;gap:12px;
+  padding:14px 18px;cursor:pointer;user-select:none;
+  background:linear-gradient(to right,#f7f9fc,#ffffff);
+  border:0;width:100%;text-align:left;
+  font-family:var(--font-b);color:var(--fg)}
+.year-header:hover{background:linear-gradient(to right,#eef4fa,#f7f9fc)}
+.year-header .chev{flex:none;font-size:15px;color:var(--accent);
+  transition:transform .2s ease;line-height:1;width:16px;
+  display:inline-block;text-align:center}
+.year-block.collapsed .year-header .chev{transform:rotate(-90deg)}
+.year-header .year-title{flex:1;min-width:0;
+  font:700 30px var(--font-d);letter-spacing:.06em;
+  color:var(--year-past)}
+.year-block.current .year-header .year-title{color:var(--year-current)}
+.year-header .year-count{flex:none;
+  font:600 11px var(--font-b);letter-spacing:.08em;
+  text-transform:uppercase;color:var(--muted);
+  background:rgba(46,111,174,.10);padding:4px 10px;border-radius:999px}
+.year-body{display:flex;flex-direction:column;
+  border-top:1px solid var(--line);padding:6px}
+.year-block.collapsed .year-body{display:none}
+
+.mois-card{display:flex;justify-content:space-between;
+  align-items:center;gap:12px;padding:13px 16px;border-radius:8px;
+  text-decoration:none;color:var(--fg);border:1px solid transparent;
+  transition:background .12s,border-color .12s}
+.mois-card:hover{background:#f3f7fb;border-color:var(--line)}
+.mois-card + .mois-card{border-top:1px solid #eef2f7;border-radius:0}
+.mois-card + .mois-card:hover{border-radius:8px}
+.mois-nom{font:600 19px/1.25 var(--font-d);letter-spacing:.02em}
+.mois-fleche{color:var(--accent);font-size:20px;flex:none}
+
+@media (max-width:520px){
+  header{padding:16px 12px 14px}
+  header h1{font-size:18px}
+  header p{font-size:12px}
+  .year-header{padding:11px 14px;gap:10px}
+  .year-header .year-title{font-size:24px}
+  .year-header .year-count{font-size:10px;padding:3px 8px}
+  .mois-card{padding:11px 14px}
+  .mois-nom{font-size:17px}
+}
 </style></head><body>
 <div class="wrap">
 <header class="has-logo">
@@ -56,9 +96,18 @@ header:not(.has-logo) .top-row .org{text-align:center}
   <p>Consultez le pointage d'un mois en particulier</p>
 </header>
 <div class="list">
-<a class="mois-card" href="indexoctobre2026.html"><span class="mois-nom">Octobre 2026</span><span class="mois-fleche">→</span></a>
-<a class="mois-card" href="indexseptembre2026.html"><span class="mois-nom">Septembre 2026</span><span class="mois-fleche">→</span></a>
+<div class="year-block current" data-year="2026"><button class="year-header" aria-expanded="true"><span class="chev">▾</span><span class="year-title">2026</span><span class="year-count">2 mois</span></button><div class="year-body"><a class="mois-card" href="indexoctobre2026.html"><span class="mois-nom">Octobre 2026</span><span class="mois-fleche">→</span></a><a class="mois-card" href="indexseptembre2026.html"><span class="mois-nom">Septembre 2026</span><span class="mois-fleche">→</span></a></div></div>
 </div>
-<p class="footer">Dernière mise à jour : 2026-10-07T20:52:41</p>
+<p class="footer">Dernière mise à jour : 2026-10-07T21:42:43</p>
 </div>
+<script>
+document.querySelectorAll('.year-header').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const block = btn.closest('.year-block');
+    block.classList.toggle('collapsed');
+    const isOpen = !block.classList.contains('collapsed');
+    btn.setAttribute('aria-expanded', String(isOpen));
+  });
+});
+</script>
 </body></html>

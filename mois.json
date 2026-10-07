@@ -1,19 +1,19 @@
 {
-  "lastUpdated": "2026-10-07T20:52:41",
+  "lastUpdated": "2026-10-07T21:42:43",
   "months": [
-    {
-      "id": "septembre2026",
-      "label": "Septembre 2026",
-      "file": "indexseptembre2026.html",
-      "year": 2026,
-      "monthNum": 9
-    },
     {
       "id": "octobre2026",
       "label": "Octobre 2026",
       "file": "indexoctobre2026.html",
       "year": 2026,
       "monthNum": 10
+    },
+    {
+      "id": "septembre2026",
+      "label": "Septembre 2026",
+      "file": "indexseptembre2026.html",
+      "year": 2026,
+      "monthNum": 9
     }
   ]
 }

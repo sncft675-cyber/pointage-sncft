@@ -24,8 +24,8 @@ fetch('mois.json', {cache:'no-store'})
   .then(d => {
     if (d && Array.isArray(d.months) && d.months.length > 0) {
       const s = d.months.slice().sort((a,b) =>
-        (a.year - b.year) || (a.monthNum - b.monthNum));
-      window.location.replace(s[s.length - 1].file);
+        (b.year - a.year) || (b.monthNum - a.monthNum));
+      window.location.replace(s[0].file);
     } else {
       window.location.replace('tous-les-mois.html');
     }
