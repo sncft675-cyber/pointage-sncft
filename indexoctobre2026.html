@@ -806,11 +806,6 @@ function drawAid(){
   $('aidGrid').innerHTML =
       buildAidCard('fitr', "Aïd el-Fitr", `Année ${AID.annee}`, '🌙', 'fitr')
     + buildAidCard('adha', "Aïd al-Adha", `Année ${AID.annee}`, '🐑', 'adha');
-} else {
-    $('aidGrid').innerHTML =
-      '<p class="note">Aucune donnée Aïd disponible. ' +
-      'Lancez un export « Pointage Début du mois » pour la générer.</p>';
-  }
 }
 
 // Toggle règles
