@@ -8,21 +8,15 @@
 :root{
   --bg:#eef2f7; --surface:#ffffff; --fg:#16222f; --muted:#5d6b7b; --line:#d3dbe6;
   --accent:#2e6fae; --accent-fg:#ffffff;
-  --head:#3579bd;
-  --head-fg:#ffffff;
+  --head:#3579bd; --head-fg:#ffffff;
   --x-w:#ffffff; --x-g:#f2f2f2; --x-G:#d9d9d9; --x-b:#daeef3;
   --x-p:#e4dfec; --x-v:#ebf1de; --x-O:#fbcda7;
   --x-V:#f4cccc; --x-FOR:#ffe599;
   --hl:#e74c3c;
   --hl-tint:rgba(46,111,174,0.20);
-  --fitr:#2e7d32;
-  --adha:#8e4a9e;
+  --fitr:#2e7d32; --adha:#8e4a9e;
   --retraite:#6b7280;
-  --conge:#c77d1e;
-  --repos:#3579bd;
-  --rc:#8064a2;
-  --ferie:#7f8c8d;
-  --absent:#c0392b;
+  --conge:#c77d1e; --repos:#3579bd; --rc:#8064a2; --ferie:#7f8c8d; --absent:#c0392b;
   --font-d:'Barlow Condensed','Arial Narrow',sans-serif;
   --font-b:'IBM Plex Sans',system-ui,sans-serif;
 }
@@ -95,6 +89,19 @@ header h1{font:700 24px/1.15 var(--font-d);margin:6px 0 10px;letter-spacing:.01e
 .month-select:focus{outline:0;border-color:#fff;box-shadow:0 0 0 3px rgba(255,255,255,.35)}
 .month-select option{color:#000;background:#fff;font:500 15px var(--font-b);
   text-transform:none;letter-spacing:0}
+.month-select optgroup{
+  font:700 12px var(--font-b);
+  color:var(--accent);
+  background:#f5f8fb;
+  text-transform:uppercase;
+  letter-spacing:.04em;
+}
+.month-select optgroup option{
+  padding-left:22px;
+  font:500 15px var(--font-b);
+  text-transform:none;letter-spacing:0;
+  color:#000;background:#ffffff;
+}
 @media (max-width:420px){.month-select{font-size:18px;padding:10px 34px 10px 12px}}
 .nav-bar{display:flex;justify-content:space-between;align-items:center;gap:6px;
   padding:0 0 10px;font:600 13px var(--font-b);min-height:26px}
@@ -278,6 +285,12 @@ table.t{border-collapse:separate;border-spacing:0;font-size:13px;width:max-conte
 .rules b{color:var(--accent)}
 .rules .hl-blue{color:var(--accent);font-weight:700}
 .rules .hl-warn{color:#c0392b;font-weight:400;font-style:italic}
+
+/* Règles administratives en violet */
+.rules li.rule-admin{color:#6b21a8;font-weight:500}
+.rules li.rule-admin::marker{color:#6b21a8}
+.rules li.rule-admin b{color:#6b21a8}
+
 .rules ul.sub-rules{margin:6px 0 0;padding-left:0;list-style:none;
   display:flex;flex-direction:column;gap:6px}
 .rules ul.sub-rules li{position:relative;padding-left:16px;margin-bottom:0}
@@ -294,10 +307,8 @@ table.t{border-collapse:separate;border-spacing:0;font-size:13px;width:max-conte
   letter-spacing:.06em;text-transform:uppercase;
   border:1px solid rgba(46,111,174,.3);flex:none}
 
-/* Version courte — cachée par défaut (desktop) */
 .title-short, .badge-short{display:none}
 
-/* Mobile : tout compact sur une seule ligne */
 @media (max-width:520px){
   .title-full, .badge-full{display:none}
   .title-short, .badge-short{display:inline}
@@ -469,6 +480,12 @@ table.t{border-collapse:separate;border-spacing:0;font-size:13px;width:max-conte
             <li id="ruleRepos"></li>
           </ul>
         </li>
+        <li class="rule-admin">Le dépôt des demandes de congés doit être
+          effectué au plus tard <b>deux (2) jours avant la dernière date
+          portée sur le pointage du mois concerné</b>.</li>
+        <li class="rule-admin">L'attribution des congés pour les jours
+          d'Aïd s'effectue <b>par ordre de priorité</b>, puis
+          <b>par ordre chronologique de dépôt</b> des demandes.</li>
       </ul>
     </div>
   </div>
@@ -580,29 +597,55 @@ $('titleline').textContent = CFG.title;
     .then(r => r.ok ? r.json() : null)
     .then(data => {
       if (!data || !Array.isArray(data.months) || data.months.length === 0) return;
+      // Trier : années desc, mois desc
       const sorted = data.months.slice().sort((a,b) =>
-        (a.year - b.year) || (a.monthNum - b.monthNum));
-      selMois.innerHTML = '';
+        (b.year - a.year) || (b.monthNum - a.monthNum));
+
+      // Grouper par année
+      const groups = [];
+      let curYear = null, curGroup = null;
       sorted.forEach(m => {
-        const opt = document.createElement('option');
-        opt.value = m.file; opt.textContent = m.label;
-        if (m.id === selfId) opt.selected = true;
-        selMois.appendChild(opt);
+        if (m.year !== curYear) {
+          curYear = m.year;
+          curGroup = { year: m.year, months: [] };
+          groups.push(curGroup);
+        }
+        curGroup.months.push(m);
       });
+
+      // Construire avec optgroup
+      selMois.innerHTML = '';
+      groups.forEach(g => {
+        const grp = document.createElement('optgroup');
+        grp.label = String(g.year);
+        g.months.forEach(m => {
+          const opt = document.createElement('option');
+          opt.value = m.file;
+          opt.textContent = m.label;
+          if (m.id === selfId) opt.selected = true;
+          grp.appendChild(opt);
+        });
+        selMois.appendChild(grp);
+      });
+
       selMois.addEventListener('change', () => {
         if (selMois.value) window.location.href = selMois.value;
       });
-      const idx = data.months.findIndex(m => m.id === selfId);
+
+      // Navigation prev / next (inversée car tri desc)
+      const idx = sorted.findIndex(m => m.id === selfId);
       if (idx >= 0) {
-        const p = data.months[idx - 1];
-        const n = data.months[idx + 1];
-        if (p) {
+        const newer = sorted[idx - 1];  // plus récent
+        const older = sorted[idx + 1];  // plus ancien
+        if (older) {
           const a = document.getElementById('navprev');
-          a.href = p.file; a.textContent = '← ' + p.label; a.hidden = false;
+          a.href = older.file; a.textContent = '← ' + older.label;
+          a.hidden = false;
         }
-        if (n) {
+        if (newer) {
           const a = document.getElementById('navnext');
-          a.href = n.file; a.textContent = n.label + ' →'; a.hidden = false;
+          a.href = newer.file; a.textContent = newer.label + ' →';
+          a.hidden = false;
         }
       }
     }).catch(() => {});
@@ -802,18 +845,16 @@ function drawAid(){
      le service lors de ce dernier, <b>même s'il n'est pas
      prioritaire</b>.`;
 
-  // Cartes Fitr + Adha
   $('aidGrid').innerHTML =
       buildAidCard('fitr', "Aïd el-Fitr", `Année ${AID.annee}`, '🌙', 'fitr')
     + buildAidCard('adha', "Aïd al-Adha", `Année ${AID.annee}`, '🐑', 'adha');
 }
 
-// Toggle règles
 document.getElementById('rulesToggle').addEventListener('click', () => {
   document.getElementById('rulesBox').classList.toggle('collapsed');
 });
 
-// ===== Rendu planning / jour / tableau =====
+// ===== Planning / Jour / Tableau =====
 function drawAgent(){
   if(sel.value===''){$('wn').textContent='Choisissez votre nom dans la liste';
     $('wp').textContent='';$('grid').innerHTML='';$('stats').innerHTML='';drawRecap();return}
