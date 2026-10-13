@@ -393,6 +393,33 @@ table.t{border-collapse:separate;border-spacing:0;font-size:13px;width:max-conte
 .badge.rc{background:var(--rc)}
 .badge.f{background:var(--ferie)}
 .badge.a{background:var(--absent)}
+
+/* ===== Bannière "Nouvelle mise à jour" ===== */
+#updateBanner{
+  position:fixed;top:16px;left:50%;transform:translateX(-50%);
+  z-index:9999;
+  background:linear-gradient(135deg,#2e6fae,#3579bd);color:#fff;
+  padding:12px 22px;border-radius:999px;
+  box-shadow:0 6px 20px rgba(46,111,174,.45);
+  display:flex;align-items:center;gap:12px;
+  font:600 14px var(--font-b);
+  animation:ub-pop .35s cubic-bezier(.18,.89,.32,1.28);
+}
+@keyframes ub-pop{
+  from{transform:translate(-50%,-24px);opacity:0}
+  to{transform:translate(-50%,0);opacity:1}
+}
+#updateBanner .ub-spinner{
+  width:16px;height:16px;flex:none;
+  border:2px solid rgba(255,255,255,.3);
+  border-top-color:#fff;border-radius:50%;
+  animation:ub-spin .8s linear infinite;
+}
+@keyframes ub-spin{to{transform:rotate(360deg)}}
+#updateBanner .ub-msg{white-space:nowrap}
+@media (max-width:420px){
+  #updateBanner{padding:10px 16px;font-size:12.5px;gap:8px}
+}
 </style></head><body>
 <div class="wrap">
 <header id="mainHeader">
@@ -1049,6 +1076,57 @@ else if (savedTab === 'aid') tab('aid');
   window.addEventListener('resize', () => {
     if (!isMobile()) header.classList.remove('header-hidden');
   });
+})();
+
+// ===== Vérification automatique des mises à jour =====
+(function(){
+  let currentUpdated = null;
+  let bannerShown = false;
+
+  async function checkUpdate(){
+    try {
+      const r = await fetch('mois.json?t=' + Date.now(), {cache: 'no-store'});
+      if (!r.ok) return;
+      const data = await r.json();
+      const newUpdated = data.lastUpdated || '';
+      if (!newUpdated) return;
+
+      // Première lecture : on mémorise sans rien faire
+      if (currentUpdated === null){
+        currentUpdated = newUpdated;
+        return;
+      }
+
+      // Changement détecté
+      if (newUpdated !== currentUpdated && !bannerShown){
+        currentUpdated = newUpdated;
+        showUpdateBanner();
+      }
+    } catch(e){}
+  }
+
+  function showUpdateBanner(){
+    if (document.getElementById('updateBanner')) return;
+    bannerShown = true;
+
+    const b = document.createElement('div');
+    b.id = 'updateBanner';
+    b.innerHTML =
+      '<span class="ub-spinner"></span>' +
+      '<span class="ub-msg">Nouvelle mise à jour…</span>';
+    document.body.appendChild(b);
+
+    // Rechargement automatique après 2 secondes
+    setTimeout(() => {
+      const url = new URL(window.location.href);
+      url.searchParams.set('_v', Date.now());
+      window.location.href = url.toString();
+    }, 2000);
+  }
+
+  // 1ère vérif après 1 minute, puis toutes les 2 minutes
+  setTimeout(checkUpdate, 60 * 1000);
+  setInterval(checkUpdate, 2 * 60 * 1000);
 })();
 </script>
 </body></html>
