@@ -220,7 +220,6 @@ table.t{border-collapse:separate;border-spacing:0;font-size:13px;width:max-conte
   .cell{min-height:60px}.cell .k{font-size:clamp(12px,4.2vw,18px)}
 }
 
-/* ===== RC / Congés ===== */
 .recap-who{display:flex;flex-wrap:wrap;gap:4px 12px;align-items:baseline;justify-content:space-between}
 .recap-who b{font:700 28px/1.1 var(--font-d)}
 .recap-who .meta{color:var(--muted);font-size:16px}
@@ -266,7 +265,6 @@ table.t{border-collapse:separate;border-spacing:0;font-size:13px;width:max-conte
 .rec-line.sub.first{border-top:2px solid var(--line)}
 .rec-line.sub.last{border-bottom:2px solid var(--line)}
 
-/* ===== Aïd ===== */
 .rules{background:linear-gradient(135deg,#f0f7ff 0%,#fbfcfc 100%);
   border:1px solid #cfdcea;border-left:5px solid var(--accent);
   border-radius:10px;padding:14px 18px;transition:padding .15s}
@@ -286,7 +284,6 @@ table.t{border-collapse:separate;border-spacing:0;font-size:13px;width:max-conte
 .rules .hl-blue{color:var(--accent);font-weight:700}
 .rules .hl-warn{color:#c0392b;font-weight:400;font-style:italic}
 
-/* Règles administratives en violet */
 .rules li.rule-admin{color:#6b21a8;font-weight:500}
 .rules li.rule-admin::marker{color:#6b21a8}
 .rules li.rule-admin b{color:#6b21a8}
@@ -394,7 +391,6 @@ table.t{border-collapse:separate;border-spacing:0;font-size:13px;width:max-conte
 .badge.f{background:var(--ferie)}
 .badge.a{background:var(--absent)}
 
-/* ===== Bannière "Nouvelle mise à jour" (centrée, verte) ===== */
 #updateBanner{
   position:fixed;
   top:50%;left:50%;
@@ -422,6 +418,54 @@ table.t{border-collapse:separate;border-spacing:0;font-size:13px;width:max-conte
 @media (max-width:420px){
   #updateBanner{padding:14px 22px;font-size:15px;gap:10px}
   #updateBanner .ub-spinner{width:18px;height:18px;border-width:2.5px}
+}
+
+/* ===== BANNIÈRE DÉTACHEMENT (ORANGE) ===== */
+.detachement-banner {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.9);
+    background-color: #e67e22;
+    color: white;
+    padding: 20px 30px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    z-index: 10000;
+    font-family: var(--font-b);
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    pointer-events: none;
+    max-width: 90vw;
+    border: 2px solid #d35400;
+}
+.detachement-banner.show {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+.detachement-banner .icon {
+    font-size: 2em;
+    margin-bottom: 10px;
+}
+.detachement-banner strong {
+    display: block;
+    font-size: 1.2em;
+    margin-bottom: 6px;
+}
+.detachement-banner span {
+    font-size: 1em;
+    display: block;
+    margin-top: 4px;
+}
+.detachement-banner .motif {
+    font-size: 0.9em;
+    opacity: 0.9;
+    font-style: italic;
+    margin-top: 6px;
+    background: rgba(0,0,0,0.1);
+    padding: 4px 8px;
+    border-radius: 6px;
 }
 </style></head><body>
 <div class="wrap">
@@ -525,10 +569,10 @@ table.t{border-collapse:separate;border-spacing:0;font-size:13px;width:max-conte
 
 <script>
 const CFG = {"org1": "SOCIETE NATIONALE DES CHEMINS DE FER TUNISIENS", "org2": "Département Gestion Des Circulations Ferroviaires", "title": "Pointage du personnel de la Régulation et PC Tunis", "year": 2026, "month": 9, "monthName": "octobre", "nextMonthName": "novembre", "ndays": 39, "novStart": 31, "logoFile": "logo.svg", "faviconFile": "favicon.svg"};
-const AG = [{"n": "Nasri Ridha", "p": "B.Programmation", "m": "38873 C", "s": 19, "c": ["=", "=", "=", "R", "=", "=", "=", "C", "=", "=", "R", "=", "=", "=", "=", "=", "=", "R", "=", "=", "=", "=", "=", "=", "R", "=", "=", "=", "=", "=", "=", "R", "=", "=", "=", "=", "=", "=", "R"], "f": "wwwwwwwgwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww"}, {"n": "Toumi Malik", "p": "Chef PC", "m": "39696 G", "s": 69, "c": ["=", "R", "=PC", "=PC", "RC", "RC", "=", "=", "=", "=PC", "=PC", "=PC", "R", "=", "RC", "=PC", "R", "R", "=", "=", "=", "=", "RC", "=PC", "=PC", "V", "=", "=", "=PC", "=PC", "RC", "R", "=", "=", "=", "=", "R", "=PC", "=PC"], "f": "wwppGGwwwpppwwGpwwwwwwGppOwwppGwwwwwwpp"}, {"n": "Khemiri Ramzi", "p": "PC", "m": "39676 H", "s": 68, "c": ["=PC", "=PC", "R", "R", "=PC", "=PC", "=PC", "=PC", "=PC", "R", "R", "V", "C", "C", "C", "C", "=PC", "=PC", "=PC", "=PC", "=PC", "=PC", "=PC", "RC", "RC", "=PC", "=PC", "=PC", "RC", "RC", "=PC", "=PC", "=PC", "=PC", "=PC", "=PC", "=PC", "R", "R"], "f": "wwwwwwwwwwwOggggwwwwwwwGGwwwGGwwwwwwwww"}, {"n": "Hemissi Sabri", "p": "PC", "m": "46594 T", "s": 31, "c": ["Ret", "Rap", "RC", "R", "Ral", "Ral", "Ral", "Ral", "Ral", "Ral", "R", "+L5/VN", "=PC", "=PC", "=PC", "Rap", "Rap", "R", "Rap", "Rap", "Rap", "Rap", "Rap", "Rap", "R", "Ral", "Ral", "Ral", "Ral", "RAL/Ret", "Ral/Ret", "R", "Ret", "Ret", "RC", "RC", "RC", "RC", "R"], "f": "bbGwbbbbbbwvwwwbbwbbbbbbwbbbbvvwbbGGGGw"}, {"n": "Oueslati Amor", "p": "B.Rapport d'incid.", "m": "38624 F", "s": 64, "c": ["C", "C", "R", "R", "", "", "", "", "", "R", "R", "", "", "", "F", "C", "R", "R", "C", "C", "C", "C", "C", "C", "R", "", "", "", "", "", "R", "R", "", "", "", "", "", "R", "R"], "f": "ggwwwwwwwwwwwwggwwggggggwwwwwwwwwwwwwww"}, {"n": "Meftahi Henda", "p": "B.Ralentissement", "m": "39949 H", "s": 109, "c": ["", "", "", "R", "C", "C", "C", "C", "C", "C", "R", "", "", "", "", "", "", "R", "", "", "", "", "", "", "R", "C", "C", "C", "C", "C", "C", "R", "", "", "", "", "", "", "R"], "f": "wwwwggggggwwwwwwwwwwwwwwwggggggwwwwwwww"}, {"n": "Ben Mahfoudh Rafaa", "p": "B.Retard", "m": "39420 D", "s": 24, "c": ["C", "", "", "R", "", "", "", "", "", "", "R", "", "", "", "", "", "", "R", "", "", "", "", "", "", "R", "", "", "", "", "C", "C", "R", "C", "C", "", "", "", "", "R"], "f": "gwwwwwwwwwwwwwwwwwwwwwwwwwwwwggwggwwwww"}, {"n": "Besbes Adel", "p": "Régulateur", "m": "39417 A", "s": 23, "c": ["R", "C", "C", "C", "C", "R", "C", "C", "R", "C", "C", "C", "C", "R", "C", "C", "R", "C", "C", "C", "C", "R", "C", "C", "R", "C", "C", "C", "C", "R", "C", "", "", "", "", "", "", "", ""], "f": "wggggwggwggggwggwggggwggwggggwgOOOOOOOO"}, {"n": "Cherni Hichem", "p": "Régulateur", "m": "46788 A", "s": 49, "c": ["+L5", "-VN", "-L5", "R", "Ret", "+VN/L5", "+L5", "-L5/VN", "-VN", "+VN", "R", "-L5/VN", "+VN", "-L5", "-VN", "R", "RC", "-L5/VN", "-VN/L5", "R", "R", "+L5", "+VN", "-L5", "R", "+VN", "-L5", "-L5", "-VN", "+L5", "R", "R", "R", "+L5", "+VN", "-L5", "-VN", "+L5", "R"], "f": "wwwwbvwvwwwvwwwwGvvwwwwwwwwwwwwwwwwwwww"}, {"n": "Ben Ouezdou Marouen", "p": "Régulateur", "m": "49042 H", "s": 28, "c": ["C", "C", "R", "+L5", "+VN", "-L5", "-VN", "R/N L5", "N VN", "/", "R", "C", "+L5", "-VN", "-L5", "R/N VN", "N L5", "/", "R", "+L5", "+VN", "-L5", "-VN", "R/N L5", "N VN", "/", "R", "+VN", "+L5", "-VN", "-L5", "R/N VN", "N L5", "/", "R", "+L5", "+VN", "-L5", "-VN"], "f": "ggwwwwwwwwwgwwwwwwwwwwwwwwwwwwwwwwwwwww"}, {"n": "Tissaoui Taoufik", "p": "Régulateur", "m": "49116 X", "s": 41, "c": ["N", "/", "R", "+VN", "+L5", "-VN", "-L5", "R/N VN", "N L5", "/", "R", "RC", "RC", "RC", "RC", "R/N L5", "N VN", "/", "R", "+VN", "+L5", "-VN", "-L5", "R/N VN", "N L5", "/", "R", "+L5", "+VN", "-L5", "-VN", "R/N L5", "N VN", "/", "R", "+VN", "+L5", "-VN", "-L5"], "f": "vwwwwwwwwwwGGGGwwwwwwwwwwwwwwwwwwwwwwww"}, {"n": "Achouri Mohamed", "p": "Régulateur", "m": "46790 C", "s": 30, "c": ["-VN", "R/N L5", "N VN", "/", "R", "C", "C", "C", "-L5", "R/N VN", "N L5", "/", "R", "+L5", "+VN", "C", "-VN/L5", "R/N L5", "N VN", "/", "R", "+VN", "+L5", "-VN", "-L5", "R/N VN", "N L5", "/", "R", "RC", "+VN", "-L5", "-VN", "R/N L5", "N VN", "/", "R", "+VN", "+L5"], "f": "wwwwwgggwwwwwwwgvwwwwwwwwwwwwGwwwwwwwww"}, {"n": "Zekri Oussema", "p": "Régulateur", "m": "46430 Z", "s": 65, "c": ["-L5", "R/N VN", "N L5", "/", "R", "C", "+VN", "RC", "+L5/VN", "R/N L5", "N VN", "/", "R", "+VN", "+L5", "-VN/L5", "C", "R/N VN", "N L5", "/", "R", "RC", "C", "+VN", "-VN", "R/N L5", "N VN", "/", "R", "+VN", "+L5", "-VN", "-L5", "R/N VN", "N L5", "/", "R", "RC", "+VN"], "f": "wwwwwgwGvwwwwwwvgwwwwGgwwwwwwwwwwwwwwGw"}, {"n": "Djobbi Fahd", "p": "Régulateur", "m": "49044 K", "s": 70, "c": ["+VN", "-L5", "-VN", "R/N L5", "N VN", "/", "R", "+VN/L5", "RC", "-VN/L5", "-L5/VN", "R/N VN", "N L5", "/", "R", "RC", "RC", "RC", "RC", "R/N L5", "N VN", "/", "R", "RC", "RC", "RC", "RC", "R/N VN", "N L5", "/", "R", "+L5", "+VN", "-L5", "-VN", "R/N L5", "N VN", "/", "R"], "f": "wwwwwwwvGvvwwwwGGGGwwwwGGGGwwwwwwwwwwww"}, {"n": "Guantassi Hamdi", "p": "Régulateur", "m": "49041 G", "s": 27, "c": ["RC", "RC", "C", "R/N VN", "N L5", "/", "R", "C", "C", "C", "C", "R/N L5", "N VN", "/", "R", "+VN/L5", "+L5/VN", "RC", "RC", "R/N VN", "N L5", "/", "R", "+L5", "+VN/L5", "-L5/VN", "-VN", "R/N L5", "N VN", "/", "R", "+VN", "+L5", "-VN", "-L5", "R/N VN", "N L5", "/", "R"], "f": "GGgwwwwggggwwwwvvGGwwwwwvvwwwwwwwwwwwww"}, {"n": "Talbi Alaeddine", "p": "Régulateur", "m": "46451 Z", "s": 49, "c": ["R", "+L5", "+VN", "-L5", "C", "R/N L5", "N VN", "/", "R", "RC", "RC", "C", "-L5", "R/N VN", "N L5", "/", "R", "+L5", "+VN", "-L5", "C", "R/N L5", "N VN", "/", "R", "V", "+L5", "-VN", "-L5", "R/N VN", "N L5", "/", "R", "RC", "C", "C", "C", "R/N L5", "N VN"], "f": "wwwwgwwwwGGgwwwwwwwwgwwwwOwwwwwwwGgggww"}, {"n": "Hannachi Mondher", "p": "Régulateur", "m": "39486 G", "s": 48, "c": ["R", "+VN", "+L5", "-VN", "-L5/VN", "R/N VN", "N L5", "/", "R", "+L5", "+VN/L5", "V", "-VN", "R/N L5", "N VN", "/", "R", "+VN", "+L5", "-VN", "-L5/VN", "R/N VN", "N L5", "/", "R", "+L5", "+VN", "RC", "RC", "R/N L5", "N VN", "/", "R", "+VN", "+L5", "-VN", "-L5", "R/N VN", "N L5"], "f": "wwwwvwwwwwvOwwwwwwwwvwwwwwwGGwwwwwwwwww"}];
+const AG = [{"n": "Nasri Ridha", "p": "B.Programmation", "m": "38873 C", "s": 19, "c": ["=", "=", "=", "R", "=", "=", "=", "C", "=", "=", "R", "=", "=", "=", "=", "=", "=", "R", "=", "=", "=", "=", "=", "=", "R", "=", "=", "=", "=", "=", "=", "R", "=", "=", "=", "=", "=", "=", "R"], "f": "wwwwwwwgwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww", "cv": "", "cw": "", "cx": "", "cx_motif": ""}, {"n": "Toumi Malik", "p": "Chef PC", "m": "39696 G", "s": 69, "c": ["=", "R", "=PC", "=PC", "RC", "RC", "=", "=", "=", "=PC", "=PC", "=PC", "R", "=", "RC", "=PC", "R", "R", "=", "=", "=", "=", "RC", "=PC", "=PC", "V", "=", "=", "=PC", "=PC", "RC", "R", "=", "=", "=", "=", "R", "=PC", "=PC"], "f": "wwppGGwwwpppwwGpwwwwwwGppOwwppGwwwwwwpp", "cv": "", "cw": "", "cx": "", "cx_motif": ""}, {"n": "Khemiri Ramzi", "p": "PC", "m": "39676 H", "s": 68, "c": ["=PC", "=PC", "R", "R", "=PC", "=PC", "=PC", "=PC", "=PC", "R", "R", "V", "C", "C", "C", "C", "=PC", "=PC", "=PC", "=PC", "=PC", "=PC", "=PC", "RC", "RC", "=PC", "=PC", "=PC", "RC", "RC", "=PC", "=PC", "=PC", "=PC", "=PC", "=PC", "=PC", "R", "R"], "f": "wwwwwwwwwwwOggggwwwwwwwGGwwwGGwwwwwwwww", "cv": "", "cw": "", "cx": "", "cx_motif": ""}, {"n": "Hemissi Sabri", "p": "PC", "m": "46594 T", "s": 31, "c": ["Ret", "Rap", "RC", "R", "Ral", "Ral", "Ral", "Ral", "Ral", "Ral", "R", "+L5/VN", "=PC", "=PC", "=PC", "Rap", "Rap", "R", "Rap", "Rap", "Rap", "Rap", "Rap", "Rap", "R", "Ral", "Ral", "Ral", "Ral", "RAL/Ret", "Ral/Ret", "R", "Ret", "Ret", "RC", "RC", "RC", "RC", "R"], "f": "bbGwbbbbbbwvwwwbbwbbbbbbwbbbbvvwbbGGGGw", "cv": "", "cw": "", "cx": "", "cx_motif": ""}, {"n": "Oueslati Amor", "p": "B.Rapport d'incid.", "m": "38624 F", "s": 64, "c": ["C", "C", "R", "R", "", "", "", "", "", "R", "R", "", "", "", "F", "C", "R", "R", "C", "C", "C", "C", "C", "C", "R", "", "", "", "", "", "R", "R", "", "", "", "", "", "R", "R"], "f": "ggwwwwwwwwwwwwggwwggggggwwwwwwwwwwwwwww", "cv": "", "cw": "", "cx": "", "cx_motif": ""}, {"n": "Meftahi Henda", "p": "B.Ralentissement", "m": "39949 H", "s": 109, "c": ["", "", "", "R", "C", "C", "C", "C", "C", "C", "R", "", "", "", "", "", "", "R", "", "", "", "", "", "", "R", "C", "C", "C", "C", "C", "C", "R", "", "", "", "", "", "", "R"], "f": "wwwwggggggwwwwwwwwwwwwwwwggggggwwwwwwww", "cv": "", "cw": "", "cx": "", "cx_motif": ""}, {"n": "Ben Mahfoudh Rafaa", "p": "B.Retard", "m": "39420 D", "s": 24, "c": ["C", "", "", "R", "", "", "", "", "", "", "R", "", "", "", "", "", "", "R", "", "", "", "", "", "", "R", "", "", "", "", "C", "C", "R", "C", "C", "", "", "", "", "R"], "f": "gwwwwwwwwwwwwwwwwwwwwwwwwwwwwggwggwwwww", "cv": "", "cw": "", "cx": "", "cx_motif": ""}, {"n": "Besbes Adel", "p": "Régulateur", "m": "39417 A", "s": 23, "c": ["R", "C", "C", "C", "C", "R", "C", "C", "R", "C", "C", "C", "C", "R", "C", "C", "R", "C", "C", "C", "C", "R", "C", "C", "R", "C", "C", "C", "C", "R", "C", "", "", "", "", "", "", "", ""], "f": "wggggwggwggggwggwggggwggwggggwgOOOOOOOO", "cv": "", "cw": "", "cx": "", "cx_motif": ""}, {"n": "Cherni Hichem", "p": "Régulateur", "m": "46788 A", "s": 49, "c": ["+L5", "-VN", "-L5", "R", "Ret", "+VN/L5", "+L5", "-L5/VN", "-VN", "+VN", "R", "-L5/VN", "+VN", "-L5", "-VN", "R", "RC", "-L5/VN", "-VN/L5", "R", "R", "+L5", "+VN", "-L5", "R", "+VN", "-L5", "-L5", "-VN", "+L5", "R", "R", "R", "+L5", "+VN", "-L5", "-VN", "+L5", "R"], "f": "wwwwbvwvwwwvwwwwGvvwwwwwwwwwwwwwwwwwwww", "cv": "", "cw": "", "cx": "", "cx_motif": ""}, {"n": "Ben Ouezdou Marouen", "p": "Régulateur", "m": "49042 H", "s": 28, "c": ["C", "C", "R", "+L5", "+VN", "-L5", "-VN", "R/N L5", "N VN", "/", "R", "C", "+L5", "-VN", "-L5", "R/N VN", "N L5", "/", "R", "+L5", "+VN", "-L5", "-VN", "R/N L5", "N VN", "/", "R", "+VN", "+L5", "-VN", "-L5", "R/N VN", "N L5", "/", "R", "+L5", "+VN", "-L5", "-VN"], "f": "ggwwwwwwwwwgwwwwwwwwwwwwwwwwwwwwwwwwwww", "cv": "", "cw": "", "cx": "", "cx_motif": ""}, {"n": "Tissaoui Taoufik", "p": "Régulateur", "m": "49116 X", "s": 41, "c": ["N", "/", "R", "+VN", "+L5", "-VN", "-L5", "R/N VN", "N L5", "/", "R", "RC", "RC", "RC", "RC", "R/N L5", "N VN", "/", "R", "+VN", "+L5", "-VN", "-L5", "R/N VN", "N L5", "/", "R", "+L5", "+VN", "-L5", "-VN", "R/N L5", "N VN", "/", "R", "+VN", "+L5", "-VN", "-L5"], "f": "vwwwwwwwwwwGGGGwwwwwwwwwwwwwwwwwwwwwwww", "cv": "", "cw": "", "cx": "", "cx_motif": ""}, {"n": "Achouri Mohamed", "p": "Régulateur", "m": "46790 C", "s": 30, "c": ["-VN", "R/N L5", "N VN", "/", "R", "C", "C", "C", "-L5", "R/N VN", "N L5", "/", "R", "+L5", "+VN", "C", "-VN/L5", "R/N L5", "N VN", "/", "R", "+VN", "+L5", "-VN", "-L5", "R/N VN", "N L5", "/", "R", "RC", "+VN", "-L5", "-VN", "R/N L5", "N VN", "/", "R", "+VN", "+L5"], "f": "wwwwwgggwwwwwwwgvwwwwwwwwwwwwGwwwwwwwww", "cv": "", "cw": "", "cx": "", "cx_motif": ""}, {"n": "Zekri Oussema", "p": "Régulateur", "m": "46430 Z", "s": 65, "c": ["-L5", "R/N VN", "N L5", "/", "R", "C", "+VN", "RC", "+L5/VN", "R/N L5", "N VN", "/", "R", "+VN", "+L5", "-VN/L5", "C", "R/N VN", "N L5", "/", "R", "RC", "C", "+VN", "-VN", "R/N L5", "N VN", "/", "R", "+VN", "+L5", "-VN", "-L5", "R/N VN", "N L5", "/", "R", "RC", "+VN"], "f": "wwwwwgwGvwwwwwwvgwwwwGgwwwwwwwwwwwwwwGw", "cv": "", "cw": "", "cx": "", "cx_motif": ""}, {"n": "Djobbi Fahd", "p": "Régulateur", "m": "49044 K", "s": 70, "c": ["+VN", "-L5", "-VN", "R/N L5", "N VN", "/", "R", "+VN/L5", "RC", "-VN/L5", "-L5/VN", "R/N VN", "N L5", "/", "R", "RC", "RC", "RC", "RC", "R/N L5", "N VN", "/", "R", "RC", "RC", "RC", "RC", "R/N VN", "N L5", "/", "R", "+L5", "+VN", "-L5", "-VN", "R/N L5", "N VN", "/", "R"], "f": "wwwwwwwvGvvwwwwGGGGwwwwGGGGwwwwwwwwwwww", "cv": "", "cw": "", "cx": "", "cx_motif": ""}, {"n": "Guantassi Hamdi", "p": "Régulateur", "m": "49041 G", "s": 27, "c": ["RC", "RC", "C", "R/N VN", "N L5", "/", "R", "C", "C", "C", "C", "R/N L5", "N VN", "/", "R", "+VN/L5", "+L5/VN", "RC", "RC", "R/N VN", "N L5", "/", "R", "+L5", "+VN/L5", "-L5/VN", "-VN", "R/N L5", "N VN", "/", "R", "+VN", "+L5", "-VN", "-L5", "R/N VN", "N L5", "/", "R"], "f": "GGgwwwwggggwwwwvvGGwwwwwvvwwwwwwwwwwwww", "cv": "", "cw": "", "cx": "", "cx_motif": ""}, {"n": "Talbi Alaeddine", "p": "Régulateur", "m": "46451 Z", "s": 49, "c": ["R", "+L5", "+VN", "-L5", "C", "R/N L5", "N VN", "/", "R", "RC", "RC", "C", "-L5", "R/N VN", "N L5", "/", "R", "+L5", "+VN", "-L5", "C", "R/N L5", "N VN", "/", "R", "V", "+L5", "-VN", "-L5", "R/N VN", "N L5", "/", "R", "RC", "C", "C", "C", "R/N L5", "N VN"], "f": "wwwwgwwwwGGgwwwwwwwwgwwwwOwwwwwwwGgggww", "cv": "", "cw": "", "cx": "", "cx_motif": ""}, {"n": "Hannachi Mondher", "p": "Régulateur", "m": "39486 G", "s": 48, "c": ["R", "+VN", "+L5", "-VN", "-L5/VN", "R/N VN", "N L5", "/", "R", "+L5", "+VN/L5", "V", "-VN", "R/N L5", "N VN", "/", "R", "+VN", "+L5", "-VN", "-L5/VN", "R/N VN", "N L5", "/", "R", "+L5", "+VN", "RC", "RC", "R/N L5", "N VN", "/", "R", "+VN", "+L5", "-VN", "-L5", "R/N VN", "N L5"], "f": "wwwwvwwwwwvOwwwwwwwwvwwwwwwGGwwwwwwwwww", "cv": "", "cw": "", "cx": "", "cx_motif": ""}];
 const RECAP = [{"n": "Nasri Ridha", "m": "38873 C", "rc": {"reliquat": 0, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 0, "pris": 0, "report": 0}, "conge": {"reliquat": 19, "autorises": 42, "valides": 19, "pris": 1, "perdus": 0, "report": 18}}, {"n": "Agent 00A", "m": "00A", "rc": {"reliquat": 0, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 0, "pris": 0, "report": 0}, "conge": {"reliquat": null, "autorises": null, "valides": null, "pris": 0, "perdus": 0, "report": null}}, {"n": "Agent 00B", "m": "00B", "rc": {"reliquat": 0, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 0, "pris": 0, "report": 0}, "conge": {"reliquat": null, "autorises": null, "valides": null, "pris": 0, "perdus": 0, "report": null}}, {"n": "Toumi Malik", "m": "39696 G", "rc": {"reliquat": 4, "double": 0, "depl": 2, "aid": 0, "except": null, "valides": 6, "pris": 5, "report": 1}, "conge": {"reliquat": 69, "autorises": 42, "valides": 69, "pris": 0, "perdus": 0, "report": 69}}, {"n": "Khemiri Ramzi", "m": "39676 H", "rc": {"reliquat": 0, "double": 0, "depl": 4, "aid": 0, "except": null, "valides": 4, "pris": 4, "report": 0}, "conge": {"reliquat": 68, "autorises": 42, "valides": 68, "pris": 4, "perdus": 0, "report": 64}}, {"n": "Hannachi Mondher", "m": "39486 G", "rc": {"reliquat": 0, "double": 3, "depl": 0, "aid": 0, "except": null, "valides": 3, "pris": 2, "report": 1}, "conge": {"reliquat": 48, "autorises": 42, "valides": 48, "pris": 0, "perdus": 0, "report": 48}}, {"n": "Hemissi Sabri", "m": "46594 T", "rc": {"reliquat": 2, "double": 3, "depl": 1, "aid": 0, "except": null, "valides": 6, "pris": 1, "report": 5}, "conge": {"reliquat": 31, "autorises": 42, "valides": 31, "pris": 0, "perdus": 0, "report": 31}}, {"n": "Agent 00C", "m": "00C", "rc": {"reliquat": 0, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 0, "pris": 0, "report": 0}, "conge": {"reliquat": null, "autorises": null, "valides": null, "pris": 0, "perdus": 0, "report": null}}, {"n": "Agent 00D", "m": "00D", "rc": {"reliquat": 0, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 0, "pris": 0, "report": 0}, "conge": {"reliquat": null, "autorises": null, "valides": null, "pris": 0, "perdus": 0, "report": null}}, {"n": "Agent 00E", "m": "00E", "rc": {"reliquat": 0, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 0, "pris": 0, "report": 0}, "conge": {"reliquat": null, "autorises": null, "valides": null, "pris": 0, "perdus": 0, "report": null}}, {"n": "Oueslati Amor", "m": "38624 F", "rc": {"reliquat": 0, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 0, "pris": 0, "report": 0}, "conge": {"reliquat": 64, "autorises": 27, "valides": 64, "pris": 9, "perdus": 0, "report": 55}}, {"n": "Agent 00F", "m": "00F", "rc": {"reliquat": 2, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 2, "pris": 0, "report": 2}, "conge": {"reliquat": null, "autorises": null, "valides": null, "pris": 0, "perdus": 0, "report": null}}, {"n": "Agent 00G", "m": "00G", "rc": {"reliquat": 2, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 2, "pris": 0, "report": 2}, "conge": {"reliquat": null, "autorises": null, "valides": null, "pris": 0, "perdus": 0, "report": null}}, {"n": "Meftahi Henda", "m": "39949 H", "rc": {"reliquat": 0, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 0, "pris": 0, "report": 0}, "conge": {"reliquat": 109, "autorises": 42, "valides": 109, "pris": 12, "perdus": 0, "report": 97}}, {"n": "Agent 00H", "m": "00H", "rc": {"reliquat": 2, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 2, "pris": 0, "report": 2}, "conge": {"reliquat": null, "autorises": null, "valides": null, "pris": 0, "perdus": 0, "report": null}}, {"n": "Agent 00I", "m": "00I", "rc": {"reliquat": 2, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 2, "pris": 0, "report": 2}, "conge": {"reliquat": null, "autorises": null, "valides": null, "pris": 0, "perdus": 0, "report": null}}, {"n": "Ben Mahfoudh Rafaa", "m": "39420 D", "rc": {"reliquat": 0, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 0, "pris": 0, "report": 0}, "conge": {"reliquat": 24, "autorises": 42, "valides": 24, "pris": 3, "perdus": 0, "report": 21}}, {"n": "Agent 00J", "m": "00J", "rc": {"reliquat": 2, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 2, "pris": 0, "report": 2}, "conge": {"reliquat": null, "autorises": null, "valides": null, "pris": 0, "perdus": 0, "report": null}}, {"n": "Agent 00K", "m": "00K", "rc": {"reliquat": 2, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 2, "pris": 0, "report": 2}, "conge": {"reliquat": null, "autorises": null, "valides": null, "pris": 0, "perdus": 0, "report": null}}, {"n": "Besbes Adel", "m": "39417 A", "rc": {"reliquat": 0, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 0, "pris": 0, "report": 0}, "conge": {"reliquat": 23, "autorises": 35, "valides": 23, "pris": 23, "perdus": 0, "report": 0}}, {"n": "Cherni Hichem", "m": "46788 A", "rc": {"reliquat": 0, "double": 5, "depl": 0, "aid": 0, "except": null, "valides": 5, "pris": 1, "report": 4}, "conge": {"reliquat": 49, "autorises": 42, "valides": 49, "pris": 0, "perdus": 0, "report": 49}}, {"n": "Ben Ouezdou Marouen", "m": "49042 H", "rc": {"reliquat": 0, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 0, "pris": 0, "report": 0}, "conge": {"reliquat": 28, "autorises": 42, "valides": 28, "pris": 3, "perdus": 0, "report": 25}}, {"n": "Tissaoui Taoufik", "m": "49116 X", "rc": {"reliquat": 4, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 4, "pris": 4, "report": 0}, "conge": {"reliquat": 41, "autorises": 42, "valides": 41, "pris": 0, "perdus": 0, "report": 41}}, {"n": "Achouri Mohamed", "m": "46790 C", "rc": {"reliquat": 0, "double": 1, "depl": 0, "aid": 0, "except": null, "valides": 1, "pris": 1, "report": 0}, "conge": {"reliquat": 30, "autorises": 42, "valides": 30, "pris": 4, "perdus": 0, "report": 26}}, {"n": "Zekri Oussema", "m": "46430 Z", "rc": {"reliquat": 1, "double": 2, "depl": 0, "aid": 0, "except": null, "valides": 3, "pris": 2, "report": 1}, "conge": {"reliquat": 65, "autorises": 42, "valides": 65, "pris": 3, "perdus": 0, "report": 62}}, {"n": "Djobbi Fahd", "m": "49044 K", "rc": {"reliquat": 9, "double": 3, "depl": 0, "aid": 0, "except": null, "valides": 12, "pris": 9, "report": 3}, "conge": {"reliquat": 70, "autorises": 42, "valides": 70, "pris": 0, "perdus": 0, "report": 70}}, {"n": "Guantassi Hamdi", "m": "49041 G", "rc": {"reliquat": 2, "double": 4, "depl": 0, "aid": 0, "except": 1, "valides": 7, "pris": 4, "report": 3}, "conge": {"reliquat": 27, "autorises": 42, "valides": 27, "pris": 5, "perdus": 0, "report": 22}}, {"n": "Talbi Alaeddine", "m": "46451 Z", "rc": {"reliquat": 3, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 3, "pris": 2, "report": 1}, "conge": {"reliquat": 49, "autorises": 42, "valides": 49, "pris": 3, "perdus": 0, "report": 46}}, {"n": "Beltifa Mourad", "m": "39224 W", "rc": {"reliquat": 0, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 0, "pris": 0, "report": 0}, "conge": {"reliquat": 0, "autorises": 4, "valides": 0, "pris": 0, "perdus": 0, "report": 0}}, {"n": "Agent 00L", "m": "00L", "rc": {"reliquat": 0, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 0, "pris": 0, "report": 0}, "conge": {"reliquat": null, "autorises": null, "valides": null, "pris": 0, "perdus": 0, "report": null}}, {"n": "Agent 00M", "m": "00M", "rc": {"reliquat": 0, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 0, "pris": 0, "report": 0}, "conge": {"reliquat": null, "autorises": null, "valides": null, "pris": 0, "perdus": 0, "report": null}}, {"n": "Agent 00N", "m": "00N", "rc": {"reliquat": 0, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 0, "pris": 0, "report": 0}, "conge": {"reliquat": null, "autorises": null, "valides": null, "pris": 0, "perdus": 0, "report": null}}, {"n": "Agent 00O", "m": "00O", "rc": {"reliquat": 0, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 0, "pris": 0, "report": 0}, "conge": {"reliquat": null, "autorises": null, "valides": null, "pris": 0, "perdus": 0, "report": null}}, {"n": "Agent 00P", "m": "00P", "rc": {"reliquat": 0, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 0, "pris": 0, "report": 0}, "conge": {"reliquat": null, "autorises": null, "valides": null, "pris": 0, "perdus": 0, "report": null}}, {"n": "Agent 00Q", "m": "00Q", "rc": {"reliquat": 0, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 0, "pris": 0, "report": 0}, "conge": {"reliquat": null, "autorises": null, "valides": null, "pris": 0, "perdus": 0, "report": null}}, {"n": "Agent 00R", "m": "00R", "rc": {"reliquat": 0, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 0, "pris": 0, "report": 0}, "conge": {"reliquat": null, "autorises": null, "valides": null, "pris": 0, "perdus": 0, "report": null}}, {"n": "Agent 00S", "m": "00S", "rc": {"reliquat": 0, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 0, "pris": 0, "report": 0}, "conge": {"reliquat": null, "autorises": null, "valides": null, "pris": 0, "perdus": 0, "report": null}}, {"n": "Agent 00T", "m": "00T", "rc": {"reliquat": 0, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 0, "pris": 0, "report": 0}, "conge": {"reliquat": null, "autorises": null, "valides": null, "pris": 0, "perdus": 0, "report": null}}, {"n": "Agent 00U", "m": "00U", "rc": {"reliquat": 0, "double": 0, "depl": 0, "aid": 0, "except": null, "valides": 0, "pris": 0, "report": 0}, "conge": {"reliquat": null, "autorises": null, "valides": null, "pris": 0, "perdus": 0, "report": null}}];
 const AID = {"annee": 2026, "years_fitr": [2026, 2025, 2024, 2023, 2022, 2021, 2026, 2025, 2024, 2023, 2022, 2021], "years_adha": [2026, 2025, 2024, 2023, 2022, 2021], "datesN1": {"fitr": "2027-03-20", "adha": "2027-05-27"}, "retraites": {"38873 C": "2027-03-31", "39696 G": "2037-02-28", "39676 H": "2035-10-31", "39486 G": "2029-06-30", "46594 T": "2043-07-31", "38624 F": "2029-07-31", "39949 H": "2033-06-30", "39420 D": "2031-08-31", "39417 A": "2026-10-31", "46788 A": "2047-06-30", "49042 H": "2051-05-31", "49116 X": "2052-09-30", "46790 C": "2041-04-30", "46430 Z": "2044-03-31", "49044 K": "2050-03-31", "49041 G": "2054-02-28", "46451 Z": "2045-06-30", "39224 W": "2026-01-31"}, "agents": [{"n": "Nasri Ridha", "p": "B.Horaires", "m": "38873 C", "fitr": ["C", null, null, null, null, null, "R", null, null, null, null, null], "adha": ["R", null, null, null, null, null]}, {"n": "Agent 00A", "p": "B.Horaires", "m": "00A", "fitr": [null, null, null, null, null, null, null, null, null, null, null, null], "adha": [null, null, null, null, null, null]}, {"n": "Agent 00B", "p": "B.Horaires", "m": "00B", "fitr": [null, null, null, null, null, null, null, null, null, null, null, null], "adha": [null, null, null, null, null, null]}, {"n": "Toumi Malik", "p": "Chef PC", "m": "39696 G", "fitr": [null, null, null, null, null, null, null, null, null, null, null, null], "adha": [null, null, null, null, null, null]}, {"n": "Khemiri Ramzi", "p": "PC", "m": "39676 H", "fitr": [null, null, null, null, null, null, "RC", null, null, null, null, null], "adha": ["RC", null, null, null, null, null]}, {"n": "Hannachi Mondher", "p": "Régulateur", "m": "39486 G", "fitr": ["R", null, null, null, null, null, null, null, null, null, null, null], "adha": [null, null, null, null, null, null]}, {"n": "Hemissi Sabri", "p": "B.Horaires", "m": "46594 T", "fitr": [null, null, null, null, null, null, null, null, null, null, null, null], "adha": [null, null, null, null, null, null]}, {"n": "Agent 00C", "p": "PC", "m": "00C", "fitr": [null, null, null, null, null, null, null, null, null, null, null, null], "adha": [null, null, null, null, null, null]}, {"n": "Agent 00D", "p": "PC", "m": "00D", "fitr": [null, null, null, null, null, null, null, null, null, null, null, null], "adha": [null, null, null, null, null, null]}, {"n": "Agent 00E", "p": "PC", "m": "00E", "fitr": [null, null, null, null, null, null, null, null, null, null, null, null], "adha": [null, null, null, null, null, null]}, {"n": "Oueslati Amor", "p": "B.Rapport d'incid.", "m": "38624 F", "fitr": ["F", null, null, null, null, null, "F", null, null, null, null, null], "adha": ["F", null, null, null, null, null]}, {"n": "Agent 00F", "p": "B.Rapport d'incid.", "m": "00F", "fitr": [null, null, null, null, null, null, null, null, null, null, null, null], "adha": [null, null, null, null, null, null]}, {"n": "Agent 00G", "p": "B.Rapport d'incid.", "m": "00G", "fitr": [null, null, null, null, null, null, null, null, null, null, null, null], "adha": [null, null, null, null, null, null]}, {"n": "Meftahi Henda", "p": "B.Ralentissement", "m": "39949 H", "fitr": [null, null, null, null, null, null, "RC", null, null, null, null, null], "adha": ["RC", null, null, null, null, null]}, {"n": "Agent 00H", "p": "B.Ralentissement", "m": "00H", "fitr": [null, null, null, null, null, null, null, null, null, null, null, null], "adha": [null, null, null, null, null, null]}, {"n": "Agent 00I", "p": "B.Ralentissement", "m": "00I", "fitr": [null, null, null, null, null, null, null, null, null, null, null, null], "adha": [null, null, null, null, null, null]}, {"n": "Ben Mahfoudh Rafaa", "p": "B.Retard", "m": "39420 D", "fitr": [null, null, null, null, null, null, "C", null, null, null, null, null], "adha": ["C", null, null, null, null, null]}, {"n": "Agent 00J", "p": "B.Retard", "m": "00J", "fitr": [null, null, null, null, null, null, null, null, null, null, null, null], "adha": [null, null, null, null, null, null]}, {"n": "Agent 00K", "p": "B.Retard", "m": "00K", "fitr": [null, null, null, null, null, null, null, null, null, null, null, null], "adha": [null, null, null, null, null, null]}, {"n": "Besbes Adel", "p": "Régulateur", "m": "39417 A", "fitr": [null, null, null, null, null, null, "C", null, null, null, null, null], "adha": ["C", null, null, null, null, null]}, {"n": "Cherni Hichem", "p": "Régulateur", "m": "46788 A", "fitr": [null, null, null, null, null, null, "C", null, null, null, null, null], "adha": ["C", null, null, null, null, null]}, {"n": "Ben Ouezdou Marouen", "p": "Régulateur", "m": "49042 H", "fitr": [null, null, null, null, null, null, "C", null, null, null, null, null], "adha": ["C", null, null, null, null, null]}, {"n": "Tissaoui Taoufik", "p": "Régulateur", "m": "49116 X", "fitr": [null, null, null, null, null, null, null, null, null, null, null, null], "adha": [null, null, null, null, null, null]}, {"n": "Achouri Mohamed", "p": "Régulateur", "m": "46790 C", "fitr": [null, null, null, null, null, null, null, null, null, null, null, null], "adha": [null, null, null, null, null, null]}, {"n": "Zekri Oussema", "p": "Régulateur", "m": "46430 Z", "fitr": [null, null, null, null, null, null, null, null, null, null, null, null], "adha": [null, null, null, null, null, null]}, {"n": "Djobbi Fahd", "p": "Régulateur", "m": "49044 K", "fitr": [null, null, null, null, null, null, null, null, null, null, null, null], "adha": [null, null, null, null, null, null]}, {"n": "Guantassi Hamdi", "p": "Régulateur", "m": "49041 G", "fitr": [null, null, null, null, null, null, null, null, null, null, null, null], "adha": [null, null, null, null, null, null]}, {"n": "Talbi Alaeddine", "p": "Régulateur", "m": "46451 Z", "fitr": ["R", null, null, null, null, null, "A", null, null, null, null, null], "adha": ["A", null, null, null, null, null]}, {"n": "Beltifa Mourad", "p": "Régulateur", "m": "39224 W", "fitr": [null, null, null, null, null, null, null, null, null, null, null, null], "adha": [null, null, null, null, null, null]}, {"n": "Agent 00L", "p": "Régulateur", "m": "00L", "fitr": [null, null, null, null, null, null, null, null, null, null, null, null], "adha": [null, null, null, null, null, null]}, {"n": "Agent 00M", "p": "Régulateur", "m": "00M", "fitr": [null, null, null, null, null, null, null, null, null, null, null, null], "adha": [null, null, null, null, null, null]}, {"n": "Agent 00N", "p": "Régulateur", "m": "00N", "fitr": [null, null, null, null, null, null, null, null, null, null, null, null], "adha": [null, null, null, null, null, null]}, {"n": "Agent 00O", "p": "Régulateur", "m": "00O", "fitr": [null, null, null, null, null, null, null, null, null, null, null, null], "adha": [null, null, null, null, null, null]}, {"n": "Agent 00P", "p": "Régulateur", "m": "00P", "fitr": [null, null, null, null, null, null, null, null, null, null, null, null], "adha": [null, null, null, null, null, null]}, {"n": "Agent 00Q", "p": "Régulateur", "m": "00Q", "fitr": [null, null, null, null, null, null, null, null, null, null, null, null], "adha": [null, null, null, null, null, null]}, {"n": "Agent 00R", "p": "Régulateur", "m": "00R", "fitr": [null, null, null, null, null, null, null, null, null, null, null, null], "adha": [null, null, null, null, null, null]}, {"n": "Agent 00S", "p": "Régulateur", "m": "00S", "fitr": [null, null, null, null, null, null, null, null, null, null, null, null], "adha": [null, null, null, null, null, null]}, {"n": "Agent 00T", "p": "Régulateur", "m": "00T", "fitr": [null, null, null, null, null, null, null, null, null, null, null, null], "adha": [null, null, null, null, null, null]}, {"n": "Agent 00U", "p": "Régulateur", "m": "00U", "fitr": [null, null, null, null, null, null, null, null, null, null, null, null], "adha": [null, null, null, null, null, null]}]};
-const HTML_GENERATED_AT = '2026-10-20T08:15:01';
+const HTML_GENERATED_AT = '2026-10-20T10:02:43';
 
 const DOW=['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'];
 const DOWL=['dimanche','lundi','mardi','mercredi','jeudi','vendredi','samedi'];
@@ -628,11 +672,8 @@ $('titleline').textContent = CFG.title;
     .then(r => r.ok ? r.json() : null)
     .then(data => {
       if (!data || !Array.isArray(data.months) || data.months.length === 0) return;
-      // Trier : années desc, mois desc
       const sorted = data.months.slice().sort((a,b) =>
         (b.year - a.year) || (b.monthNum - a.monthNum));
-
-      // Grouper par année
       const groups = [];
       let curYear = null, curGroup = null;
       sorted.forEach(m => {
@@ -643,8 +684,6 @@ $('titleline').textContent = CFG.title;
         }
         curGroup.months.push(m);
       });
-
-      // Construire avec optgroup
       selMois.innerHTML = '';
       groups.forEach(g => {
         const grp = document.createElement('optgroup');
@@ -658,16 +697,13 @@ $('titleline').textContent = CFG.title;
         });
         selMois.appendChild(grp);
       });
-
       selMois.addEventListener('change', () => {
         if (selMois.value) window.location.href = selMois.value;
       });
-
-      // Navigation prev / next (inversée car tri desc)
       const idx = sorted.findIndex(m => m.id === selfId);
       if (idx >= 0) {
-        const newer = sorted[idx - 1];  // plus récent
-        const older = sorted[idx + 1];  // plus ancien
+        const newer = sorted[idx - 1];
+        const older = sorted[idx + 1];
         if (older) {
           const a = document.getElementById('navprev');
           a.href = older.file; a.textContent = '← ' + older.label;
@@ -860,7 +896,6 @@ function drawAid(){
     return;
   }
 
-  // Règle 2 : ne sera pas prioritaire (année dynamique)
   $('ruleNoWork').innerHTML =
     `L'agent s'étant trouvé en <b>Congé (C)</b>,
      <b>Congé exceptionnel (Cexp)</b>, <b>Repos (R)</b>,
@@ -869,7 +904,6 @@ function drawAid(){
      deux Aïds en ${AID.annee} <b>ne sera pas prioritaire</b> au prochain
      <span class="hl-blue">même Aïd</span>.`;
 
-  // Règle 3 : Repos non contraignant
   $('ruleRepos').innerHTML =
     `L'agent en position de <b>Repos (R)</b> lors d'un prochain
      <span class="hl-blue">Aïd</span> n'est en aucun cas tenu d'assurer
@@ -884,6 +918,83 @@ function drawAid(){
 document.getElementById('rulesToggle').addEventListener('click', () => {
   document.getElementById('rulesBox').classList.toggle('collapsed');
 });
+
+// ===== BANNIÈRE DÉTACHEMENT =====
+function parseDateFR(dateStr) {
+    if (!dateStr) return null;
+    let d, m, y;
+    if (dateStr.includes('/')) {
+        const parts = dateStr.split('/');
+        if (parts.length === 3) {
+            d = parseInt(parts[0], 10);
+            m = parseInt(parts[1], 10) - 1;
+            y = parseInt(parts[2], 10);
+        }
+    } else if (dateStr.includes('-')) {
+        const parts = dateStr.split('-');
+        if (parts.length === 3) {
+            y = parseInt(parts[0], 10);
+            m = parseInt(parts[1], 10) - 1;
+            d = parseInt(parts[2], 10);
+        }
+    }
+    if (d !== undefined && !isNaN(d) && !isNaN(m) && !isNaN(y)) {
+        return new Date(y, m, d);
+    }
+    return null;
+}
+
+function showDetachementAlert(a) {
+    const oldBanner = document.getElementById('detachementBanner');
+    if (oldBanner) oldBanner.remove();
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    let messages = [];
+
+    function processEvent(dateStr, title, type) {
+        if (!dateStr) return;
+        const evDate = parseDateFR(dateStr);
+        if (!evDate) return;
+
+        // Si la date est passée, on ne fait rien
+        if (evDate < today) return;
+
+        let dateText = dateStr;
+        if (evDate.getTime() === today.getTime()) {
+            dateText = "aujourd'hui";
+        } else {
+            dateText = "le " + dateStr;
+        }
+
+        let txt = `<strong>Rappel : ${title}</strong><span>${dateText}</span>`;
+        if (type === 'cx' && a.cx_motif) {
+            txt += `<div class="motif">Motif : ${a.cx_motif}</div>`;
+        }
+        messages.push(txt);
+    }
+
+    processEvent(a.cv, "Visite Médicale", "cv");
+    processEvent(a.cw, "Formation", "cw");
+    processEvent(a.cx, "Détachement", "cx");
+
+    if (messages.length > 0) {
+        const div = document.createElement('div');
+        div.id = 'detachementBanner';
+        div.className = 'detachement-banner';
+        div.innerHTML = '<div class="icon">⚠️</div>' + messages.join('<hr style="border:0; border-top:1px solid rgba(255,255,255,0.3); margin:10px 0;">');
+        document.body.appendChild(div);
+
+        void div.offsetWidth; // Force reflow
+        div.classList.add('show');
+
+        setTimeout(() => {
+            div.classList.remove('show');
+            setTimeout(() => div.remove(), 300);
+        }, 3000);
+    }
+}
 
 // ===== Planning / Jour / Tableau =====
 function drawAgent(){
@@ -937,6 +1048,8 @@ function drawAgent(){
     chip.addEventListener('touchstart', on, {passive:true});
     chip.addEventListener('touchend',   off2);
   });
+  
+  showDetachementAlert(a); // <-- Affichage du bandeau de détachement
   drawRecap();
 }
 
@@ -1082,9 +1195,7 @@ else if (savedTab === 'aid') tab('aid');
   });
 })();
 
-// ===== Vérification automatique des mises à jour =====
 (function(){
-  // On initialise avec la date du fichier HTML chargé
   let currentUpdated = HTML_GENERATED_AT;
   let bannerShown = false;
 
@@ -1096,7 +1207,6 @@ else if (savedTab === 'aid') tab('aid');
       const newUpdated = data.lastUpdated || '';
       if (!newUpdated) return;
 
-      // Si la date du serveur est différente de celle du HTML
       if (newUpdated !== currentUpdated && !bannerShown){
         currentUpdated = newUpdated;
         showUpdateBanner();
@@ -1115,7 +1225,6 @@ else if (savedTab === 'aid') tab('aid');
       '<span class="ub-msg">Nouvelle mise à jour…</span>';
     document.body.appendChild(b);
 
-    // Rechargement automatique après 2 secondes
     setTimeout(() => {
       const url = new URL(window.location.href);
       url.searchParams.set('_v', Date.now());
@@ -1123,9 +1232,7 @@ else if (savedTab === 'aid') tab('aid');
     }, 2000);
   }
 
-  // 1ère vérification TRÈS RAPIDEMENT (après 2 secondes)
   setTimeout(checkUpdate, 2000);
-  // Puis toutes les 2 minutes
   setInterval(checkUpdate, 2 * 60 * 1000);
 })();
 </script>
