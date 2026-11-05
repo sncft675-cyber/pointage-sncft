@@ -1,6 +1,13 @@
 {
-  "lastUpdated": "2026-11-05T11:51:03",
+  "lastUpdated": "2026-11-05T12:05:32",
   "months": [
+    {
+      "id": "novembre2026",
+      "label": "Novembre 2026",
+      "file": "indexnovembre2026.html",
+      "year": 2026,
+      "monthNum": 11
+    },
     {
       "id": "octobre2026",
       "label": "Octobre 2026",
